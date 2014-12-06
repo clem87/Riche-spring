@@ -6,6 +6,7 @@
 package org.lamop.riche.dao;
 
 import java.util.List;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -13,14 +14,24 @@ import java.util.List;
  * @param <T>
  */
 public interface DAOGenericIFS<T> {
-    
-    
+
     public T getEntity(Long id);
+
     public void addEntity(T obj);
+
     public void removeEntity(T obj);
+
     public List<T> getAllEntities();
+
     public T find(Long id);
+
     public T update(T obj);
+
+    public List<T> find(String arg);
     
+    public EntityManager getEm() ;
+    public void setEm(EntityManager em);
     
+    public void initEm();
+
 }

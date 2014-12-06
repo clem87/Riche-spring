@@ -5,12 +5,16 @@
  */
 package org.lamop.riche.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  *
@@ -18,6 +22,7 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class RelationWorkSource implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,15 +35,19 @@ public class RelationWorkSource implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    @OneToOne
+
+    @JsonBackReference("workrelation")
+    @OneToOne(targetEntity = WorkEntity.class)
+//    @Cascade(CascadeType.MERGE)
     WorkEntity workEntity;
-    
-    @OneToOne
+
+    @JsonBackReference("sourcerelation")
+//    @Cascade(CascadeType.MERGE)
+    @OneToOne(targetEntity = Source.class)
     Source source;
-    
+
     String extract;
-    
+
     String note;
 
     @Override
@@ -99,6 +108,6 @@ public class RelationWorkSource implements Serializable {
     }
     
     
-    
-    
+
+
 }

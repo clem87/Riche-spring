@@ -14,6 +14,13 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 
     
     
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
+        <property name="datasource" ref="dataSource" />
+
+</bean>
+
+<tx:annotation-driven transaction-manager="txManager"/>
+    
 
     <!--bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
@@ -40,11 +47,11 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     </bean>-->
     
     
-    <context:annotation-config/>
+<!--    <context:annotation-config/>
     
     <bean id="emf" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
         <property name="persistenceUnitName" value="myPersistenceUnit"/>
-    </bean>
+    </bean>-->
    
    
     <bean id="daoWork" class="org.lamop.riche.dao.DAOWorkImpl">
@@ -55,6 +62,18 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean id="daoPerson" class ="org.lamop.riche.dao.DAOPersonImpl">
         <property name="emf" ref="emf" />
     </bean>
+    
+    <bean id="daoTheme" class="org.lamop.riche.dao.DAOThemeImpl">
+        <property name="emf" ref="emf" />
+    </bean>
+    
+    <bean id="daoOrigine" class="org.lamop.riche.dao.DAOOrigineImpl">
+        <property name="emf" ref="emf" />
+    </bean>
+    
+    <bean id="daoSource" class="org.lamop.riche.dao.DAOSourceImpl">
+        <property name="emf" ref="emf" />
+    </bean>
    
    
    
@@ -63,11 +82,24 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean id="serviceWork" class="org.lamop.riche.services.WorkServiceImpl">
         <property name="dao" ref="daoWork" />
         <property name="daoPerson" ref="daoPerson" />
+        <property name="daoSource" ref="daoSource" />
        
     </bean>
     <bean id="servicePerson" class="org.lamop.riche.services.AuthorServiceImpl">
-        <property name="dao" ref="daoPerson"></property> 
+        <property name="dao" ref="daoPerson" />
     </bean>
-   
-   
+    
+    <bean id="serviceTheme" class="org.lamop.riche.services.ThemeServiceImpl">
+        <property name="dao" ref="daoTheme" />
+        
+    </bean>
+    
+    <bean id="serviceOrigine" class="org.lamop.riche.services.OrigineServiceImpl">
+        <property name="dao" ref="daoOrigine" />
+    </bean>
+    
+    <bean id="serviceSource" class="org.lamop.riche.services.SourceServiceImpl">
+        <property name="dao" ref="daoSource" />
+        
+    </bean>
 </beans>

@@ -5,7 +5,10 @@
  */
 package org.lamop.riche.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +16,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  *
@@ -21,8 +27,13 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class Source implements Serializable {
-    @OneToOne(mappedBy = "source")
-    private RelationWorkSource relationWorkSource;
+    
+    
+//    @JsonIgnore
+    @OneToMany
+    @Cascade(CascadeType.ALL)
+    @JsonManagedReference("sourcerelation")
+    private List<RelationWorkSource> relationWorkSource =new ArrayList<>();
 
 //    private static final long serialVersionUID = 1L;
     @Id
@@ -57,8 +68,9 @@ public class Source implements Serializable {
         return id;
     }
 
-    @ManyToMany(mappedBy = "sources")
-    private List<WorkEntity> works;
+//    @JsonIgnore
+//    @ManyToMany(mappedBy = "sources")
+//    private List<WorkEntity> works;
 
     public void setId(Long id) {
         this.id = id;
@@ -89,13 +101,7 @@ public class Source implements Serializable {
         return "org.lamop.riche.model.Source[ id=" + id + " ]";
     }
 
-    public RelationWorkSource getRelationWorkSource() {
-        return relationWorkSource;
-    }
 
-    public void setRelationWorkSource(RelationWorkSource relationWorkSource) {
-        this.relationWorkSource = relationWorkSource;
-    }
 
     public String getTitle() {
         return title;
@@ -185,14 +191,31 @@ public class Source implements Serializable {
         this.num = num;
     }
 
-    public List<WorkEntity> getWorks() {
-        return works;
+//    public List<WorkEntity> getWorks() {
+//        return works;
+//    }
+//
+//    public void setWorks(List<WorkEntity> works) {
+//        this.works = works;
+//    }
+
+    public List<RelationWorkSource> getRelationWorkSource() {
+        return relationWorkSource;
     }
 
-    public void setWorks(List<WorkEntity> works) {
-        this.works = works;
+    public void setRelationWorkSource(List<RelationWorkSource> relationWorkSource) {
+        this.relationWorkSource = relationWorkSource;
     }
     
+    
+    public synchronized void addRelationWorkSource(RelationWorkSource r){
+        
+        this.relationWorkSource.add(r);
+        
+    }
+    public synchronized void removeRelationWorkSource(RelationWorkSource r){
+        this.relationWorkSource.remove(r);
+    }
     
 
 }

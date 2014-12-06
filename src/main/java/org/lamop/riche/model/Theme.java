@@ -5,6 +5,8 @@
  */
 package org.lamop.riche.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -20,6 +22,8 @@ import javax.persistence.OneToMany;
 @Entity
 public class Theme implements Serializable {
     @OneToMany(mappedBy = "theme")
+//    @JsonIgnore
+    @JsonBackReference("worktheme")
     private List<WorkEntity> works;
     
     private static final long serialVersionUID = 1L;

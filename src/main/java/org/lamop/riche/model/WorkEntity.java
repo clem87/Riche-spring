@@ -6,7 +6,9 @@
 package org.lamop.riche.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
@@ -16,16 +18,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  *
  * @author clril
  */
 @Entity
+//@JsonSerialize(using = WorkEntitySerializer.class)
 public class WorkEntity implements Serializable {
-    @OneToOne(mappedBy = "workEntity")
-    private RelationWorkSource relationWorkSource;
+    
+    
+  
+    @OneToMany()
+    @Cascade(CascadeType.ALL)
+//    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonManagedReference("workrelation")
+    private List<RelationWorkSource> relationWorkSource = new ArrayList<>();
 
     @JsonCreator
     public WorkEntity() {
@@ -52,8 +64,17 @@ public class WorkEntity implements Serializable {
     @OneToOne
     protected Origin origin;
 
-    @ManyToMany
-    protected List<Source> sources;
+//    @ManyToMany
+//    protected List<Source> sources= new ArrayList<>();
+    
+    
+    protected Date exactDate;
+    
+    
+    protected Integer centuryMax;
+    
+    protected Integer centuryMin;
+    
 
     /**
      * Get the value of title
@@ -97,13 +118,13 @@ public class WorkEntity implements Serializable {
         this.origin = origin;
     }
 
-    public List<Source> getSources() {
-        return sources;
-    }
-
-    public void setSources(List<Source> sources) {
-        this.sources = sources;
-    }
+//    public List<Source> getSources() {
+//        return sources;
+//    }
+//
+//    public void setSources(List<Source> sources) {
+//        this.sources = sources;
+//    }
 
     public Long getId() {
         return id;
@@ -113,12 +134,41 @@ public class WorkEntity implements Serializable {
         this.id = id;
     }
 
+    public Date getExactDate() {
+        return exactDate;
+    }
+
+    public void setExactDate(Date exactDate) {
+        this.exactDate = exactDate;
+    }
+
+    public Integer getCenturyMax() {
+        return centuryMax;
+    }
+
+    public void setCenturyMax(Integer centuryMax) {
+        this.centuryMax = centuryMax;
+    }
+
+    public Integer getCenturyMin() {
+        return centuryMin;
+    }
+
+    public void setCenturyMin(Integer centuryMin) {
+        this.centuryMin = centuryMin;
+    }
+    
+    
+    
+    
+
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
+    
 
     @Override
     public boolean equals(Object object) {
@@ -138,4 +188,21 @@ public class WorkEntity implements Serializable {
         return "org.lamop.riche.model.Work[ id=" + id + " ]";
     }
 
+    public List<RelationWorkSource> getRelationWorkSource() {
+        return relationWorkSource;
+    }
+
+    public void setRelationWorkSource(List<RelationWorkSource> relationWorkSource) {
+        this.relationWorkSource = relationWorkSource;
+    }
+
+    
+    public synchronized void removeRelationWorkSource(RelationWorkSource relation){
+        this.relationWorkSource.remove(relation);
+        
+    }
+    public synchronized void addRelationWorkSource(RelationWorkSource relation){
+        this.relationWorkSource.add(relation);
+    }
+    
 }

@@ -3,18 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.lamop.riche.dao;
+package org.lamop.riche.services;
 
-import org.lamop.riche.model.WorkEntity;
+import java.util.List;
+import org.lamop.riche.model.Source;
 
 /**
  *
  * @author clril
  */
-public interface DAOWorkIFS extends DAOGenericIFS<WorkEntity>{
+public interface SourceServiceIfs extends ServiceCRUDIfs<Source>{
     
-    
-    public void testSpeWork(WorkEntity w);
-    
+    List<Source> find(String arg);
     
 }

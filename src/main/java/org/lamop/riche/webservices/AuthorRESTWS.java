@@ -11,6 +11,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.lamop.riche.model.Person;
+import org.lamop.riche.model.WorkEntity;
 import org.lamop.riche.services.PersonServiceIfs;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -39,6 +40,18 @@ public class AuthorRESTWS {
     public @ResponseBody List<Person> queryAuthor(@RequestParam("userselection") String arg){
          List<Person> l = servicePerson.find(arg);
         return l;
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/testcreate")
+    public void testcreate(){
+        System.out.println("OUI");
+        Person wTest = new Person();
+        wTest.setLabel("John Steinbeck");
+        
+        Person p2 = new Person();
+        p2.setLabel("William Faulkner");
+        servicePerson.addEntity(wTest);
+        servicePerson.addEntity(p2);
     }
     
 }

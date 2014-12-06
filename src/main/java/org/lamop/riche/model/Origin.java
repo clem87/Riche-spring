@@ -5,6 +5,7 @@
  */
 package org.lamop.riche.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -20,6 +21,7 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class Origin implements Serializable {
+    @JsonBackReference("origin")
     @OneToOne(mappedBy = "origin")
     private WorkEntity work;
 

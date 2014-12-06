@@ -5,16 +5,16 @@
  */
 package org.lamop.riche.dao;
 
-import org.lamop.riche.model.WorkEntity;
+import org.lamop.riche.model.RelationWorkSource;
+import org.lamop.riche.model.Source;
 
 /**
  *
  * @author clril
  */
-public interface DAOWorkIFS extends DAOGenericIFS<WorkEntity>{
-    
-    
-    public void testSpeWork(WorkEntity w);
+public interface DAOSourceIfs extends DAOGenericIFS<Source>{
+
+    public void addRelation(RelationWorkSource get);
     
     
 }

@@ -37,17 +37,13 @@ public class DAOWorkImpl extends DAOGenericImpl<WorkEntity> implements DAOWorkIF
         return em.find(WorkEntity.class, id);
     }
 
+    
     @Override
-    public WorkEntity update(WorkEntity obj) {
+        public WorkEntity getEntity(Long id) {
         initEm();
-        if (!em.getTransaction().isActive()) {
-            em.getTransaction().begin();
-        }
-        em.merge(obj);
-        em.getTransaction().commit();
-        return obj;
-
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+      
+        return (WorkEntity) em.find(WorkEntity.class, id);
     }
 
 }

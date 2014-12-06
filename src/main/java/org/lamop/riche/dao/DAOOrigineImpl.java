@@ -6,29 +6,24 @@
 package org.lamop.riche.dao;
 
 import java.util.List;
-import javax.persistence.Query;
+import org.lamop.riche.model.Origin;
 import org.lamop.riche.model.Person;
 
 /**
  *
  * @author clril
  */
-public class DAOPersonImpl extends DAOGenericImpl<Person> implements DAOPersonIfs{
-    
-//    private static String REQ_FIND = ""
-    
-    public List<Person> find(String arg){
-        
-        initEm();
-        Query q = em.createQuery("SELECT p FROM Person p WHERE p.label LIKE :label");
-        
-        q.setParameter("label", "%"+arg+"%");
-        return q.getResultList();
-        
-    }
+public class DAOOrigineImpl extends DAOGenericImpl<Origin> implements DAOOrigineIFS{
 
     @Override
-    public Person find(Long id) {
+    public Origin find(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
+
+    @Override
+    public List<Origin> find(String arg) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

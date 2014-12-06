@@ -6,40 +6,34 @@
 package org.lamop.riche.services;
 
 import java.util.List;
-import org.lamop.riche.dao.DAOPersonIfs;
-import org.lamop.riche.model.Person;
+import org.lamop.riche.dao.DAOThemeIfs;
+import org.lamop.riche.model.Theme;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author clril
  */
-public class AuthorServiceImpl implements PersonServiceIfs{
+public class ThemeServiceImpl implements ThemeServiceIfs{
 
-  @Autowired
-    DAOPersonIfs dao;
+    @Autowired
+    DAOThemeIfs dao;
     
-
     @Override
-    public List<Person> find(String arg) {
-        return dao.find(arg);
+    public List<Theme> getAll() {
+        return dao.getAllEntities();
         
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Person> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void addEntity(Person entity) {
+    public void addEntity(Theme entity) {
         dao.addEntity(entity);
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void removeEntity(Person entity) {
+    public void removeEntity(Theme entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -49,21 +43,25 @@ public class AuthorServiceImpl implements PersonServiceIfs{
     }
 
     @Override
-    public void modifyEntity(Person entity) {
+    public void modifyEntity(Theme entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public DAOPersonIfs getDao() {
-        return dao;
-    }
-
-    public void setDao(DAOPersonIfs dao) {
-        this.dao = dao;
     }
 
     @Override
-    public Person getEntity(Long id) {
+    public Theme getEntity(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    public DAOThemeIfs getDao() {
+        return dao;
+    }
+
+    public void setDao(DAOThemeIfs dao) {
+        this.dao = dao;
+    }
+    
+    
+    
+    
     
 }

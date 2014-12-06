@@ -5,16 +5,14 @@
  */
 package org.lamop.riche.dao;
 
-import org.lamop.riche.model.WorkEntity;
+import org.lamop.riche.model.Origin;
 
 /**
  *
  * @author clril
  */
-public interface DAOWorkIFS extends DAOGenericIFS<WorkEntity>{
+public interface DAOOrigineIFS extends DAOGenericIFS<Origin>{
     
-    
-    public void testSpeWork(WorkEntity w);
     
     
 }
