@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -22,6 +24,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Origin implements Serializable {
     @JsonBackReference("origin")
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToOne(mappedBy = "origin")
     private WorkEntity work;
 
@@ -44,6 +47,7 @@ public class Origin implements Serializable {
     
     
     @OneToMany
+            @LazyCollection(LazyCollectionOption.FALSE)
     List<SecondaryName> secondaryNames;
     
     

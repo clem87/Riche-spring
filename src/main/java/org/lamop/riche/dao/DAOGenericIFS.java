@@ -23,15 +23,15 @@ public interface DAOGenericIFS<T> {
 
     public List<T> getAllEntities();
 
-    public T find(Long id);
+//    public T find(Long id);
 
     public T update(T obj);
 
     public List<T> find(String arg);
     
-    public EntityManager getEm() ;
-    public void setEm(EntityManager em);
-    
-    public void initEm();
+//    public EntityManager getEm() ;
+//    public void setEm(EntityManager em);
+//    
+//    public void initEm();
 
 }

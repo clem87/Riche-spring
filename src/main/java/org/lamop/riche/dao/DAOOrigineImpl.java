@@ -15,10 +15,7 @@ import org.lamop.riche.model.Person;
  */
 public class DAOOrigineImpl extends DAOGenericImpl<Origin> implements DAOOrigineIFS{
 
-    @Override
-    public Origin find(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+  
 
 
 

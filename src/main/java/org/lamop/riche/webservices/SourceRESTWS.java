@@ -34,14 +34,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class SourceRESTWS {
 
     @Autowired
-    SourceServiceIfs service;
+    SourceServiceIfs serviceSource;
 
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", value = "/getall")
     @Produces(MediaType.APPLICATION_JSON)
     @ResponseBody
     public List<Source> getAll() {
 
-        return service.getAll();
+        return serviceSource.getAll();
 //        return null;
     }
 
@@ -50,7 +50,7 @@ public class SourceRESTWS {
     @Produces(MediaType.APPLICATION_JSON)
     public @ResponseBody
     List<Source> queryAuthor(@RequestParam("userselection") String arg) {
-        List<Source> l = service.find(arg);
+        List<Source> l = serviceSource.find(arg);
         return l;
     }
 
@@ -59,7 +59,7 @@ public class SourceRESTWS {
     public @ResponseBody
     Source create(@RequestBody Source source) {
         System.out.println("ADD source");
-        service.addEntity(source);
+        serviceSource.addEntity(source);
         return source;
     }
 
@@ -67,7 +67,7 @@ public class SourceRESTWS {
     public @ResponseBody
     Source get(@PathParam("id") int id) {
         System.out.println("GET ID " + id);
-        return service.getEntity(new Long(id));
+        return serviceSource.getEntity(new Long(id));
     }
 
     @RequestMapping(method = RequestMethod.PUT, headers = "Accept=application/json")
@@ -75,7 +75,7 @@ public class SourceRESTWS {
     Source update(@PathParam("id") int id, @RequestBody Source work) {
         System.out.println("ID " + id);
         System.out.println("Modify " + work);
-        service.modifyEntity(work);
+        serviceSource.modifyEntity(work);
         return work;
     }
 
@@ -84,7 +84,7 @@ public class SourceRESTWS {
     @Produces(MediaType.APPLICATION_JSON)
     @RequestMapping(method = RequestMethod.DELETE)
     public void remove(@PathParam("id") int id) {
-        service.removeEntity(new Long(id));
+        serviceSource.removeEntity(new Long(id));
     }
 
 }

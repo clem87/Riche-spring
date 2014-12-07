@@ -14,12 +14,55 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 
     
     
-    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
-        <property name="datasource" ref="dataSource" />
+  
 
-</bean>
+<!-- SessionFactory, DataSource, etc. omitted -->
 
-<tx:annotation-driven transaction-manager="txManager"/>
+
+<bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/riche"/>
+        <property name="username" value="root"/>
+        <property name="password" value="Sidll4LP"/>
+    </bean>
+
+    <!--<bean id="mySessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">-->
+    <bean id="mySessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="myDataSource"/>
+        <property name="annotatedClasses">
+            <list>
+                <value>org.lamop.riche.model.Source</value>
+                <value>org.lamop.riche.model.WorkEntity</value>
+                <value>org.lamop.riche.model.BibliographicType</value>
+                <value>org.lamop.riche.model.BibliograficAuthor</value>
+                <value>org.lamop.riche.model.Person</value>
+                <value>org.lamop.riche.model.RelationWorkSource</value>
+                <value>org.lamop.riche.model.Origin</value>
+                <value>org.lamop.riche.model.SecondaryName</value>
+                <value>org.lamop.riche.model.AuthorityNotice</value>
+                <value>org.lamop.riche.model.Theme</value>
+                <value>org.lamop.riche.model.AuthorityOrganism</value>
+            </list>
+        </property>
+        
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <!--<prop key="hibernate.current_session_context_class">thread</prop>-->
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+        
+    </bean>
+    
+
+    <bean id="transactionManager"
+            class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="mySessionFactory"/>
+    </bean>
+
+    <tx:annotation-driven/>
+    
     
 
     <!--bean id="propertyConfigurer"
@@ -47,34 +90,46 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     </bean>-->
     
     
-<!--    <context:annotation-config/>
-    
-    <bean id="emf" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
+    <!--    <context:annotation-config/>
+    -->
+    <!--    <bean id="emf" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
         <property name="persistenceUnitName" value="myPersistenceUnit"/>
     </bean>-->
    
    
     <bean id="daoWork" class="org.lamop.riche.dao.DAOWorkImpl">
-        <property name="emf" ref="emf" />
+        <!--<property name="emf" ref="emf" />-->
+        <property name="sessionFactory" ref="mySessionFactory" />
        
     </bean>
 
     <bean id="daoPerson" class ="org.lamop.riche.dao.DAOPersonImpl">
-        <property name="emf" ref="emf" />
+        <!--<property name="emf" ref="emf" />-->
+        <property name="sessionFactory" ref="mySessionFactory" />
     </bean>
     
     <bean id="daoTheme" class="org.lamop.riche.dao.DAOThemeImpl">
-        <property name="emf" ref="emf" />
+        <!--<property name="emf" ref="emf" />-->
+        <property name="sessionFactory" ref="mySessionFactory" />
     </bean>
     
     <bean id="daoOrigine" class="org.lamop.riche.dao.DAOOrigineImpl">
-        <property name="emf" ref="emf" />
+        <!--<property name="emf" ref="emf" />-->
+        <property name="sessionFactory" ref="mySessionFactory" />
     </bean>
     
     <bean id="daoSource" class="org.lamop.riche.dao.DAOSourceImpl">
-        <property name="emf" ref="emf" />
+        <!--<property name="emf" ref="emf" />-->
+        <property name="sessionFactory" ref="mySessionFactory" />
     </bean>
    
+    <bean id="daoRelationWorkSource" class="org.lamop.riche.dao.DAORelationWorkSourceImpl">
+        <property name="sessionFactory" ref="mySessionFactory" />
+    </bean>
+    
+    <bean id="daoBibliographicType" class="org.lamop.riche.dao.DAOBibliographicTypeImpl">
+         <property name="sessionFactory" ref="mySessionFactory" />
+    </bean>
    
    
     <!--Definition des services-->
@@ -83,10 +138,16 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <property name="dao" ref="daoWork" />
         <property name="daoPerson" ref="daoPerson" />
         <property name="daoSource" ref="daoSource" />
+        <property name="daoRelationWorkSource" ref="daoRelationWorkSource" />
+       
        
     </bean>
+    
+    
+    
     <bean id="servicePerson" class="org.lamop.riche.services.AuthorServiceImpl">
         <property name="dao" ref="daoPerson" />
+       
     </bean>
     
     <bean id="serviceTheme" class="org.lamop.riche.services.ThemeServiceImpl">
@@ -100,6 +161,12 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     
     <bean id="serviceSource" class="org.lamop.riche.services.SourceServiceImpl">
         <property name="dao" ref="daoSource" />
-        
+        <property name="daoRelationWorkSource" ref="daoRelationWorkSource" />
+        <property name="daoWork" ref="daoWork" />
+    </bean>
+    
+    
+    <bean id="serviceBibliographicType" class="org.lamop.riche.services.BibliographicTypeServiceImpl">
+        <property name="dao"  ref="daoBibliographicType"/>
     </bean>
 </beans>

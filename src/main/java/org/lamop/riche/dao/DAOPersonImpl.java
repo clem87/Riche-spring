@@ -7,6 +7,8 @@ package org.lamop.riche.dao;
 
 import java.util.List;
 import javax.persistence.Query;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.lamop.riche.model.Person;
 
 /**
@@ -17,20 +19,17 @@ public class DAOPersonImpl extends DAOGenericImpl<Person> implements DAOPersonIf
     
 //    private static String REQ_FIND = ""
     
+    @Override
     public List<Person> find(String arg){
         
-        initEm();
-        Query q = em.createQuery("SELECT p FROM Person p WHERE p.label LIKE :label");
-        
-        q.setParameter("label", "%"+arg+"%");
-        return q.getResultList();
-        
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Person.class);
+        criteria.add(Restrictions.like("label", "%"+arg+"%"));
+        List resu = criteria.list();
+        return resu;
+       
     }
 
-    @Override
-    public Person find(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
 
 
     

@@ -18,6 +18,12 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.lamop.riche.model.Person;
 import org.lamop.riche.model.WorkEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +31,7 @@ import org.springframework.core.GenericTypeResolver;
 import org.springframework.stereotype.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -37,9 +44,12 @@ public abstract class DAOGenericImpl<T> implements DAOGenericIFS<T> {
     Logger log = LoggerFactory.getLogger(DAOGenericImpl.class);
 
     @Autowired
-    protected EntityManagerFactory emf;
+    protected SessionFactory sessionFactory;
 
-    protected EntityManager em;
+//    @Autowired
+//    protected EntityManagerFactory emf;
+//
+//    protected EntityManager em;
 
     private Class<T> persistentClass;
 
@@ -48,8 +58,8 @@ public abstract class DAOGenericImpl<T> implements DAOGenericIFS<T> {
     }
 
     public T getEntity(Long id) {
-        initEm();
-        return em.find(persistentClass, id);
+       return (T) sessionFactory.getCurrentSession().get(persistentClass, id);
+        
     }
 
     @PersistenceContext
@@ -59,86 +69,84 @@ public abstract class DAOGenericImpl<T> implements DAOGenericIFS<T> {
         return null;
     }
 
+    @Transactional
     @Override
     public void addEntity(T obj) throws EntityExistsException, IllegalArgumentException, TransactionRequiredException {
 
-        try {
-            initEm();
 
-            if (!em.getTransaction().isActive()) {
-                em.getTransaction().begin();
-            }
-            em.persist(obj);
-            
-            em.getTransaction().commit();
+        sessionFactory.getCurrentSession().persist(obj);
+ 
+       
+//        tr.commit();
 
-        } catch (Exception e) {
-            log.error("Error during adding ", e);
-            throw e;
-        } finally {
-            finallyCloseEmTransaction(em);
-        }
+//        try {
+//            initEm();
+//
+//            if (!em.getTransaction().isActive()) {
+//                em.getTransaction().begin();
+//            }
+//            em.persist(obj);
+//            
+//            em.getTransaction().commit();
+//
+//        } catch (Exception e) {
+//            log.error("Error during adding ", e);
+//            throw e;
+//        } finally {
+//            finallyCloseEmTransaction(em);
+//        }
     }
 
-    ;
     @Override
     public void removeEntity(T obj) {
-
-        initEm();
-        try {
-            if (!em.getTransaction().isActive()) {
-                em.getTransaction().begin();
-            }
-
-            em.remove(obj);
-            em.getTransaction().commit();
-
-        } catch (Exception e) {
-            log.error("Error during removing", e);
-        } finally {
-            finallyCloseEmTransaction(em);
-        }
+        sessionFactory.getCurrentSession().delete(obj);
     }
 
-    ;
+    
+    @Transactional
+    @Override
     public List<T> getAllEntities() {
-//        Query q = em.createQuery(null);
-        initEm();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<T> query = cb.createQuery(persistentClass);
-        Root<T> root = query.from(persistentClass);
-        query.select(root);
-        Query q = em.createQuery(query);
-        return q.getResultList();
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(persistentClass);
+        return criteria.list();
+
+//        initEm();
+//        CriteriaBuilder cb = em.getCriteriaBuilder();
+//        CriteriaQuery<T> query = cb.createQuery(persistentClass);
+//        Root<T> root = query.from(persistentClass);
+//        query.select(root);
+//        Query q = em.createQuery(query);
+//        return q.getResultList();
     }
 
     @Override
     public T update(T obj) throws IllegalArgumentException, TransactionRequiredException {
 
-        try {
-            initEm();
-            if(!em.getTransaction().isActive()){
-                em.getTransaction().begin();
-            }
-            
-            em.merge(obj);
-            em.getTransaction().commit();
-            return obj;
+        return (T) sessionFactory.getCurrentSession().merge(obj);
 
-        } catch (Exception e) {
-            log.error("Erreur during update", e);
-            throw e;
-        } finally {
-            finallyCloseEmTransaction(em);
-        }
+//        try {
+//            initEm();
+//            if(!em.getTransaction().isActive()){
+//                em.getTransaction().begin();
+//            }
+//            
+//            em.merge(obj);
+//            em.getTransaction().commit();
+//            return obj;
+//
+//        } catch (Exception e) {
+//            log.error("Erreur during update", e);
+//            throw e;
+//        } finally {
+//            finallyCloseEmTransaction(em);
+//        }
     }
 
-    public void initEm() {
-        if (em == null) {
-            em = emf.createEntityManager();
-        }
-
-    }
+//    public void initEm() {
+//        if (em == null) {
+//            em = emf.createEntityManager();
+//        }
+//
+//    }
 
     public EntityManager getEntityManager() {
         return entityManager;
@@ -148,26 +156,43 @@ public abstract class DAOGenericImpl<T> implements DAOGenericIFS<T> {
         this.entityManager = entityManager;
     }
 
-    public EntityManagerFactory getEmf() {
-        return emf;
-    }
+//    public EntityManagerFactory getEmf() {
+//        return emf;
+//    }
+//
+//    @PersistenceUnit
+//    public void setEmf(EntityManagerFactory emf) {
+//        this.emf = emf;
+//    }
 
-    @PersistenceUnit
-    public void setEmf(EntityManagerFactory emf) {
-        this.emf = emf;
-    }
+//    public EntityManager getEm() {
+//        return em;
+//    }
 
-    public EntityManager getEm() {
-        return em;
-    }
+//    public void setEm(EntityManager em) {
+//        this.em = em;
+//    }
 
-    public void setEm(EntityManager em) {
-        this.em = em;
-    }
+//    @Override
+//    public T find(Long id){
+//        
+//        
+//        return null;
+//    };
 
+    
+    
+    
     @Override
     public List<T> find(String arg) {
-        throw new UnsupportedOperationException();
+       Criteria criteria = sessionFactory.getCurrentSession().createCriteria(persistentClass);
+        criteria.add(Restrictions.like("label", "%"+arg+"%"));
+        return criteria.list();
+        
+        
+//        sessionFactory.getCurrentSession().create
+//        
+//        throw new UnsupportedOperationException();
 //        return null;
     }
 
@@ -176,6 +201,14 @@ public abstract class DAOGenericImpl<T> implements DAOGenericIFS<T> {
             em.getTransaction().rollback();
         }
 
+    }
+
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
 }

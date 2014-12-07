@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +21,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -30,7 +33,8 @@ public class Source implements Serializable {
     
     
 //    @JsonIgnore
-    @OneToMany
+    @OneToMany()
+      @LazyCollection(LazyCollectionOption.FALSE)
     @Cascade(CascadeType.ALL)
     @JsonManagedReference("sourcerelation")
     private List<RelationWorkSource> relationWorkSource =new ArrayList<>();
@@ -44,8 +48,9 @@ public class Source implements Serializable {
     
     protected String articleTitle;
     
-    @ManyToMany
-    protected List<BibliograficAuthor> authors;
+    @ManyToMany()
+      @LazyCollection(LazyCollectionOption.FALSE)
+    protected List<BibliograficAuthor> authors = new ArrayList<>();
     
     @ManyToOne
     protected BibliographicType bibliographicType;

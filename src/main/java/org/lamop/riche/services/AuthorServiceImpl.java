@@ -9,6 +9,7 @@ import java.util.List;
 import org.lamop.riche.dao.DAOPersonIfs;
 import org.lamop.riche.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -20,6 +21,7 @@ public class AuthorServiceImpl implements PersonServiceIfs{
     DAOPersonIfs dao;
     
 
+  @Transactional
     @Override
     public List<Person> find(String arg) {
         return dao.find(arg);
@@ -32,6 +34,7 @@ public class AuthorServiceImpl implements PersonServiceIfs{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+      @Transactional
     @Override
     public void addEntity(Person entity) {
         dao.addEntity(entity);
@@ -61,6 +64,7 @@ public class AuthorServiceImpl implements PersonServiceIfs{
         this.dao = dao;
     }
 
+      @Transactional
     @Override
     public Person getEntity(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

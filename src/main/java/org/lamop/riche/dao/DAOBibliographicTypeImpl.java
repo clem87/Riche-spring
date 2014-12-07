@@ -5,14 +5,13 @@
  */
 package org.lamop.riche.dao;
 
-import java.util.List;
-import org.lamop.riche.model.Person;
+import org.lamop.riche.model.BibliographicType;
+import org.lamop.riche.services.BibliographicTypeServiceIfs;
 
 /**
  *
  * @author clril
  */
-public interface DAOPersonIfs extends DAOGenericIFS<Person>{
-    @Override
-    public List<Person> find(String arg);
+public class DAOBibliographicTypeImpl extends DAOGenericImpl<BibliographicType> implements DAOBibliographicTypeIfs{
+    
 }

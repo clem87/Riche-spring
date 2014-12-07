@@ -23,27 +23,13 @@ public class DAOWorkImpl extends DAOGenericImpl<WorkEntity> implements DAOWorkIF
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public List<WorkEntity> getAllEntities() {
-        initEm();
-        Query q = em.createQuery("SELECT w FROM WorkEntity w");
-        return q.getResultList();
-//        return super.getAllEntities(); //To change body of generated methods, choose Tools | Templates.
-    }
+//    @Override
+//    public List<WorkEntity> getAllEntities() {
+//        initEm();
+//        Query q = em.createQuery("SELECT w FROM WorkEntity w");
+//        return q.getResultList();
+////        return super.getAllEntities(); //To change body of generated methods, choose Tools | Templates.
+//    }
 
-    @Override
-    public WorkEntity find(Long id) {
-        initEm();
-        return em.find(WorkEntity.class, id);
-    }
-
-    
-    @Override
-        public WorkEntity getEntity(Long id) {
-        initEm();
-        
-      
-        return (WorkEntity) em.find(WorkEntity.class, id);
-    }
 
 }

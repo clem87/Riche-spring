@@ -6,13 +6,15 @@
 package org.lamop.riche.dao;
 
 import java.util.List;
-import org.lamop.riche.model.Person;
+import org.lamop.riche.model.RelationWorkSource;
+import org.lamop.riche.model.WorkEntity;
 
 /**
  *
  * @author clril
  */
-public interface DAOPersonIfs extends DAOGenericIFS<Person>{
-    @Override
-    public List<Person> find(String arg);
+public interface DAORelationWorkSourceIfs extends DAOGenericIFS<RelationWorkSource>{
+
+    public List<RelationWorkSource> findRelationForSource(WorkEntity w);
+    
 }

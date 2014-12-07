@@ -6,8 +6,8 @@
 package org.lamop.riche.services;
 
 import java.util.List;
-import org.lamop.riche.dao.DAOThemeIfs;
-import org.lamop.riche.model.Theme;
+import org.lamop.riche.dao.DAOBibliographicTypeIfs;
+import org.lamop.riche.model.BibliographicType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,60 +15,53 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author clril
  */
-public class ThemeServiceImpl implements ThemeServiceIfs{
+public class BibliographicTypeServiceImpl implements BibliographicTypeServiceIfs {
 
     @Autowired
-    DAOThemeIfs dao;
-    
+    DAOBibliographicTypeIfs dao;
+
     @Transactional
     @Override
-    public List<Theme> getAll() {
+    public List<BibliographicType> getAll() {
         return dao.getAllEntities();
-        
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Transactional
     @Override
-    public void addEntity(Theme entity) {
+    public void addEntity(BibliographicType entity) {
         dao.addEntity(entity);
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Transactional
     @Override
-    public void removeEntity(Theme entity) {
+    public void removeEntity(BibliographicType entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Transactional
     @Override
     public void removeEntity(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Transactional
     @Override
-    public void modifyEntity(Theme entity) {
+    public void modifyEntity(BibliographicType entity) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Transactional
     @Override
-    public Theme getEntity(Long id) {
+    public BibliographicType getEntity(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public DAOThemeIfs getDao() {
+    public DAOBibliographicTypeIfs getDao() {
         return dao;
     }
 
-    public void setDao(DAOThemeIfs dao) {
+    public void setDao(DAOBibliographicTypeIfs dao) {
         this.dao = dao;
     }
     
     
     
-    
-    
+
 }

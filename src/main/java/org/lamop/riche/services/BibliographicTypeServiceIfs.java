@@ -5,17 +5,15 @@
  */
 package org.lamop.riche.services;
 
-import java.util.List;
-import org.lamop.riche.model.Source;
+import org.lamop.riche.dao.DAOBibliographicTypeIfs;
+import org.lamop.riche.model.BibliographicType;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author clril
  */
-public interface SourceServiceIfs extends ServiceCRUDIfs<Source>{
+public interface BibliographicTypeServiceIfs extends ServiceCRUDIfs<BibliographicType>{
     
-    List<Source> find(String arg);
-    
-   
-    
+
 }

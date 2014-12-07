@@ -13,10 +13,7 @@ import org.lamop.riche.model.Theme;
  */
 public class DAOThemeImpl  extends DAOGenericImpl<Theme> implements DAOThemeIfs{
 
-    @Override
-    public Theme find(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
 
 
     

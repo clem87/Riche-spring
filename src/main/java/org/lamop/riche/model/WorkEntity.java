@@ -22,6 +22,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -33,10 +35,11 @@ public class WorkEntity implements Serializable {
     
     
   
-    @OneToMany()
+    @OneToMany
     @Cascade(CascadeType.ALL)
 //    @LazyCollection(LazyCollectionOption.FALSE)
     @JsonManagedReference("workrelation")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<RelationWorkSource> relationWorkSource = new ArrayList<>();
 
     @JsonCreator
@@ -55,7 +58,8 @@ public class WorkEntity implements Serializable {
 //    @JsonSerialize
     protected String title;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany()
+    @LazyCollection(LazyCollectionOption.FALSE)
     protected List<Person> authors = new ArrayList<>();
 
     @ManyToOne
