@@ -37,7 +37,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Source implements Serializable {
 
     
-    @OneToMany(cascade = javax.persistence.CascadeType.ALL, orphanRemoval = true)
+    @OneToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<RelationWorkSource> relationWorkSource = new ArrayList<>();
 

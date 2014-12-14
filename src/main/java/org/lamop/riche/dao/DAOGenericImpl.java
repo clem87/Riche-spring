@@ -118,10 +118,13 @@ public abstract class DAOGenericImpl<T> implements DAOGenericIFS<T> {
 //        return q.getResultList();
     }
 
+    @Transactional
     @Override
     public T update(T obj) throws IllegalArgumentException, TransactionRequiredException {
 
-        return (T) sessionFactory.getCurrentSession().merge(obj);
+        Object retour = sessionFactory.getCurrentSession().merge(obj);
+        sessionFactory.getCurrentSession().flush();
+        return (T) retour;
 //        try {
 //            initEm();
 //            if(!em.getTransaction().isActive()){

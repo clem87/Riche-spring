@@ -52,7 +52,7 @@ public class WorkEntity implements Serializable {
 //    @JsonManagedReference("workrelation")
 //    @JsonSerialize(using = RelationWorkSourceSerialize.class)
 //    @JsonIdentityReference(alwaysAsId = true)
-    @OneToMany(cascade = javax.persistence.CascadeType.ALL, orphanRemoval = true)
+    @OneToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<RelationWorkSource> relationWorkSource = new ArrayList<>();
 

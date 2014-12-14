@@ -73,7 +73,6 @@ public class SourceServiceImpl implements SourceServiceIfs {
             daoRelationWorkSource.removeEntity(relation);
 
 //            daoRelationWorkSource.update(relation);
-
 //
         }
 
@@ -91,7 +90,22 @@ public class SourceServiceImpl implements SourceServiceIfs {
     @Transactional
     @Override
     public void modifyEntity(Source entity) {
-        dao.update(entity);
+
+        Source sourceExistante = dao.getEntity(entity.getId());
+        sourceExistante.setArticleTitle(entity.getArticleTitle());
+        sourceExistante.setEditor(entity.getEditor());
+        sourceExistante.setNum(entity.getNum());
+        sourceExistante.setPublisher(entity.getPublisher());
+        sourceExistante.setReleaseTown(entity.getReleaseTown());
+        sourceExistante.setReleaseYear(entity.getReleaseYear());
+        sourceExistante.setSeries(entity.getSeries());
+        sourceExistante.setTitle(entity.getTitle());
+        sourceExistante.setVolume(entity.getVolume());
+
+        sourceExistante.setAuthors(entity.getAuthors());
+        sourceExistante.setBibliographicType(entity.getBibliographicType());
+        dao.update(sourceExistante);
+
     }
 
     @Transactional

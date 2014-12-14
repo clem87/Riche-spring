@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.sound.midi.Soundbank;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -46,16 +47,16 @@ public class RelationWorkSource implements Serializable {
 //    @OneToOne(targetEntity = WorkEntity.class, cascade = CascadeType.ALL)
 //    @Cascade(CascadeType.MERGE)
 //        @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToOne()
-//    @ManyToOne
+//    @OneToOne()
+    @OneToOne(targetEntity = WorkEntity.class)
     WorkEntity workEntity;
 
 //    @JsonBackReference("sourcerelation")
 //    @Cascade(CascadeType.MERGE)
 //    @OneToOne(targetEntity = Source.class, cascade = CascadeType.ALL)
 //    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToOne()
-//                @ManyToOne
+//    @OneToOne()
+    @OneToOne(targetEntity =Source.class)
     Source source;
 
     String extract;
