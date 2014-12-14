@@ -6,10 +6,17 @@
 package org.lamop.riche.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,37 +27,37 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.swing.text.View;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.lamop.riche.model.jsonserialize.RelationWorkSourceSerialize;
 
 /**
  *
  * @author clril
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
+        property = "@id", scope = WorkEntity.class)
 //@JsonSerialize(using = WorkEntitySerializer.class)
 public class WorkEntity implements Serializable {
-    
-    
-  
-    @OneToMany
-    @Cascade(CascadeType.ALL)
-//    @LazyCollection(LazyCollectionOption.FALSE)
-    @JsonManagedReference("workrelation")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<RelationWorkSource> relationWorkSource = new ArrayList<>();
 
     @JsonCreator
     public WorkEntity() {
     }
-    
-    
-    
-    
+
+//    @Cascade(CascadeType.ALL)
+//    @JsonManagedReference("workrelation")
+//    @JsonSerialize(using = RelationWorkSourceSerialize.class)
+//    @JsonIdentityReference(alwaysAsId = true)
+    @OneToMany(cascade = javax.persistence.CascadeType.ALL, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<RelationWorkSource> relationWorkSource = new ArrayList<>();
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -70,15 +77,11 @@ public class WorkEntity implements Serializable {
 
 //    @ManyToMany
 //    protected List<Source> sources= new ArrayList<>();
-    
-    
     protected Date exactDate;
-    
-    
+
     protected Integer centuryMax;
-    
+
     protected Integer centuryMin;
-    
 
     /**
      * Get the value of title
@@ -129,7 +132,6 @@ public class WorkEntity implements Serializable {
 //    public void setSources(List<Source> sources) {
 //        this.sources = sources;
 //    }
-
     public Long getId() {
         return id;
     }
@@ -161,10 +163,6 @@ public class WorkEntity implements Serializable {
     public void setCenturyMin(Integer centuryMin) {
         this.centuryMin = centuryMin;
     }
-    
-    
-    
-    
 
     @Override
     public int hashCode() {
@@ -172,7 +170,6 @@ public class WorkEntity implements Serializable {
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
-    
 
     @Override
     public boolean equals(Object object) {
@@ -200,13 +197,19 @@ public class WorkEntity implements Serializable {
         this.relationWorkSource = relationWorkSource;
     }
 
-    
-    public synchronized void removeRelationWorkSource(RelationWorkSource relation){
-        this.relationWorkSource.remove(relation);
+    public synchronized void removeRelationWorkSource(RelationWorkSource relation) {
         
+        for (Iterator<RelationWorkSource> iterator = relationWorkSource.iterator(); iterator.hasNext();) {
+            RelationWorkSource next = iterator.next();
+                 if(next.getId().equals(relation.getId())){
+                     iterator.remove();
+            }
+        }
+
     }
-    public synchronized void addRelationWorkSource(RelationWorkSource relation){
+
+    public synchronized void addRelationWorkSource(RelationWorkSource relation) {
         this.relationWorkSource.add(relation);
     }
-    
+
 }

@@ -22,8 +22,8 @@ import javax.persistence.ManyToMany;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class BibliograficAuthor extends Person implements Serializable {
-    @ManyToMany(mappedBy = "authors")
-    private List<Source> sources;
+//    @ManyToMany(mappedBy = "authors")
+//    private List<Source> sources;
     private static final long serialVersionUID = 1L;
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.AUTO)

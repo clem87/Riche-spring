@@ -6,22 +6,27 @@
 package org.lamop.riche.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
  * @author clril
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
+        property = "@id", scope = RelationWorkSource.class)
 public class RelationWorkSource implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,14 +42,20 @@ public class RelationWorkSource implements Serializable {
         this.id = id;
     }
 
-    @JsonBackReference("workrelation")
-    @OneToOne(targetEntity = WorkEntity.class)
+//    @JsonBackReference("workrelation")
+//    @OneToOne(targetEntity = WorkEntity.class, cascade = CascadeType.ALL)
 //    @Cascade(CascadeType.MERGE)
+//        @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToOne()
+//    @ManyToOne
     WorkEntity workEntity;
 
-    @JsonBackReference("sourcerelation")
+//    @JsonBackReference("sourcerelation")
 //    @Cascade(CascadeType.MERGE)
-    @OneToOne(targetEntity = Source.class)
+//    @OneToOne(targetEntity = Source.class, cascade = CascadeType.ALL)
+//    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToOne()
+//                @ManyToOne
     Source source;
 
     String extract;
@@ -107,8 +118,5 @@ public class RelationWorkSource implements Serializable {
     public void setNote(String note) {
         this.note = note;
     }
-    
-    
-
 
 }

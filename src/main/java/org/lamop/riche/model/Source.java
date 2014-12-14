@@ -5,8 +5,11 @@
  */
 package org.lamop.riche.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,46 +32,45 @@ import org.hibernate.annotations.LazyCollectionOption;
  * @author clril
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
+        property = "@id", scope = Source.class)
 public class Source implements Serializable {
+
     
-    
-//    @JsonIgnore
-    @OneToMany()
-      @LazyCollection(LazyCollectionOption.FALSE)
-    @Cascade(CascadeType.ALL)
-    @JsonManagedReference("sourcerelation")
-    private List<RelationWorkSource> relationWorkSource =new ArrayList<>();
+    @OneToMany(cascade = javax.persistence.CascadeType.ALL, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<RelationWorkSource> relationWorkSource = new ArrayList<>();
 
 //    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     protected String title;
-    
+
     protected String articleTitle;
-    
+
     @ManyToMany()
-      @LazyCollection(LazyCollectionOption.FALSE)
-    protected List<BibliograficAuthor> authors = new ArrayList<>();
-    
+    @LazyCollection(LazyCollectionOption.FALSE)
+    protected List<Person> authors = new ArrayList<>();
+
     @ManyToOne
     protected BibliographicType bibliographicType;
-    
+
     protected String releaseTown;
-    
+
     protected Integer releaseYear;
-    
+
     protected Integer volume;
-    
+
     protected String series;
-    
+
     protected String publisher;
-    
+
     protected String editor;
-    
+
     protected Integer num;
-    
+
     public Long getId() {
         return id;
     }
@@ -76,7 +78,6 @@ public class Source implements Serializable {
 //    @JsonIgnore
 //    @ManyToMany(mappedBy = "sources")
 //    private List<WorkEntity> works;
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -106,8 +107,6 @@ public class Source implements Serializable {
         return "org.lamop.riche.model.Source[ id=" + id + " ]";
     }
 
-
-
     public String getTitle() {
         return title;
     }
@@ -124,13 +123,23 @@ public class Source implements Serializable {
         this.articleTitle = articleTitle;
     }
 
-    public List<BibliograficAuthor> getAuthors() {
+//    public List<BibliograficAuthor> getAuthors() {
+//        return authors;
+//    }
+//
+//    public void setAuthors(List<BibliograficAuthor> authors) {
+//        this.authors = authors;
+//    }
+
+    public List<Person> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<BibliograficAuthor> authors) {
+    public void setAuthors(List<Person> authors) {
         this.authors = authors;
     }
+    
+    
 
     public BibliographicType getBibliographicType() {
         return bibliographicType;
@@ -203,7 +212,6 @@ public class Source implements Serializable {
 //    public void setWorks(List<WorkEntity> works) {
 //        this.works = works;
 //    }
-
     public List<RelationWorkSource> getRelationWorkSource() {
         return relationWorkSource;
     }
@@ -211,16 +219,15 @@ public class Source implements Serializable {
     public void setRelationWorkSource(List<RelationWorkSource> relationWorkSource) {
         this.relationWorkSource = relationWorkSource;
     }
-    
-    
-    public synchronized void addRelationWorkSource(RelationWorkSource r){
-        
+
+    public synchronized void addRelationWorkSource(RelationWorkSource r) {
+
         this.relationWorkSource.add(r);
-        
+
     }
-    public synchronized void removeRelationWorkSource(RelationWorkSource r){
+
+    public synchronized void removeRelationWorkSource(RelationWorkSource r) {
         this.relationWorkSource.remove(r);
     }
-    
 
 }

@@ -55,7 +55,6 @@ public class SourceServiceImpl implements SourceServiceIfs {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-
     @Transactional
     @Override
     public void removeEntity(Source source) {
@@ -65,14 +64,17 @@ public class SourceServiceImpl implements SourceServiceIfs {
         for (int i = 0; i < listRelation.size(); i++) {
             RelationWorkSource relation = listRelation.get(i);
             WorkEntity w = relation.getWorkEntity();
-
+//
             if (w != null) {
                 w.removeRelationWorkSource(relation);
                 daoWork.update(w);
             }
-            
+
             daoRelationWorkSource.removeEntity(relation);
 
+//            daoRelationWorkSource.update(relation);
+
+//
         }
 
         dao.removeEntity(source);
@@ -131,8 +133,6 @@ public class SourceServiceImpl implements SourceServiceIfs {
 //        em.merge(source);
 //
 //    }
-
-
     public DAOWorkIFS getDaoWork() {
         return daoWork;
     }
@@ -148,8 +148,5 @@ public class SourceServiceImpl implements SourceServiceIfs {
     public void setDaoRelationWorkSource(DAORelationWorkSourceIfs daoRelationWorkSource) {
         this.daoRelationWorkSource = daoRelationWorkSource;
     }
-    
-    
-    
 
 }

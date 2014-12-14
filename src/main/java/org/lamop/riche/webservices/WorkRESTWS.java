@@ -63,6 +63,8 @@ public class WorkRESTWS {
         System.out.println("Create new work : " + work);
         System.out.println("work title : " + work.getTitle());
         System.out.println("Work author size " + work.getAuthors().size());
+
+                
         serviceWork.addEntity(work);
         return work;
     }

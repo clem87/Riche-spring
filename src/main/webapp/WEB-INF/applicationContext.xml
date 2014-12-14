@@ -92,9 +92,9 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     
     <!--    <context:annotation-config/>
     -->
-    <!--    <bean id="emf" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
+        <bean id="emf" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
         <property name="persistenceUnitName" value="myPersistenceUnit"/>
-    </bean>-->
+    </bean>
    
    
     <bean id="daoWork" class="org.lamop.riche.dao.DAOWorkImpl">

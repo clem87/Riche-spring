@@ -29,9 +29,9 @@ public class Person implements Serializable {
     
     
     
-    @JsonIgnore
-    @ManyToMany(mappedBy = "authors")
-    private List<WorkEntity> works;
+//    @JsonIgnore
+//    @ManyToMany(mappedBy = "authors")
+//    private List<WorkEntity> works;
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -44,20 +44,20 @@ public class Person implements Serializable {
     
 
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "person")
-    protected List<SecondaryName> secondarynames;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "person")
+//    protected List<SecondaryName> secondarynames;
   
     
     protected String label;
 
-    public List<WorkEntity> getWorks() {
-        return works;
-    }
-
-    public void setWorks(List<WorkEntity> works) {
-        this.works = works;
-    }
+//    public List<WorkEntity> getWorks() {
+//        return works;
+//    }
+//
+//    public void setWorks(List<WorkEntity> works) {
+//        this.works = works;
+//    }
     
     
     
@@ -79,13 +79,13 @@ public class Person implements Serializable {
         this.notices = notices;
     }
 
-    public List<SecondaryName> getSecondarynames() {
-        return secondarynames;
-    }
-
-    public void setSecondarynames(List<SecondaryName> secondarynames) {
-        this.secondarynames = secondarynames;
-    }
+//    public List<SecondaryName> getSecondarynames() {
+//        return secondarynames;
+//    }
+//
+//    public void setSecondarynames(List<SecondaryName> secondarynames) {
+//        this.secondarynames = secondarynames;
+//    }
 
     public String getLabel() {
         return label;

@@ -53,31 +53,72 @@ public class WorkServiceImpl implements WorkServiceIfs {
     @Transactional
     @Override
     public void addEntity(WorkEntity w) {
+        
+        dao.addEntity(w);
+                List<RelationWorkSource> listRelation = w.getRelationWorkSource();
+                
+        for (int i = 0; i < listRelation.size(); i++) {
+              RelationWorkSource relation = listRelation.get(i);
+              Source s = daoSource.getEntity(relation.getSource().getId());
+              s.addRelationWorkSource(relation);
+              relation.setSource(s);
+              relation.setWorkEntity(w);
+              daoRelationWorkSource.addEntity(relation);
+        }
+        
+        
+    
         //TODO : verification présence
 
-        for (Iterator<Person> iterator = w.getAuthors().iterator(); iterator.hasNext();) {
-            Person next = iterator.next();
-            if (next.getId() == null) {
-                System.out.println("ADDING PERSON");
-                daoPerson.addEntity(next);
-            }
-        }
+//        for (Iterator<Person> iterator = w.getAuthors().iterator(); iterator.hasNext();) {
+//            Person next = iterator.next();
+//            if (next.getId() == null) {
+//                System.out.println("ADDING PERSON");
+//                daoPerson.addEntity(next);
+//            }
+//        }
+//
+//        List<RelationWorkSource> listRelation = w.getRelationWorkSource();
+//        for (int i = 0; i < listRelation.size(); i++) {
+//            RelationWorkSource relation = listRelation.get(i);
+//            relation.setWorkEntity(w);
+//        }
+//            relation.setWorkEntity(w);
+//            if (relation.getId() == null) {
+//                log.debug("Adding relation");
+//                daoRelationWorkSource.addEntity(relation);
+//
+////                em.persist(relation);
+//                if (relation.getSource() != null) {
+//                    relation.getSource().addRelationWorkSource(relation);
+//                    daoSource.update(relation.getSource());
+////                    em.merge(relation.getSource());
+//                }
+//            }
+//        }
 
-        dao.addEntity(w);
+        
+        
+//        dao.addEntity(w);
     }
 
     @Transactional
     @Override
     public void removeEntity(WorkEntity w) {
+        
+        
         List<RelationWorkSource> listRelation = daoRelationWorkSource.findRelationForSource(w);
         for (Iterator<RelationWorkSource> iterator = listRelation.iterator(); iterator.hasNext();) {
+            
             RelationWorkSource relation = iterator.next();
-            if (relation.getSource() != null) {
-                relation.getSource().removeRelationWorkSource(relation);
-                daoSource.update(relation.getSource());
-            }
-            daoRelationWorkSource.removeEntity(relation);
+            Source s = relation.getSource();
+            relation.setSource(null);
+            relation.setWorkEntity(null);
+            s.removeRelationWorkSource(relation);
+            daoSource.update(s);
+            daoRelationWorkSource.update(relation);
         }
+           
         dao.removeEntity(w);
     }
 
@@ -104,34 +145,22 @@ public class WorkServiceImpl implements WorkServiceIfs {
     @Override
     public void modifyEntity(WorkEntity entity) {
 
-//        log.debug("Modify Work : " + entity.getId());
-//        dao.initEm();
-//        EntityManager em = dao.getEm();
-//        if (!em.getTransaction().isActive()) {
-//            em.getTransaction().begin();
-//        }
-//
+//          
         List<RelationWorkSource> d = entity.getRelationWorkSource();
+//        
         for (int i = 0; i < d.size(); i++) {
-            RelationWorkSource relation = d.get(i);
-            if (relation.getId() == null) {
-                log.debug("Adding relation");
-                daoRelationWorkSource.addEntity(relation);
-
-//                em.persist(relation);
-                if (relation.getSource() != null) {
-                    relation.getSource().addRelationWorkSource(relation);
-                    daoSource.update(relation.getSource());
-//                    em.merge(relation.getSource());
-                }
-            }
+                        RelationWorkSource relation = d.get(i);
+                         Source source= daoSource.getEntity(relation.getSource().getId());
+                        if (relation.getId() ==null){
+                            relation.setSource(source);
+                            source.addRelationWorkSource(relation);
+                            daoRelationWorkSource.addEntity(relation);
+                        }
+                  
         }
-        dao.update(entity);
-//
-//        dao.update(entity);
-
-//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        
+        
+          dao.update(entity);
     }
 
     public void removeRelation(RelationWorkSource relation) {

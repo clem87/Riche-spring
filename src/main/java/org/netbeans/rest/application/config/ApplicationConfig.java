@@ -29,8 +29,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(org.lamop.riche.webservices.AuthorRESTWS.class);
-        resources.add(org.lamop.riche.webservices.WorkRESTWS.class);
+        resources.add(org.lamop.riche.webservices.SourceRESTWS.class);
     }
     
 }
