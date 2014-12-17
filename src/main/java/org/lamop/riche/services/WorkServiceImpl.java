@@ -115,6 +115,7 @@ public class WorkServiceImpl implements WorkServiceIfs {
         workinDB.setTitle(entity.getTitle());
         
         workinDB.setAuthors(entity.getAuthors());
+        workinDB.setNote(entity.getNote());
 
         
         

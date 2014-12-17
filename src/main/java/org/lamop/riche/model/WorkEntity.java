@@ -82,6 +82,11 @@ public class WorkEntity implements Serializable {
     protected Integer centuryMax;
 
     protected Integer centuryMin;
+    
+    /***
+     * Note personnelle de Pierre Riché sur l'oeuvre
+     */
+    protected String note;
 
     /**
      * Get the value of title
@@ -212,4 +217,15 @@ public class WorkEntity implements Serializable {
         this.relationWorkSource.add(relation);
     }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    
+    
+    
 }

@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -41,6 +42,14 @@ public class Person implements Serializable {
     @JsonIgnore
     @ManyToMany
     protected List<AuthorityNotice> notices; 
+    
+
+    
+    
+    /***
+     * Champ permettant de spécifier si il s'agit d'un auteur biblio ou historique
+     */
+    String type;
     
 
 
@@ -124,5 +133,18 @@ public class Person implements Serializable {
     public String toString() {
         return "org.lamop.riche.model.Person[ id=" + id + " ]";
     }
+
+
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+    
+    
+    
     
 }

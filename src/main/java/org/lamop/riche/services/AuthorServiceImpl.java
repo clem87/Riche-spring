@@ -70,6 +70,8 @@ public class AuthorServiceImpl implements PersonServiceIfs{
         
         Person personInDB = getEntity(entity.getId());
         personInDB.setLabel(entity.getLabel());
+        personInDB.setType(entity.getType());
+        //TODO : ok pas de controle de valeur ...
         
         dao.update(personInDB);
     }
