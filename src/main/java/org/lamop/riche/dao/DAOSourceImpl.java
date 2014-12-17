@@ -62,6 +62,14 @@ public class DAOSourceImpl extends DAOGenericImpl<Source> implements DAOSourceIf
         return result;
 //        return super.getAllEntities(); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public List<Source> getAllSourcesForAuthor(Person p) {
+          org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery("SELECT s FROM Source s JOIN FETCH s.authors a WHERE a.id=:aid");
+          q.setParameter("aid", p.getId());
+          return q.list();
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     

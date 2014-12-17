@@ -50,6 +50,9 @@ public class Person implements Serializable {
   
     
     protected String label;
+    
+    
+    
 
 //    public List<WorkEntity> getWorks() {
 //        return works;

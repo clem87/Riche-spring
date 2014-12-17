@@ -147,6 +147,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     
     <bean id="servicePerson" class="org.lamop.riche.services.AuthorServiceImpl">
         <property name="dao" ref="daoPerson" />
+        <property name="daoSource" ref="daoSource" />
        
     </bean>
     

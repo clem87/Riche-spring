@@ -5,6 +5,8 @@
  */
 package org.lamop.riche.dao;
 
+import java.util.List;
+import org.lamop.riche.model.Person;
 import org.lamop.riche.model.RelationWorkSource;
 import org.lamop.riche.model.Source;
 
@@ -15,6 +17,8 @@ import org.lamop.riche.model.Source;
 public interface DAOSourceIfs extends DAOGenericIFS<Source>{
 
     public void addRelation(RelationWorkSource get);
+    
+    public List<Source> getAllSourcesForAuthor(Person p);
     
     
 }

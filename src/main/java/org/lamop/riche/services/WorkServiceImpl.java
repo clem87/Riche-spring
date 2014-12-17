@@ -113,6 +113,8 @@ public class WorkServiceImpl implements WorkServiceIfs {
         workinDB.setOrigin(entity.getOrigin());
         workinDB.setTheme(entity.getTheme());
         workinDB.setTitle(entity.getTitle());
+        
+        workinDB.setAuthors(entity.getAuthors());
 
         
         
