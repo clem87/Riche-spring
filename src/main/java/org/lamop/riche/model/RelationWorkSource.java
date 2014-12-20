@@ -5,19 +5,12 @@
  */
 package org.lamop.riche.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.sound.midi.Soundbank;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -26,8 +19,8 @@ import org.hibernate.annotations.LazyCollectionOption;
  * @author clril
  */
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
-        property = "@id", scope = RelationWorkSource.class)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
+//        property = "@id", scope = RelationWorkSource.class)
 public class RelationWorkSource implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -33,8 +33,8 @@ import org.hibernate.annotations.LazyCollectionOption;
  * @author clril
  */
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
-        property = "@id", scope = Source.class)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
+//        property = "@id", scope = Source.class)
 public class Source implements Serializable {
 
     

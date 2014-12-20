@@ -5,34 +5,29 @@
  */
 package org.lamop.riche.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.annotations.OnDelete;
 
 /**
  *
  * @author clril
  */
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
-        property = "@id", scope = Person.class)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
+//        property = "@id", scope = Person.class)
 public class Person implements Serializable {
 
     @JsonCreator
@@ -42,6 +37,9 @@ public class Person implements Serializable {
     @OneToMany(mappedBy = "person", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
 //    @Cascade(CascadeType.)
+//            @JsonManagedReference(value = "person")
+//            @JsonBackReference
+//            @JsonIgnore
     List<RelationSourcePerson> relationSource = new ArrayList<>();
 
 //    @JsonIgnore

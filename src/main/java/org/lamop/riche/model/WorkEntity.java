@@ -31,8 +31,8 @@ import org.hibernate.annotations.LazyCollectionOption;
  * @author clril
  */
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
-        property = "@id", scope = WorkEntity.class)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
+//        property = "@id", scope = WorkEntity.class)
 //@JsonSerialize(using = WorkEntitySerializer.class)
 public class WorkEntity implements Serializable {
 
