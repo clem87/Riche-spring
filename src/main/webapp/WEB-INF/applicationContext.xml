@@ -42,6 +42,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
                 <value>org.lamop.riche.model.AuthorityNotice</value>
                 <value>org.lamop.riche.model.Theme</value>
                 <value>org.lamop.riche.model.AuthorityOrganism</value>
+                <value>org.lamop.riche.model.RelationSourcePerson</value>
             </list>
         </property>
         
@@ -130,6 +131,10 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean id="daoBibliographicType" class="org.lamop.riche.dao.DAOBibliographicTypeImpl">
          <property name="sessionFactory" ref="mySessionFactory" />
     </bean>
+    
+    <bean id="daoRelationSourcePerson" class="org.lamop.riche.dao.DAORelationSourcePersonImpl">
+        <property name="sessionFactory" ref="mySessionFactory" />
+    </bean>
    
    
     <!--Definition des services-->
@@ -164,7 +169,11 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <property name="dao" ref="daoSource" />
         <property name="daoRelationWorkSource" ref="daoRelationWorkSource" />
         <property name="daoWork" ref="daoWork" />
+        <property name="daoPerson" ref="daoPerson" />
+        <property name="daoRelationSourcePerson" ref="daoRelationSourcePerson" />
     </bean>
+    
+    
     
     
     <bean id="serviceBibliographicType" class="org.lamop.riche.services.BibliographicTypeServiceImpl">

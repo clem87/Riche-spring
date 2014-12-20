@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 import org.lamop.riche.model.BibliographicType;
 import org.lamop.riche.model.Origin;
 import org.lamop.riche.model.Person;
+import org.lamop.riche.model.RelationSourcePerson;
 import org.lamop.riche.model.RelationWorkSource;
 import org.lamop.riche.model.Source;
 import org.lamop.riche.model.Theme;
@@ -51,6 +52,8 @@ public class InitValueWS {
 
     @Autowired
     PersonServiceIfs personService;
+    
+  
 
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", value = "/addvalue")
     @Produces(MediaType.APPLICATION_JSON)
@@ -160,6 +163,13 @@ public class InitValueWS {
         s3.setTitle("historiographie à Saint-Benoît-sur-Loire et les miracles de saint Benoît");
         s3.setReleaseTown("Paris");
         s3.setReleaseYear(1965);
+        
+        RelationSourcePerson relationSourcePerson = new RelationSourcePerson();
+        relationSourcePerson.setSource(s3);
+        relationSourcePerson.setPerson(p2);
+        s3.addRelationPerson(relationSourcePerson);
+        
+        
         sourceService.addEntity(s3);
         
           RelationWorkSource r3 = new RelationWorkSource();

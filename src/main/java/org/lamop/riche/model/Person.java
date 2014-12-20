@@ -6,62 +6,68 @@
 package org.lamop.riche.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.OnDelete;
 
 /**
  *
  * @author clril
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
+        property = "@id", scope = Person.class)
 public class Person implements Serializable {
 
     @JsonCreator
     public Person() {
     }
-    
-    
-    
+
+    @OneToMany(mappedBy = "person", orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+//    @Cascade(CascadeType.)
+    List<RelationSourcePerson> relationSource = new ArrayList<>();
+
 //    @JsonIgnore
 //    @ManyToMany(mappedBy = "authors")
 //    private List<WorkEntity> works;
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     @JsonIgnore
     @ManyToMany
-    protected List<AuthorityNotice> notices; 
-    
+    protected List<AuthorityNotice> notices;
 
-    
-    
-    /***
-     * Champ permettant de spécifier si il s'agit d'un auteur biblio ou historique
+    /**
+     * *
+     * Champ permettant de spécifier si il s'agit d'un auteur biblio ou
+     * historique
      */
     String type;
-    
-
 
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "person")
 //    protected List<SecondaryName> secondarynames;
-  
-    
     protected String label;
-    
-    
-    
 
 //    public List<WorkEntity> getWorks() {
 //        return works;
@@ -70,11 +76,6 @@ public class Person implements Serializable {
 //    public void setWorks(List<WorkEntity> works) {
 //        this.works = works;
 //    }
-    
-    
-    
-    
-
     public Long getId() {
         return id;
     }
@@ -98,7 +99,6 @@ public class Person implements Serializable {
 //    public void setSecondarynames(List<SecondaryName> secondarynames) {
 //        this.secondarynames = secondarynames;
 //    }
-
     public String getLabel() {
         return label;
     }
@@ -106,8 +106,6 @@ public class Person implements Serializable {
     public void setLabel(String label) {
         this.label = label;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -134,8 +132,6 @@ public class Person implements Serializable {
         return "org.lamop.riche.model.Person[ id=" + id + " ]";
     }
 
-
-
     public String getType() {
         return type;
     }
@@ -143,8 +139,21 @@ public class Person implements Serializable {
     public void setType(String type) {
         this.type = type;
     }
-    
-    
-    
-    
+
+    public List<RelationSourcePerson> getRelationSource() {
+        return relationSource;
+    }
+
+    public void setRelationSource(List<RelationSourcePerson> relationSource) {
+        this.relationSource = relationSource;
+    }
+
+    public void removeRelationSourcePerson(RelationSourcePerson relation) {
+        this.relationSource.remove(relation);
+    }
+
+    public void addRelationSourcePerson(RelationSourcePerson relation) {
+        this.relationSource.add(relation);
+    }
+
 }

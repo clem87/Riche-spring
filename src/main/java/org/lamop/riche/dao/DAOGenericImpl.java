@@ -123,7 +123,7 @@ public abstract class DAOGenericImpl<T> implements DAOGenericIFS<T> {
     public T update(T obj) throws IllegalArgumentException, TransactionRequiredException {
 
         Object retour = sessionFactory.getCurrentSession().merge(obj);
-        sessionFactory.getCurrentSession().flush();
+//        sessionFactory.getCurrentSession().flush();
         return (T) retour;
 //        try {
 //            initEm();

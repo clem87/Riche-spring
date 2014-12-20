@@ -43,23 +43,21 @@ public class RelationWorkSource implements Serializable {
         this.id = id;
     }
 
-//    @JsonBackReference("workrelation")
-//    @OneToOne(targetEntity = WorkEntity.class, cascade = CascadeType.ALL)
-//    @Cascade(CascadeType.MERGE)
-//        @LazyCollection(LazyCollectionOption.FALSE)
-//    @OneToOne()
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToOne(targetEntity = WorkEntity.class)
     WorkEntity workEntity;
 
-//    @JsonBackReference("sourcerelation")
-//    @Cascade(CascadeType.MERGE)
-//    @OneToOne(targetEntity = Source.class, cascade = CascadeType.ALL)
-//    @LazyCollection(LazyCollectionOption.FALSE)
-//    @OneToOne()
-    @OneToOne(targetEntity =Source.class)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToOne(targetEntity = Source.class)
     Source source;
 
     String extract;
+
+    /**
+     * *
+     * Indique di c'est de la biblio une traduction etc
+     */
+    String nature;
 
     String note;
 
@@ -118,6 +116,14 @@ public class RelationWorkSource implements Serializable {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getNature() {
+        return nature;
+    }
+
+    public void setNature(String nature) {
+        this.nature = nature;
     }
 
 }

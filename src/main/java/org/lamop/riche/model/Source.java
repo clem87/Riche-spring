@@ -18,6 +18,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -37,8 +38,9 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Source implements Serializable {
 
     
-    @OneToMany()
+    @OneToMany(orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
+    @Cascade(CascadeType.ALL)
     private List<RelationWorkSource> relationWorkSource = new ArrayList<>();
 
 //    private static final long serialVersionUID = 1L;
@@ -53,6 +55,12 @@ public class Source implements Serializable {
     @ManyToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
     protected List<Person> authors = new ArrayList<>();
+    
+    
+    @OneToMany(mappedBy = "source", orphanRemoval = true)
+     @LazyCollection(LazyCollectionOption.FALSE)
+    @Cascade(CascadeType.ALL)
+    protected List<RelationSourcePerson> relationPerson = new ArrayList<>();
 
     @ManyToOne
     protected BibliographicType bibliographicType;
@@ -230,4 +238,24 @@ public class Source implements Serializable {
         this.relationWorkSource.remove(r);
     }
 
+    public List<RelationSourcePerson> getRelationPerson() {
+        return relationPerson;
+    }
+
+    public void setRelationPerson(List<RelationSourcePerson> relationPerson) {
+        this.relationPerson = relationPerson;
+    }
+    
+    public void addRelationPerson(RelationSourcePerson relation){
+        this.relationPerson.add(relation);
+    }
+    public void removeRelationPerson(RelationSourcePerson relation){
+        this.relationPerson.remove(relation);
+    }
+
+    
+    
+  
+    
+    
 }
