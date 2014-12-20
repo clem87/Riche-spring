@@ -38,12 +38,10 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Source implements Serializable {
 
     
-    @OneToMany(orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
-    @Cascade(CascadeType.ALL)
+    @OneToMany(mappedBy = "source",orphanRemoval = true)
     private List<RelationWorkSource> relationWorkSource = new ArrayList<>();
 
-//    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -52,11 +50,6 @@ public class Source implements Serializable {
 
     protected String articleTitle;
 
-    @ManyToMany()
-    @LazyCollection(LazyCollectionOption.FALSE)
-    protected List<Person> authors = new ArrayList<>();
-    
-    
     @OneToMany(mappedBy = "source", orphanRemoval = true)
      @LazyCollection(LazyCollectionOption.FALSE)
     @Cascade(CascadeType.ALL)
@@ -83,9 +76,6 @@ public class Source implements Serializable {
         return id;
     }
 
-//    @JsonIgnore
-//    @ManyToMany(mappedBy = "sources")
-//    private List<WorkEntity> works;
     public void setId(Long id) {
         this.id = id;
     }
@@ -130,24 +120,6 @@ public class Source implements Serializable {
     public void setArticleTitle(String articleTitle) {
         this.articleTitle = articleTitle;
     }
-
-//    public List<BibliograficAuthor> getAuthors() {
-//        return authors;
-//    }
-//
-//    public void setAuthors(List<BibliograficAuthor> authors) {
-//        this.authors = authors;
-//    }
-
-    public List<Person> getAuthors() {
-        return authors;
-    }
-
-    public void setAuthors(List<Person> authors) {
-        this.authors = authors;
-    }
-    
-    
 
     public BibliographicType getBibliographicType() {
         return bibliographicType;

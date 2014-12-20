@@ -8,6 +8,7 @@ package org.lamop.riche.services;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import javax.persistence.EntityManager;
 import org.lamop.riche.dao.DAOGenericImpl;
 import org.lamop.riche.dao.DAOPersonIfs;
@@ -54,17 +55,18 @@ public class WorkServiceImpl implements WorkServiceIfs {
     @Override
     public void addEntity(WorkEntity w) {
 
-        dao.addEntity(w);
+     
         List<RelationWorkSource> listRelation = w.getRelationWorkSource();
 
         for (int i = 0; i < listRelation.size(); i++) {
             RelationWorkSource relation = listRelation.get(i);
             Source s = daoSource.getEntity(relation.getSource().getId());
-            s.addRelationWorkSource(relation);
+//            s.addRelationWorkSource(relation);
             relation.setSource(s);
             relation.setWorkEntity(w);
-            daoRelationWorkSource.addEntity(relation);
+//            daoRelationWorkSource.addEntity(relation);
         }
+           dao.addEntity(w);
 
     }
 
@@ -72,14 +74,14 @@ public class WorkServiceImpl implements WorkServiceIfs {
     @Override
     public void removeEntity(WorkEntity w) {
 
-        List<RelationWorkSource> listRelation = daoRelationWorkSource.findRelationForSource(w);
-        for (Iterator<RelationWorkSource> iterator = listRelation.iterator(); iterator.hasNext();) {
-            RelationWorkSource relation = iterator.next();
-            Source s = relation.getSource();
-            s.removeRelationWorkSource(relation);
-            daoSource.update(s);
-            daoRelationWorkSource.removeEntity(relation);
-        }
+//        List<RelationWorkSource> listRelation = daoRelationWorkSource.findRelationForSource(w);
+//        for (Iterator<RelationWorkSource> iterator = listRelation.iterator(); iterator.hasNext();) {
+//            RelationWorkSource relation = iterator.next();
+//            Source s = relation.getSource();
+//            s.removeRelationWorkSource(relation);
+//            daoSource.update(s);
+//            daoRelationWorkSource.removeEntity(relation);
+//        }
         dao.removeEntity(w);
     }
 
@@ -119,28 +121,51 @@ public class WorkServiceImpl implements WorkServiceIfs {
 
         
         
-        List<RelationWorkSource> listrelationEnBase = workinDB.getRelationWorkSource();
-         List<RelationWorkSource> listRelationSelectionUser = entity.getRelationWorkSource();
-        for (int i = 0; i < listrelationEnBase.size(); i++) {
-            RelationWorkSource relationEnBase = listrelationEnBase.get(i);
-            
-            if(!listRelationSelectionUser.contains(relationEnBase)){
-                listrelationEnBase.remove(relationEnBase);
-                relationEnBase.getSource().removeRelationWorkSource(relationEnBase);
-                daoSource.update(relationEnBase.getSource());
-                daoRelationWorkSource.removeEntity(relationEnBase);
+        
+        List<RelationWorkSource> rel = entity.getRelationWorkSource();
+        for (ListIterator<RelationWorkSource> iterator = rel.listIterator(); iterator.hasNext();) {
+            RelationWorkSource relationByUser = iterator.next();
+            if(relationByUser.getId()==null){
+                Source s = daoSource.getEntity(relationByUser.getSource().getId());
+                relationByUser.setSource(s);
+                relationByUser.setWorkEntity(workinDB);
+            }
+            else{
+                RelationWorkSource relInDB= daoRelationWorkSource.getEntity(relationByUser.getId());
+                iterator.set(relInDB);
             }
         }
-        for (int i = 0; i < listRelationSelectionUser.size(); i++) {
-            RelationWorkSource relationUser = listRelationSelectionUser.get(i);
-            if(!listrelationEnBase.contains(relationUser)){
-                listrelationEnBase.add(relationUser);
-                daoRelationWorkSource.addEntity(relationUser);
-                Source source = daoSource.getEntity(relationUser.getSource().getId());
-                source.addRelationWorkSource(relationUser);
-                daoSource.update(source);
-            }
-        }
+        workinDB.getRelationWorkSource().clear();
+        workinDB.getRelationWorkSource().addAll(entity.getRelationWorkSource());
+        
+        
+        
+        
+        
+        
+//        
+//        List<RelationWorkSource> listrelationEnBase = workinDB.getRelationWorkSource();
+//         List<RelationWorkSource> listRelationSelectionUser = entity.getRelationWorkSource();
+//        for (int i = 0; i < listrelationEnBase.size(); i++) {
+//            RelationWorkSource relationEnBase = listrelationEnBase.get(i);
+//            
+//            if(!listRelationSelectionUser.contains(relationEnBase)){
+//                listrelationEnBase.remove(relationEnBase);
+//                relationEnBase.getSource().removeRelationWorkSource(relationEnBase);
+//                daoSource.update(relationEnBase.getSource());
+//                daoRelationWorkSource.removeEntity(relationEnBase);
+//            }
+//        }
+//        for (int i = 0; i < listRelationSelectionUser.size(); i++) {
+//            RelationWorkSource relationUser = listRelationSelectionUser.get(i);
+//            if(!listrelationEnBase.contains(relationUser)){
+//                listrelationEnBase.add(relationUser);
+//                daoRelationWorkSource.addEntity(relationUser);
+//                Source source = daoSource.getEntity(relationUser.getSource().getId());
+//                source.addRelationWorkSource(relationUser);
+//                daoSource.update(source);
+//            }
+//        }
 
         dao.update(workinDB);
 

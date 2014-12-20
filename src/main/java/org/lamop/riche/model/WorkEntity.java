@@ -7,19 +7,13 @@ package org.lamop.riche.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,12 +21,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.swing.text.View;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.lamop.riche.model.jsonserialize.RelationWorkSourceSerialize;
 
 /**
  *
@@ -48,12 +40,9 @@ public class WorkEntity implements Serializable {
     public WorkEntity() {
     }
 
-//    @Cascade(CascadeType.ALL)
-//    @JsonManagedReference("workrelation")
-//    @JsonSerialize(using = RelationWorkSourceSerialize.class)
-//    @JsonIdentityReference(alwaysAsId = true)
-    @OneToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "workEntity", orphanRemoval = true)
+    @Cascade(CascadeType.ALL)
     private List<RelationWorkSource> relationWorkSource = new ArrayList<>();
 
     private static final long serialVersionUID = 1L;
@@ -62,7 +51,6 @@ public class WorkEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-//    @JsonSerialize
     protected String title;
 
     @ManyToMany()
@@ -75,8 +63,6 @@ public class WorkEntity implements Serializable {
     @OneToOne
     protected Origin origin;
 
-//    @ManyToMany
-//    protected List<Source> sources= new ArrayList<>();
     protected Date exactDate;
 
     protected Integer centuryMax;
@@ -130,13 +116,6 @@ public class WorkEntity implements Serializable {
         this.origin = origin;
     }
 
-//    public List<Source> getSources() {
-//        return sources;
-//    }
-//
-//    public void setSources(List<Source> sources) {
-//        this.sources = sources;
-//    }
     public Long getId() {
         return id;
     }
@@ -224,8 +203,4 @@ public class WorkEntity implements Serializable {
     public void setNote(String note) {
         this.note = note;
     }
-
-    
-    
-    
 }

@@ -43,12 +43,16 @@ public class RelationWorkSource implements Serializable {
         this.id = id;
     }
 
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    @OneToOne(targetEntity = WorkEntity.class)
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToOne(targetEntity = WorkEntity.class)
+    @ManyToOne
     WorkEntity workEntity;
 
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    @OneToOne(targetEntity = Source.class)
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToOne(targetEntity = Source.class)
+    @ManyToOne
     Source source;
 
     String extract;

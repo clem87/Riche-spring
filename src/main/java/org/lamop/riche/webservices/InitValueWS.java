@@ -106,8 +106,6 @@ public class InitValueWS {
         p1.setLabel("Sot, Michel");
         personService.addEntity(p1);
 
-        s1.getAuthors().add(p1);
-
         sourceService.addEntity(s1);
 
         RelationWorkSource r1 = new RelationWorkSource();

@@ -9,6 +9,7 @@ import java.util.List;
 import org.lamop.riche.dao.DAOPersonIfs;
 import org.lamop.riche.dao.DAOSourceIfs;
 import org.lamop.riche.model.Person;
+import org.lamop.riche.model.RelationSourcePerson;
 import org.lamop.riche.model.Source;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,26 +54,24 @@ public class AuthorServiceImpl implements PersonServiceIfs{
     @Override
     public void removeEntity(Long id) {
         Person p = getEntity(id);
-        List<Source> sources = daoSource.getAllSourcesForAuthor(p);
-        for (int i = 0; i < sources.size(); i++) {
-            Source source = sources.get(i);
-            source.getAuthors().remove(p);
-            daoSource.update(source);
-        }
-        
-        
+        //Pour éviter de recrer la relation par cascade , il faut modifier manuellement les sources
+        List<RelationSourcePerson> list = p.getRelationSource();
+        for (int i = 0; i < list.size(); i++) {
+            RelationSourcePerson get = list.get(i);
+            Source s = get.getSource();
+            s.removeRelationPerson(get);
+            daoSource.update(s);
+        }    
         dao.removeEntity(p);
     }
 
     @Transactional
     @Override
     public void modifyEntity(Person entity) {
-        
         Person personInDB = getEntity(entity.getId());
         personInDB.setLabel(entity.getLabel());
         personInDB.setType(entity.getType());
         //TODO : ok pas de controle de valeur ...
-        
         dao.update(personInDB);
     }
 
@@ -97,7 +96,4 @@ public class AuthorServiceImpl implements PersonServiceIfs{
     public void setDaoSource(DAOSourceIfs daoSource) {
         this.daoSource = daoSource;
     }
-    
-    
-    
 }
