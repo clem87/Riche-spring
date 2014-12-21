@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import org.lamop.riche.model.Person;
+import org.lamop.riche.model.WorkAuthor;
 
 /**
  *
@@ -83,7 +84,7 @@ public class WorkRESTWS {
         WorkEntity wTest = new WorkEntity();
         wTest.setTitle("Le livre de test");
         
-        Person p = new Person();
+        WorkAuthor p = new WorkAuthor();
         p.setLabel("auteur de test");
         
         wTest.getAuthors().add(p);

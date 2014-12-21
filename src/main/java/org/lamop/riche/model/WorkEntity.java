@@ -55,7 +55,7 @@ public class WorkEntity implements Serializable, Cloneable {
 
     @ManyToMany()
     @LazyCollection(LazyCollectionOption.FALSE)
-    protected List<Person> authors = new ArrayList<>();
+    protected List<WorkAuthor> authors = new ArrayList<>();
 
     @ManyToOne
     protected Theme theme;
@@ -92,11 +92,11 @@ public class WorkEntity implements Serializable, Cloneable {
         this.title = title;
     }
 
-    public List<Person> getAuthors() {
+    public List<WorkAuthor> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<Person> authors) {
+    public void setAuthors(List<WorkAuthor> authors) {
         this.authors = authors;
     }
 
