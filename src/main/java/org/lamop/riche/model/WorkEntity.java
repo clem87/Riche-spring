@@ -34,7 +34,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 //@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
 //        property = "@id", scope = WorkEntity.class)
 //@JsonSerialize(using = WorkEntitySerializer.class)
-public class WorkEntity implements Serializable {
+public class WorkEntity implements Serializable, Cloneable {
 
     @JsonCreator
     public WorkEntity() {
@@ -203,4 +203,17 @@ public class WorkEntity implements Serializable {
     public void setNote(String note) {
         this.note = note;
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        WorkEntity clone = (WorkEntity) super.clone();
+        clone.setRelationWorkSource(null);
+//        clone.setRelationWorkSource(this.relationWorkSource.);
+        
+        
+        return clone; //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
 }

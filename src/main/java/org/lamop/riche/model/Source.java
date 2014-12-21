@@ -35,7 +35,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 @Entity
 //@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
 //        property = "@id", scope = Source.class)
-public class Source implements Serializable {
+public class Source implements Serializable, Cloneable {
 
     
     @LazyCollection(LazyCollectionOption.FALSE)

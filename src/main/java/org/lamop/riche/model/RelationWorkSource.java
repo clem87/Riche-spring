@@ -5,6 +5,7 @@
  */
 package org.lamop.riche.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +20,7 @@ import org.hibernate.annotations.LazyCollectionOption;
  * @author clril
  */
 @Entity
+@JsonSerialize(using = RelationWorkSourceSerializer.class)
 //@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
 //        property = "@id", scope = RelationWorkSource.class)
 public class RelationWorkSource implements Serializable {
@@ -122,5 +124,5 @@ public class RelationWorkSource implements Serializable {
     public void setNature(String nature) {
         this.nature = nature;
     }
-
+    
 }
