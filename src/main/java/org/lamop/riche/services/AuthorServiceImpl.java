@@ -32,6 +32,11 @@ public class AuthorServiceImpl implements PersonServiceIfs{
     public List<Person> find(String arg) {
         return dao.find(arg);
     }
+    
+    @Transactional
+    public List<Person> getPersonFromLabel(String s){
+        return dao.getPersonFromLabel(s);
+    }
 
     @Override
     public List<Person> getAll() {

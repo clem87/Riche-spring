@@ -29,6 +29,14 @@ public class DAOPersonImpl extends DAOGenericImpl<Person> implements DAOPersonIf
        
     }
 
+    @Override
+    public List<Person> getPersonFromLabel(String s) {
+             Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Person.class);
+        criteria.add(Restrictions.like("label", s));
+          List resu = criteria.list();
+        return resu;
+    }
+
 
 
 

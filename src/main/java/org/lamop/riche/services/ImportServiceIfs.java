@@ -5,16 +5,11 @@
  */
 package org.lamop.riche.services;
 
-import java.util.List;
-import org.lamop.riche.model.Person;
-
 /**
  *
  * @author clril
  */
-public interface PersonServiceIfs extends ServiceCRUDIfs<Person>{
-    
-    
-    List<Person> find(String arg);
-    public List<Person> getPersonFromLabel(String s);
+public interface ImportServiceIfs {
+        public void importBDD() ;
+            public void initThemes();
 }

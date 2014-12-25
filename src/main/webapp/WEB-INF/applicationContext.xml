@@ -182,9 +182,20 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <property name="dao" ref="daoWorkAuthor" />
     </bean>
     
+    <bean id="importService" class="org.lamop.riche.services.ImportServiceImpl">
+        <property name="serviceSource" ref="serviceSource" />
+        <property name="serviceBibliographicType" ref="serviceBibliographicType"/>
+        <property name="servicePerson" ref="servicePerson" />
+        <property name="themeService" ref="serviceTheme" />
+        <property name="serviceWorkAuthor" ref="serviceWorkAuthor" />
+        <property name="workService" ref="serviceWork" />
+        <property name="daoRelationWorkSource" ref="daoRelationWorkSource" />
+    </bean>
+    
     
     
     <bean id="serviceBibliographicType" class="org.lamop.riche.services.BibliographicTypeServiceImpl">
         <property name="dao"  ref="daoBibliographicType"/>
+        
     </bean>
 </beans>

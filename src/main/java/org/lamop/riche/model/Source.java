@@ -25,6 +25,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -43,12 +44,19 @@ public class Source implements Serializable, Cloneable {
     private List<RelationWorkSource> relationWorkSource = new ArrayList<>();
 
     @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "UseIdOrGenerateID")
+//    @GenericGenerator(name = "UseIdOrGenerateID", strategy = "org.lamop.riche.model.UseIdOrGenerateID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     protected String title;
 
     protected String articleTitle;
+    
+    /***
+     * Champs issu de la premiere base de données. Contient une url http vers sudoc persee etc...
+     */
+    protected String url;
 
     @OneToMany(mappedBy = "source", orphanRemoval = true)
      @LazyCollection(LazyCollectionOption.FALSE)
@@ -71,6 +79,10 @@ public class Source implements Serializable, Cloneable {
     protected String editor;
 
     protected Integer num;
+    
+    protected String journal;
+    
+    
 
     public Long getId() {
         return id;
@@ -223,6 +235,22 @@ public class Source implements Serializable, Cloneable {
     }
     public void removeRelationPerson(RelationSourcePerson relation){
         this.relationPerson.remove(relation);
+    }
+
+    public String getJournal() {
+        return journal;
+    }
+
+    public void setJournal(String journal) {
+        this.journal = journal;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     

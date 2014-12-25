@@ -16,6 +16,7 @@ import org.lamop.riche.model.Source;
 import org.lamop.riche.model.Theme;
 import org.lamop.riche.model.WorkEntity;
 import org.lamop.riche.services.BibliographicTypeServiceIfs;
+import org.lamop.riche.services.ImportServiceIfs;
 import org.lamop.riche.services.OrigineServiceIfs;
 import org.lamop.riche.services.PersonServiceIfs;
 import org.lamop.riche.services.SourceServiceIfs;
@@ -53,6 +54,24 @@ public class InitValueWS {
     @Autowired
     PersonServiceIfs personService;
     
+    @Autowired
+    ImportServiceIfs importService;
+    
+     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", value = "/importall")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ResponseBody
+    public void importall() {
+        importService.importBDD();
+        
+    }
+    
+    
+    @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", value = "/addTheme")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ResponseBody
+    public void addTheme() {
+        importService.initThemes();
+    }
   
 
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", value = "/addvalue")
@@ -194,5 +213,8 @@ public class InitValueWS {
 
 //[1] Patrologia Latina, 65 p.Ep.VIII, 360-372 [bibliographie]
     }
+    
+    
+    
 
 }

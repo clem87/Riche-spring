@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 /**
@@ -21,10 +22,27 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class Theme implements Serializable {
-    @OneToMany(mappedBy = "theme")
+//    @OneToMany(mappedBy = "theme")
 //    @JsonIgnore
-    @JsonBackReference("worktheme")
+    @JsonBackReference()
+    @ManyToMany(mappedBy = "theme")
     private List<WorkEntity> works;
+
+    public Theme() {
+    }
+
+//    public Theme(Long id, String label) {
+//        this.id = id;
+//        this.label = label;
+//    }
+
+    public Theme(String label) {
+        this.label = label;
+    }
+    
+    
+    
+    
     
     private static final long serialVersionUID = 1L;
     

@@ -74,9 +74,9 @@ public abstract class DAOGenericImpl<T> implements DAOGenericIFS<T> {
     public void addEntity(T obj) throws EntityExistsException, IllegalArgumentException, TransactionRequiredException {
 
 
-        sessionFactory.getCurrentSession().persist(obj);
+        sessionFactory.getCurrentSession().save(obj);
  
-       
+     
 //        tr.commit();
 
 //        try {
@@ -95,6 +95,12 @@ public abstract class DAOGenericImpl<T> implements DAOGenericIFS<T> {
 //        } finally {
 //            finallyCloseEmTransaction(em);
 //        }
+    }
+    @Override
+    @Transactional
+    public void clearSession(){
+        sessionFactory.getCurrentSession().flush();
+        sessionFactory.getCurrentSession().clear();
     }
 
     @Override

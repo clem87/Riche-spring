@@ -15,4 +15,6 @@ import org.lamop.riche.model.Person;
 public interface DAOPersonIfs extends DAOGenericIFS<Person>{
     @Override
     public List<Person> find(String arg);
+
+    public List<Person> getPersonFromLabel(String s);
 }

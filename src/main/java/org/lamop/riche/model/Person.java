@@ -36,15 +36,17 @@ public class Person implements Serializable {
 
     @OneToMany(mappedBy = "person", orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
-//    @Cascade(CascadeType.)
-//            @JsonManagedReference(value = "person")
-//            @JsonBackReference
-//            @JsonIgnore
-    List<RelationSourcePerson> relationSource = new ArrayList<>();
 
-//    @JsonIgnore
-//    @ManyToMany(mappedBy = "authors")
-//    private List<WorkEntity> works;
+    List<RelationSourcePerson> relationSource = new ArrayList<>();
+    
+    
+    
+        protected String lastName;
+    
+    protected String fistName;
+    
+
+
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -152,6 +154,22 @@ public class Person implements Serializable {
 
     public void addRelationSourcePerson(RelationSourcePerson relation) {
         this.relationSource.add(relation);
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFistName() {
+        return fistName;
+    }
+
+    public void setFistName(String fistName) {
+        this.fistName = fistName;
     }
 
 }

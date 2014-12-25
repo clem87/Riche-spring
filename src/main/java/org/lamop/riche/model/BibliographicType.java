@@ -21,6 +21,16 @@ public class BibliographicType implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    public BibliographicType() {
+    }
+
+    public BibliographicType(String label) {
+        this.label = label;
+    }
+    
+    
+    
     
     private String label;
 

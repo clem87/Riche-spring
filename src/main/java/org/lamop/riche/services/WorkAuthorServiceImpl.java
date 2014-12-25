@@ -65,7 +65,16 @@ public class WorkAuthorServiceImpl implements WorkAuthorServiceIfs{
     public void setDao(DAOWorkAuthorIfs dao) {
         this.dao = dao;
     }
+
+    @Transactional
+    @Override
+    public List<WorkAuthor> find(String arg, boolean approx) {
+        
+        return dao.find(arg, approx);
+    }
     
+    
+
     
     
 }

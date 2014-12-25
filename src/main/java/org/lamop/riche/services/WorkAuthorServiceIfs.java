@@ -5,6 +5,7 @@
  */
 package org.lamop.riche.services;
 
+import java.util.List;
 import org.lamop.riche.model.WorkAuthor;
 
 /**
@@ -12,5 +13,8 @@ import org.lamop.riche.model.WorkAuthor;
  * @author clril
  */
 public interface WorkAuthorServiceIfs extends ServiceCRUDIfs<WorkAuthor>{
+
+//    public List<WorkAuthor> find(String arg);
+        public List<WorkAuthor> find(String arg, boolean approx) ;
     
 }

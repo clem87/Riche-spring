@@ -7,12 +7,14 @@ package org.lamop.riche.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +25,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -57,9 +60,14 @@ public class WorkEntity implements Serializable, Cloneable {
     @LazyCollection(LazyCollectionOption.FALSE)
     protected List<WorkAuthor> authors = new ArrayList<>();
 
-    @ManyToOne
-    protected Theme theme;
 
+    
+    
+@LazyCollection(LazyCollectionOption.FALSE)
+//    @JsonManagedReference()
+    @ManyToMany
+    protected List<Theme> theme;
+    
     @OneToOne
     protected Origin origin;
 
@@ -72,6 +80,8 @@ public class WorkEntity implements Serializable, Cloneable {
     /***
      * Note personnelle de Pierre Riché sur l'oeuvre
      */
+
+    @Column(length = 700)
     protected String note;
 
     /**
@@ -100,13 +110,23 @@ public class WorkEntity implements Serializable, Cloneable {
         this.authors = authors;
     }
 
-    public Theme getTheme() {
+//    public Theme getTheme() {
+//        return theme;
+//    }
+//
+//    public void setTheme(Theme theme) {
+//        this.theme = theme;
+//    }
+
+    public List<Theme> getTheme() {
         return theme;
     }
 
-    public void setTheme(Theme theme) {
+    public void setTheme(List<Theme> theme) {
         this.theme = theme;
     }
+    
+    
 
     public Origin getOrigin() {
         return origin;

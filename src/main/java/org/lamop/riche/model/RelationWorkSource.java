@@ -51,6 +51,11 @@ public class RelationWorkSource implements Serializable {
     Source source;
 
     String extract;
+    
+    String tome;
+    
+    
+    
 
     /**
      * *
@@ -124,5 +129,16 @@ public class RelationWorkSource implements Serializable {
     public void setNature(String nature) {
         this.nature = nature;
     }
+
+    public String getTome() {
+        return tome;
+    }
+
+    public void setTome(String tome) {
+        this.tome = tome;
+    }
+    
+    
+    
     
 }

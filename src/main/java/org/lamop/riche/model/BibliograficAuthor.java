@@ -29,10 +29,10 @@ public class BibliograficAuthor extends Person implements Serializable {
 //    @GeneratedValue(strategy = GenerationType.AUTO)
 //    private Long id;
     
-    
-    protected String lastName;
-    
-    protected String fistName;
+//    
+//    protected String lastName;
+//    
+//    protected String fistName;
 
 //    public Long getId() {
 //        return id;
@@ -49,22 +49,22 @@ public class BibliograficAuthor extends Person implements Serializable {
 //        return hash;
 //    }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getFistName() {
-        return fistName;
-    }
-
-    public void setFistName(String fistName) {
-        this.fistName = fistName;
-    }
-    
+//    public String getLastName() {
+//        return lastName;
+//    }
+//
+//    public void setLastName(String lastName) {
+//        this.lastName = lastName;
+//    }
+//
+//    public String getFistName() {
+//        return fistName;
+//    }
+//
+//    public void setFistName(String fistName) {
+//        this.fistName = fistName;
+//    }
+//    
     
 
 //    @Override

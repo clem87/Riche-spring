@@ -5,6 +5,7 @@
  */
 package org.lamop.riche.dao;
 
+import java.util.List;
 import org.lamop.riche.model.WorkAuthor;
 
 /**
@@ -12,5 +13,9 @@ import org.lamop.riche.model.WorkAuthor;
  * @author clril
  */
 public interface DAOWorkAuthorIfs extends DAOGenericIFS<WorkAuthor>{
+
+//    public List<WorkAuthor> findByExactLabel(String label, boolean approx);
+    
+    public List<WorkAuthor> find(String arg, boolean approx);
     
 }

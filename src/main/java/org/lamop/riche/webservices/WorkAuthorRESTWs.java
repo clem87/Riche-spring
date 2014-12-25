@@ -7,11 +7,13 @@ package org.lamop.riche.webservices;
 
 import java.util.List;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import org.lamop.riche.model.Person;
 import org.lamop.riche.model.Source;
 import org.lamop.riche.model.WorkAuthor;
 import org.lamop.riche.model.WorkEntity;
@@ -20,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -75,4 +78,12 @@ public class WorkAuthorRESTWs {
         return work;
     }
     
+    
+        @GET
+    @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", value = "/find")
+    @Produces(MediaType.APPLICATION_JSON)
+    public @ResponseBody List<WorkAuthor> queryAuthor(@RequestParam("userselection") String arg){
+         List<WorkAuthor> l = workAuthorService.find(arg, true);
+        return l;
+    }
 }
