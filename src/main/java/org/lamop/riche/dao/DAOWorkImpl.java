@@ -7,8 +7,11 @@ package org.lamop.riche.dao;
 
 import java.util.List;
 import javax.persistence.Query;
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.lamop.riche.model.WorkEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -30,6 +33,24 @@ public class DAOWorkImpl extends DAOGenericImpl<WorkEntity> implements DAOWorkIF
 //        return q.getResultList();
 ////        return super.getAllEntities(); //To change body of generated methods, choose Tools | Templates.
 //    }
+    @Transactional
+    @Override
+    public List<WorkEntity> getAllEntities() {
+//        return super.getAllEntities(); //To change body of generated methods, choose Tools | Templates.
 
+        org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery("SELECT w FROM WorkEntity w "
+                + "JOIN FETCH w.authors authors "
+                + "JOIN FETCH w.origin origin "
+                + "JOIN FETCH w.relationWorkSource relation "
+                + "JOIN FETCH w.theme theme");
+        return q.list();
+
+//        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(WorkEntity.class);
+//        criteria.setFetchMode("relationWorkSource", FetchMode.JOIN);
+////         criteria.setFetchMode("authors", FetchMode.JOIN);
+////         criteria.setFetchMode("theme", FetchMode.JOIN);
+//        return criteria.list();
+
+    }
 
 }

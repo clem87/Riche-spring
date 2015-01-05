@@ -35,7 +35,7 @@ public class Person implements Serializable {
     }
 
     @OneToMany(mappedBy = "person", orphanRemoval = true)
-    @LazyCollection(LazyCollectionOption.FALSE)
+//    @LazyCollection(LazyCollectionOption.FALSE)
 
     List<RelationSourcePerson> relationSource = new ArrayList<>();
     

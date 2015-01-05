@@ -43,7 +43,7 @@ public class WorkEntity implements Serializable, Cloneable {
     public WorkEntity() {
     }
 
-    @LazyCollection(LazyCollectionOption.FALSE)
+//    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "workEntity", orphanRemoval = true)
     @Cascade(CascadeType.ALL)
     private List<RelationWorkSource> relationWorkSource = new ArrayList<>();
@@ -57,13 +57,13 @@ public class WorkEntity implements Serializable, Cloneable {
     protected String title;
 
     @ManyToMany()
-    @LazyCollection(LazyCollectionOption.FALSE)
+//    @LazyCollection(LazyCollectionOption.FALSE)
     protected List<WorkAuthor> authors = new ArrayList<>();
 
 
     
     
-@LazyCollection(LazyCollectionOption.FALSE)
+//@LazyCollection(LazyCollectionOption.FALSE)
 //    @JsonManagedReference()
     @ManyToMany
     protected List<Theme> theme;

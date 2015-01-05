@@ -24,7 +24,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 @Entity
 public class Origin implements Serializable {
     @JsonBackReference("origin")
-    @LazyCollection(LazyCollectionOption.FALSE)
+//    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToOne(mappedBy = "origin")
     private WorkEntity work;
 
@@ -47,7 +47,7 @@ public class Origin implements Serializable {
     
     
     @OneToMany
-            @LazyCollection(LazyCollectionOption.FALSE)
+//            @LazyCollection(LazyCollectionOption.FALSE)
     List<SecondaryName> secondaryNames;
     
     

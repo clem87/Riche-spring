@@ -39,7 +39,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Source implements Serializable, Cloneable {
 
     
-    @LazyCollection(LazyCollectionOption.FALSE)
+//    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "source",orphanRemoval = true)
     private List<RelationWorkSource> relationWorkSource = new ArrayList<>();
 
@@ -59,7 +59,7 @@ public class Source implements Serializable, Cloneable {
     protected String url;
 
     @OneToMany(mappedBy = "source", orphanRemoval = true)
-     @LazyCollection(LazyCollectionOption.FALSE)
+//     @LazyCollection(LazyCollectionOption.FALSE)
     @Cascade(CascadeType.ALL)
     protected List<RelationSourcePerson> relationPerson = new ArrayList<>();
 

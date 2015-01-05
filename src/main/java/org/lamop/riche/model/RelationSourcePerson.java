@@ -32,13 +32,13 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class RelationSourcePerson implements Serializable {
 
     @ManyToOne()
-     @LazyCollection(LazyCollectionOption.FALSE)
+//     @LazyCollection(LazyCollectionOption.FALSE)
 //    @JsonBackReference(value = "relationSource")
 //    @JsonManagedReference
     private Person person;
 
     @ManyToOne()
-     @LazyCollection(LazyCollectionOption.FALSE)
+//     @LazyCollection(LazyCollectionOption.FALSE)
     private Source source;
     
     

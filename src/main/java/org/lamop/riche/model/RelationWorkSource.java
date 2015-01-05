@@ -40,13 +40,13 @@ public class RelationWorkSource implements Serializable {
 
 //    @LazyCollection(LazyCollectionOption.FALSE)
 //    @OneToOne(targetEntity = WorkEntity.class)
-    @LazyCollection(LazyCollectionOption.FALSE)
+//    @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToOne
     WorkEntity workEntity;
 
 //    @LazyCollection(LazyCollectionOption.FALSE)
 //    @OneToOne(targetEntity = Source.class)
-    @LazyCollection(LazyCollectionOption.FALSE)
+//    @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToOne
     Source source;
 
