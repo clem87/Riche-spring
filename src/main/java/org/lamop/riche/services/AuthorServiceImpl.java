@@ -5,7 +5,9 @@
  */
 package org.lamop.riche.services;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import org.lamop.riche.dao.DAOPersonIfs;
 import org.lamop.riche.dao.DAOSourceIfs;
 import org.lamop.riche.model.Person;
@@ -60,9 +62,13 @@ public class AuthorServiceImpl implements PersonServiceIfs{
     public void removeEntity(Long id) {
         Person p = getEntity(id);
         //Pour éviter de recrer la relation par cascade , il faut modifier manuellement les sources
-        List<RelationSourcePerson> list = p.getRelationSource();
-        for (int i = 0; i < list.size(); i++) {
-            RelationSourcePerson get = list.get(i);
+        Set<RelationSourcePerson> list = p.getRelationSource();
+        for (Iterator<RelationSourcePerson> iterator = list.iterator(); iterator.hasNext();) {
+            RelationSourcePerson get = iterator.next();
+            
+//        }
+//        for (int i = 0; i < list.size(); i++) {
+//            RelationSourcePerson get = list.get(i);
             Source s = get.getSource();
             s.removeRelationPerson(get);
             daoSource.update(s);

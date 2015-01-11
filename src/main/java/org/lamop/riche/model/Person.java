@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,15 +39,11 @@ public class Person implements Serializable {
     @OneToMany(mappedBy = "person", orphanRemoval = true)
 //    @LazyCollection(LazyCollectionOption.FALSE)
 
-    List<RelationSourcePerson> relationSource = new ArrayList<>();
-    
-    
-    
-        protected String lastName;
-    
-    protected String fistName;
-    
+    Set<RelationSourcePerson> relationSource = new HashSet<>();
 
+    protected String lastName;
+
+    protected String fistName;
 
     private static final long serialVersionUID = 1L;
 
@@ -140,11 +138,11 @@ public class Person implements Serializable {
         this.type = type;
     }
 
-    public List<RelationSourcePerson> getRelationSource() {
+    public Set<RelationSourcePerson> getRelationSource() {
         return relationSource;
     }
 
-    public void setRelationSource(List<RelationSourcePerson> relationSource) {
+    public void setRelationSource(Set<RelationSourcePerson> relationSource) {
         this.relationSource = relationSource;
     }
 

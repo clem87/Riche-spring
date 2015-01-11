@@ -7,7 +7,9 @@ package org.lamop.riche.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -48,7 +50,7 @@ public class Origin implements Serializable {
     
     @OneToMany
 //            @LazyCollection(LazyCollectionOption.FALSE)
-    List<SecondaryName> secondaryNames;
+    Set<SecondaryName> secondaryNames= new HashSet<>();
     
     
     String label;
@@ -62,13 +64,15 @@ public class Origin implements Serializable {
         this.id = id;
     }
 
-    public List<SecondaryName> getSecondaryNames() {
+    public Set<SecondaryName> getSecondaryNames() {
         return secondaryNames;
     }
 
-    public void setSecondaryNames(List<SecondaryName> secondaryNames) {
+    public void setSecondaryNames(Set<SecondaryName> secondaryNames) {
         this.secondaryNames = secondaryNames;
     }
+
+
 
     public String getLabel() {
         return label;

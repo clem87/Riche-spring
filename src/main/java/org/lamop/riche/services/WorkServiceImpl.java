@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 import javax.persistence.EntityManager;
 import org.lamop.riche.dao.DAOGenericImpl;
 import org.lamop.riche.dao.DAOPersonIfs;
@@ -56,10 +57,14 @@ public class WorkServiceImpl implements WorkServiceIfs {
     public void addEntity(WorkEntity w) {
 
      
-        List<RelationWorkSource> listRelation = w.getRelationWorkSource();
-
-        for (int i = 0; i < listRelation.size(); i++) {
-            RelationWorkSource relation = listRelation.get(i);
+        Set<RelationWorkSource> listRelation = w.getRelationWorkSource();
+        for (Iterator<RelationWorkSource> iterator = listRelation.iterator(); iterator.hasNext();) {
+            RelationWorkSource relation = iterator.next();
+            
+//        }
+//
+//        for (int i = 0; i < listRelation.size(); i++) {
+//            RelationWorkSource relation = listRelation.get(i);
             Source s = daoSource.getEntity(relation.getSource().getId());
 //            s.addRelationWorkSource(relation);
             relation.setSource(s);
@@ -122,9 +127,15 @@ public class WorkServiceImpl implements WorkServiceIfs {
         
         
         
-        List<RelationWorkSource> rel = entity.getRelationWorkSource();
-        for (ListIterator<RelationWorkSource> iterator = rel.listIterator(); iterator.hasNext();) {
+        Set<RelationWorkSource> rel = entity.getRelationWorkSource();
+        List<RelationWorkSource> add = new ArrayList<>();
+      
+        for (Iterator<RelationWorkSource> iterator = rel. iterator(); iterator.hasNext();) {
             RelationWorkSource relationByUser = iterator.next();
+            
+//        }
+//        for (ListIterator<RelationWorkSource> iterator = rel.listIterator(); iterator.hasNext();) {
+//            RelationWorkSource relationByUser = iterator.next();
             if(relationByUser.getId()==null){
                 Source s = daoSource.getEntity(relationByUser.getSource().getId());
                 relationByUser.setSource(s);
@@ -132,9 +143,12 @@ public class WorkServiceImpl implements WorkServiceIfs {
             }
             else{
                 RelationWorkSource relInDB= daoRelationWorkSource.getEntity(relationByUser.getId());
-                iterator.set(relInDB);
+//                iterator.set(relInDB);
+                add.add(relInDB);
             }
         }
+        rel.addAll(add);
+        
         workinDB.getRelationWorkSource().clear();
         workinDB.getRelationWorkSource().addAll(entity.getRelationWorkSource());
         
@@ -203,7 +217,7 @@ public class WorkServiceImpl implements WorkServiceIfs {
     @Override
     public WorkEntity getEntity(Long id) {
         WorkEntity entity = dao.getEntity(id);
-        entity.getRelationWorkSource();
+//        entity.getRelationWorkSource();
         return entity;
     }
 

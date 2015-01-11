@@ -5,8 +5,11 @@
  */
 package org.lamop.riche.services;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 import org.lamop.riche.dao.DAOPersonIfs;
 import org.lamop.riche.dao.DAORelationSourcePersonIfs;
 import org.lamop.riche.dao.DAORelationWorkSourceIfs;
@@ -58,14 +61,18 @@ public class SourceServiceImpl implements SourceServiceIfs {
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
     @Override
     public void addEntity(Source entity) {
-        List<RelationSourcePerson> list = entity.getRelationPerson();
-        for (int i = 0; i < list.size(); i++) {
-            RelationSourcePerson get = list.get(i);
-           Person person=  daoPerson.getEntity(get.getPerson().getId());
-           get.setPerson(person);
+        Set<RelationSourcePerson> list = entity.getRelationPerson();
+        for (Iterator<RelationSourcePerson> iterator = list.iterator(); iterator.hasNext();) {
+            RelationSourcePerson get = iterator.next();
+
+//        }
+//        for (int i = 0; i < list.size(); i++) {
+//            RelationSourcePerson get = list.get(i);
+            Person person = daoPerson.getEntity(get.getPerson().getId());
+            get.setPerson(person);
             get.setSource(entity);
         }
-         dao.addEntity(entity);
+        dao.addEntity(entity);
     }
 
     @Transactional
@@ -73,16 +80,20 @@ public class SourceServiceImpl implements SourceServiceIfs {
     public void removeEntity(Source source) {
 
         // Pour éviter le work recré la relation par cascade, il faut explicitement supprimer
-        List<RelationWorkSource> listRelation = source.getRelationWorkSource();
-        for (int i = 0; i < listRelation.size(); i++) {
-            RelationWorkSource relation = listRelation.get(i);
+        Set<RelationWorkSource> listRelation = source.getRelationWorkSource();
+        for (Iterator<RelationWorkSource> iterator = listRelation.iterator(); iterator.hasNext();) {
+            RelationWorkSource relation = iterator.next();
+
+//        }
+//        for (int i = 0; i < listRelation.size(); i++) {
+//            RelationWorkSource relation = listRelation.get(i);
             WorkEntity w = relation.getWorkEntity();
             if (w != null) {
                 w.removeRelationWorkSource(relation);
                 daoWork.update(w);
             }
         }
-        
+
         dao.removeEntity(source);
     }
 
@@ -108,21 +119,28 @@ public class SourceServiceImpl implements SourceServiceIfs {
         sourceExistante.setTitle(entity.getTitle());
         sourceExistante.setVolume(entity.getVolume());
         sourceExistante.setBibliographicType(entity.getBibliographicType());
-        
-        List<RelationSourcePerson> relationsSendByUsers = entity.getRelationPerson();
-        
-        for (ListIterator<RelationSourcePerson> iterator =  relationsSendByUsers.listIterator(); iterator.hasNext();) {
+
+        Set<RelationSourcePerson> relationsSendByUsers = entity.getRelationPerson();
+        List<RelationSourcePerson> listAAjouter = new ArrayList<>();
+        for (Iterator<RelationSourcePerson> iterator = relationsSendByUsers.iterator(); iterator.hasNext();) {
             RelationSourcePerson relationUser = iterator.next();
-            if(relationUser.getId()==null){
+
+//        }
+//        
+//        for (ListIterator<RelationSourcePerson> iterator =  relationsSendByUsers.listIterator(); iterator.hasNext();) {
+//            RelationSourcePerson relationUser = iterator.next();
+            if (relationUser.getId() == null) {
                 relationUser.setSource(sourceExistante);
                 Person p = daoPerson.getEntity(relationUser.getPerson().getId());
                 relationUser.setPerson(p);
-            }
-            else{
+            } else {
                 RelationSourcePerson relation = daoRelationSourcePerson.getEntity(relationUser.getId());
-          iterator.set(relation);
+                relationsSendByUsers.remove(relationUser);
+                listAAjouter.add(relation);
+//                iterator.set(relation);
             }
         }
+        relationsSendByUsers.addAll(listAAjouter);
         sourceExistante.getRelationPerson().clear();
         sourceExistante.getRelationPerson().addAll(relationsSendByUsers);
         dao.update(sourceExistante);

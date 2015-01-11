@@ -12,7 +12,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -41,7 +43,7 @@ public class Source implements Serializable, Cloneable {
     
 //    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "source",orphanRemoval = true)
-    private List<RelationWorkSource> relationWorkSource = new ArrayList<>();
+    private Set<RelationWorkSource> relationWorkSource = new HashSet<>();
 
     @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "UseIdOrGenerateID")
@@ -61,7 +63,7 @@ public class Source implements Serializable, Cloneable {
     @OneToMany(mappedBy = "source", orphanRemoval = true)
 //     @LazyCollection(LazyCollectionOption.FALSE)
     @Cascade(CascadeType.ALL)
-    protected List<RelationSourcePerson> relationPerson = new ArrayList<>();
+    protected Set<RelationSourcePerson> relationPerson = new HashSet<>();
 
     @ManyToOne
     protected BibliographicType bibliographicType;
@@ -198,19 +200,15 @@ public class Source implements Serializable, Cloneable {
     }
 
 //    public List<WorkEntity> getWorks() {
-//        return works;
-//    }
-//
-//    public void setWorks(List<WorkEntity> works) {
-//        this.works = works;
-//    }
-    public List<RelationWorkSource> getRelationWorkSource() {
+
+    public Set<RelationWorkSource> getRelationWorkSource() {
         return relationWorkSource;
     }
 
-    public void setRelationWorkSource(List<RelationWorkSource> relationWorkSource) {
+    public void setRelationWorkSource(Set<RelationWorkSource> relationWorkSource) {
         this.relationWorkSource = relationWorkSource;
     }
+
 
     public synchronized void addRelationWorkSource(RelationWorkSource r) {
 
@@ -222,13 +220,23 @@ public class Source implements Serializable, Cloneable {
         this.relationWorkSource.remove(r);
     }
 
-    public List<RelationSourcePerson> getRelationPerson() {
+//    public List<RelationSourcePerson> getRelationPerson() {
+//        return relationPerson;
+//    }
+//
+//    public void setRelationPerson(List<RelationSourcePerson> relationPerson) {
+//        this.relationPerson = relationPerson;
+//    }
+
+    public Set<RelationSourcePerson> getRelationPerson() {
         return relationPerson;
     }
 
-    public void setRelationPerson(List<RelationSourcePerson> relationPerson) {
+    public void setRelationPerson(Set<RelationSourcePerson> relationPerson) {
         this.relationPerson = relationPerson;
     }
+    
+    
     
     public void addRelationPerson(RelationSourcePerson relation){
         this.relationPerson.add(relation);

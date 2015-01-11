@@ -12,8 +12,10 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -46,7 +48,7 @@ public class WorkEntity implements Serializable, Cloneable {
 //    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "workEntity", orphanRemoval = true)
     @Cascade(CascadeType.ALL)
-    private List<RelationWorkSource> relationWorkSource = new ArrayList<>();
+    private Set<RelationWorkSource> relationWorkSource = new HashSet<>();
 
     private static final long serialVersionUID = 1L;
 
@@ -58,7 +60,7 @@ public class WorkEntity implements Serializable, Cloneable {
 
     @ManyToMany()
 //    @LazyCollection(LazyCollectionOption.FALSE)
-    protected List<WorkAuthor> authors = new ArrayList<>();
+    protected Set<WorkAuthor> authors = new HashSet<>();
 
 
     
@@ -66,7 +68,7 @@ public class WorkEntity implements Serializable, Cloneable {
 //@LazyCollection(LazyCollectionOption.FALSE)
 //    @JsonManagedReference()
     @ManyToMany
-    protected List<Theme> theme;
+    protected Set<Theme> theme;
     
     @OneToOne
     protected Origin origin;
@@ -102,31 +104,23 @@ public class WorkEntity implements Serializable, Cloneable {
         this.title = title;
     }
 
-    public List<WorkAuthor> getAuthors() {
+    public Set<WorkAuthor> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<WorkAuthor> authors) {
+    public void setAuthors(Set<WorkAuthor> authors) {
         this.authors = authors;
     }
+    
 
-//    public Theme getTheme() {
-//        return theme;
-//    }
-//
-//    public void setTheme(Theme theme) {
-//        this.theme = theme;
-//    }
-
-    public List<Theme> getTheme() {
+    public Set<Theme> getTheme() {
         return theme;
     }
 
-    public void setTheme(List<Theme> theme) {
+
+    public void setTheme(Set<Theme> theme) {    
         this.theme = theme;
     }
-    
-    
 
     public Origin getOrigin() {
         return origin;
@@ -193,13 +187,22 @@ public class WorkEntity implements Serializable, Cloneable {
         return "org.lamop.riche.model.Work[ id=" + id + " ]";
     }
 
-    public List<RelationWorkSource> getRelationWorkSource() {
+//    public List<RelationWorkSource> getRelationWorkSource() {
+//        return relationWorkSource;
+//    }
+//
+//    public void setRelationWorkSource(List<RelationWorkSource> relationWorkSource) {
+//        this.relationWorkSource = relationWorkSource;
+//    }
+
+    public Set<RelationWorkSource> getRelationWorkSource() {
         return relationWorkSource;
     }
 
-    public void setRelationWorkSource(List<RelationWorkSource> relationWorkSource) {
+    public void setRelationWorkSource(Set<RelationWorkSource> relationWorkSource) {
         this.relationWorkSource = relationWorkSource;
     }
+    
 
     public synchronized void removeRelationWorkSource(RelationWorkSource relation) {
         

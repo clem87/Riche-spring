@@ -6,9 +6,6 @@
 package org.lamop.riche.dao;
 
 import java.util.List;
-import javax.persistence.Query;
-import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.lamop.riche.model.WorkEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,12 +35,24 @@ public class DAOWorkImpl extends DAOGenericImpl<WorkEntity> implements DAOWorkIF
     public List<WorkEntity> getAllEntities() {
 //        return super.getAllEntities(); //To change body of generated methods, choose Tools | Templates.
 
-        org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery("SELECT w FROM WorkEntity w "
-                + "JOIN FETCH w.authors authors "
-                + "JOIN FETCH w.origin origin "
-                + "JOIN FETCH w.relationWorkSource relation "
-                + "JOIN FETCH w.theme theme");
-        return q.list();
+        org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery("SELECT DISTINCT w FROM WorkEntity w "
+                + "LEFT JOIN FETCH w.authors authors "
+                + "LEFT JOIN FETCH w.origin origin "
+                + "LEFT JOIN FETCH w.relationWorkSource relation "
+                + "LEFT JOIN FETCH w.theme theme");
+        
+        
+        List<WorkEntity> returnList = q.list();
+//        for (int i = 0; i < returnList.size(); i++) {
+//            WorkEntity get = returnList.get(i);
+//            
+////            sessionFactory.getCurrentSession().evict(get);
+////            Hibernate.initialize(get);
+//        }
+        sessionFactory.getCurrentSession().clear();
+        
+
+        return returnList;
 
 //        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(WorkEntity.class);
 //        criteria.setFetchMode("relationWorkSource", FetchMode.JOIN);
@@ -52,5 +61,41 @@ public class DAOWorkImpl extends DAOGenericImpl<WorkEntity> implements DAOWorkIF
 //        return criteria.list();
 
     }
+
+//    @Override
+//    public WorkEntity getEntity(WorkEntity id) {
+//        org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery("SELECT w FROM WorkEntity w "
+//                + "LEFT JOIN FETCH w.authors authors "
+//                + "LEFT JOIN FETCH w.origin origin "
+//                + "LEFT JOIN FETCH w.relationWorkSource relation "
+//                + "LEFT JOIN FETCH w.theme theme "
+//                + "WHERE w.id=:id");
+//        q.setParameter("id", id);
+//        WorkEntity result = (WorkEntity) q.uniqueResult();
+//         sessionFactory.getCurrentSession().clear();
+//         return result;
+////        return (WorkEntity) q.uniqueResult();
+//        
+////        return super.getEntity(id); //To change body of generated methods, choose Tools | Templates.
+//    }
+
+    @Override
+    public WorkEntity getEntity(Long id) {
+                org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery("SELECT DISTINCT w FROM WorkEntity w "
+                + "LEFT JOIN FETCH w.authors authors "
+                + "LEFT JOIN FETCH w.origin origin "
+                + "LEFT JOIN FETCH w.relationWorkSource relation "
+                + "LEFT JOIN FETCH w.theme theme "
+                + "WHERE w.id=:id");
+        q.setParameter("id", id);
+        WorkEntity result = (WorkEntity) q.uniqueResult();
+         sessionFactory.getCurrentSession().clear();
+         return result;
+    }
+    
+    
+    
+    
+    
 
 }
