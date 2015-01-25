@@ -203,6 +203,8 @@ public abstract class DAOGenericImpl<T> implements DAOGenericIFS<T> {
 //        throw new UnsupportedOperationException();
 //        return null;
     }
+    
+    
 
     private void finallyCloseEmTransaction(EntityManager em) {
         if (em != null && em.getTransaction().isActive()) {

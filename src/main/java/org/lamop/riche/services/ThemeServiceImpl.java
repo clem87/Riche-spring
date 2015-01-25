@@ -20,6 +20,10 @@ public class ThemeServiceImpl implements ThemeServiceIfs{
     @Autowired
     DAOThemeIfs dao;
     
+    
+    
+    
+    
     @Transactional
     @Override
     public List<Theme> getAll() {
@@ -65,6 +69,13 @@ public class ThemeServiceImpl implements ThemeServiceIfs{
 
     public void setDao(DAOThemeIfs dao) {
         this.dao = dao;
+    }
+
+    @Transactional
+    @Override
+    public List<Theme> find(String arg) {
+        return dao.find(arg);
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

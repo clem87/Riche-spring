@@ -8,7 +8,6 @@ package org.lamop.riche.webservices;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.lamop.riche.model.BibliographicType;
-import org.lamop.riche.model.Origin;
 import org.lamop.riche.model.Person;
 import org.lamop.riche.model.RelationSourcePerson;
 import org.lamop.riche.model.RelationWorkSource;
@@ -17,7 +16,6 @@ import org.lamop.riche.model.Theme;
 import org.lamop.riche.model.WorkEntity;
 import org.lamop.riche.services.BibliographicTypeServiceIfs;
 import org.lamop.riche.services.ImportServiceIfs;
-import org.lamop.riche.services.OrigineServiceIfs;
 import org.lamop.riche.services.PersonServiceIfs;
 import org.lamop.riche.services.SourceServiceIfs;
 import org.lamop.riche.services.ThemeServiceIfs;
@@ -42,8 +40,6 @@ public class InitValueWS {
     @Autowired
     BibliographicTypeServiceIfs serviceBiblio;
 
-    @Autowired
-    OrigineServiceIfs origineService;
 
     @Autowired
     WorkServiceIfs workService;
@@ -100,16 +96,6 @@ public class InitValueWS {
         bt2.setLabel("Article");
         serviceBiblio.addEntity(bt);
         serviceBiblio.addEntity(bt2);
-
-        // Origine
-        Origin o = new Origin();
-        o.setLabel("Couvent des Célestins");
-
-        Origin o2 = new Origin();
-        o2.setLabel("Saint-Victor");
-
-        origineService.addEntity(o);
-        origineService.addEntity(o2);
 
         //Work
         WorkEntity w1 = new WorkEntity();
@@ -196,22 +182,7 @@ public class InitValueWS {
         w3.addRelationWorkSource(r3);
         
         workService.addEntity(w3);
-        
                 
-                
-//        Vidier, Alexandre and Abbaye Saint-Benoît de Fleur
-//        
-//        
-//        
-//        Auteur Isambard de Fleury 
-//        Titre Puerorum speculum Période 10 - 10 siècle Date
-//        Notes ouvrage perdu Références bibliographiques[1] Vidier
-//        , Alexandre and Abbaye Saint
-//        -Benoît de Fleur, L
-//         'historiographie à Saint-Benoît-sur-Loire et les miracles de saint Benoît, Paris, 1965, p.97, note 156 ; 243 [bibliographie]
-//
-
-//[1] Patrologia Latina, 65 p.Ep.VIII, 360-372 [bibliographie]
     }
     
     

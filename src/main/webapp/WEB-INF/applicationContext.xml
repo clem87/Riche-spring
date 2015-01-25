@@ -37,7 +37,6 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
                 <value>org.lamop.riche.model.BibliograficAuthor</value>
                 <value>org.lamop.riche.model.Person</value>
                 <value>org.lamop.riche.model.RelationWorkSource</value>
-                <value>org.lamop.riche.model.Origin</value>
                 <value>org.lamop.riche.model.SecondaryName</value>
                 <value>org.lamop.riche.model.AuthorityNotice</value>
                 <value>org.lamop.riche.model.Theme</value>
@@ -115,10 +114,6 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <property name="sessionFactory" ref="mySessionFactory" />
     </bean>
     
-    <bean id="daoOrigine" class="org.lamop.riche.dao.DAOOrigineImpl">
-        <!--<property name="emf" ref="emf" />-->
-        <property name="sessionFactory" ref="mySessionFactory" />
-    </bean>
     
     <bean id="daoSource" class="org.lamop.riche.dao.DAOSourceImpl">
         <!--<property name="emf" ref="emf" />-->
@@ -166,9 +161,6 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         
     </bean>
     
-    <bean id="serviceOrigine" class="org.lamop.riche.services.OrigineServiceImpl">
-        <property name="dao" ref="daoOrigine" />
-    </bean>
     
     <bean id="serviceSource" class="org.lamop.riche.services.SourceServiceImpl">
         <property name="dao" ref="daoSource" />

@@ -37,7 +37,6 @@ public class DAOWorkImpl extends DAOGenericImpl<WorkEntity> implements DAOWorkIF
 
         org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery("SELECT DISTINCT w FROM WorkEntity w "
                 + "LEFT JOIN FETCH w.authors authors "
-                + "LEFT JOIN FETCH w.origin origin "
                 + "LEFT JOIN FETCH w.relationWorkSource relation "
                 + "LEFT JOIN FETCH w.theme theme");
         
@@ -62,28 +61,12 @@ public class DAOWorkImpl extends DAOGenericImpl<WorkEntity> implements DAOWorkIF
 
     }
 
-//    @Override
-//    public WorkEntity getEntity(WorkEntity id) {
-//        org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery("SELECT w FROM WorkEntity w "
-//                + "LEFT JOIN FETCH w.authors authors "
-//                + "LEFT JOIN FETCH w.origin origin "
-//                + "LEFT JOIN FETCH w.relationWorkSource relation "
-//                + "LEFT JOIN FETCH w.theme theme "
-//                + "WHERE w.id=:id");
-//        q.setParameter("id", id);
-//        WorkEntity result = (WorkEntity) q.uniqueResult();
-//         sessionFactory.getCurrentSession().clear();
-//         return result;
-////        return (WorkEntity) q.uniqueResult();
-//        
-////        return super.getEntity(id); //To change body of generated methods, choose Tools | Templates.
-//    }
 
     @Override
     public WorkEntity getEntity(Long id) {
                 org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery("SELECT DISTINCT w FROM WorkEntity w "
                 + "LEFT JOIN FETCH w.authors authors "
-                + "LEFT JOIN FETCH w.origin origin "
+//                + "LEFT JOIN FETCH w.origin origin "
                 + "LEFT JOIN FETCH w.relationWorkSource relation "
                 + "LEFT JOIN FETCH w.theme theme "
                 + "WHERE w.id=:id");

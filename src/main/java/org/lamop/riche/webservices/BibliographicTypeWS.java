@@ -9,7 +9,6 @@ import java.util.List;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.lamop.riche.model.BibliographicType;
-import org.lamop.riche.model.Origin;
 import org.lamop.riche.services.BibliographicTypeServiceIfs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -5,12 +5,14 @@
  */
 package org.lamop.riche.services;
 
+import java.util.List;
 import org.lamop.riche.model.Theme;
+import org.lamop.riche.model.WorkAuthor;
 
 /**
  *
  * @author clril
  */
 public interface ThemeServiceIfs extends ServiceCRUDIfs<Theme>{
-    
+     public List<Theme> find(String arg) ;
 }

@@ -586,11 +586,11 @@ public class ImportServiceImpl implements ImportServiceIfs {
     }
     
     public void initbibliographicType() {
-        BibliographicType t1 = new BibliographicType("article");
-        BibliographicType t2 = new BibliographicType("book");
-        BibliographicType t3 = new BibliographicType("incollection");
+        BibliographicType t1 = new BibliographicType("Article dans une revue");
+        BibliographicType t2 = new BibliographicType("Ouvrage");
+        BibliographicType t3 = new BibliographicType("Article dans un collectif");
         BibliographicType t4 = new BibliographicType("Manuscrit");
-        BibliographicType t5 = new BibliographicType("phdthesis");
+        BibliographicType t5 = new BibliographicType("Mémoire ou thèse");
         
         serviceBibliographicType.addEntity(t1);
         serviceBibliographicType.addEntity(t2);

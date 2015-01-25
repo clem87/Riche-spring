@@ -6,15 +6,9 @@
 package org.lamop.riche.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,14 +16,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.Columns;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -70,10 +59,9 @@ public class WorkEntity implements Serializable, Cloneable {
     @ManyToMany
     protected Set<Theme> theme;
     
-    @OneToOne
-    protected Origin origin;
+    protected String origin;
 
-    protected Date exactDate;
+    protected String exactDate;
 
     protected Integer centuryMax;
 
@@ -82,7 +70,6 @@ public class WorkEntity implements Serializable, Cloneable {
     /***
      * Note personnelle de Pierre Riché sur l'oeuvre
      */
-
     @Column(length = 700)
     protected String note;
 
@@ -122,13 +109,15 @@ public class WorkEntity implements Serializable, Cloneable {
         this.theme = theme;
     }
 
-    public Origin getOrigin() {
+    public String getOrigin() {
         return origin;
     }
 
-    public void setOrigin(Origin origin) {
+    public void setOrigin(String origin) {
         this.origin = origin;
     }
+
+
 
     public Long getId() {
         return id;
@@ -138,13 +127,15 @@ public class WorkEntity implements Serializable, Cloneable {
         this.id = id;
     }
 
-    public Date getExactDate() {
+    public String getExactDate() {
         return exactDate;
     }
 
-    public void setExactDate(Date exactDate) {
+    public void setExactDate(String exactDate) {
         this.exactDate = exactDate;
     }
+
+
 
     public Integer getCenturyMax() {
         return centuryMax;
