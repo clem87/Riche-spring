@@ -5,6 +5,8 @@
  */
 package org.lamop.riche.dao;
 
+import java.util.List;
+import org.lamop.riche.model.WorkAuthor;
 import org.lamop.riche.model.WorkEntity;
 
 /**
@@ -13,8 +15,8 @@ import org.lamop.riche.model.WorkEntity;
  */
 public interface DAOWorkIFS extends DAOGenericIFS<WorkEntity>{
     
-    
     public void testSpeWork(WorkEntity w);
-    
-    
+
+    public List<WorkEntity> getWorkForAuthor(WorkAuthor author);
+
 }

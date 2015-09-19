@@ -10,14 +10,12 @@ import org.lamop.riche.model.WorkEntity;
 import org.lamop.riche.services.WorkServiceIfs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
-//import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import org.lamop.riche.model.Person;
 import org.lamop.riche.model.WorkAuthor;
 
 /**
@@ -25,12 +23,14 @@ import org.lamop.riche.model.WorkAuthor;
  * @author clril
  */
 @RestController
-@RequestMapping("/rest/test")
+@RequestMapping("/rest/work")
 //@EnableAutoConfiguration
 public class WorkRESTWS {
 
     @Autowired
     WorkServiceIfs serviceWork;
+    
+
 
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", value = "/getall")
     @Produces(MediaType.APPLICATION_JSON)
@@ -42,12 +42,14 @@ public class WorkRESTWS {
         return list;
 
     }
-
-//    @RequestMapping(method = RequestMethod.POST, value = "/add")
-//    public void add(@RequestBody WorkEntity work) {
-//        System.out.println("ADD work " + work);
-//        serviceWork.addEntity(work);
-//    }
+    
+     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", value = "/getWorkForAuthor")
+    @Produces(MediaType.APPLICATION_JSON)
+    List<WorkEntity> getWorkForAuthor(@PathParam("authorId") Long authorId){
+        List<WorkEntity> list = serviceWork.getWorkForAuthor(authorId);
+        return list;
+    }
+    
 
     @DELETE
     @Path("{id}")
@@ -91,7 +93,6 @@ public class WorkRESTWS {
         serviceWork.addEntity(wTest);
     }
 
-    
     @RequestMapping(method = RequestMethod.PUT, headers = "Accept=application/json")
     public @ResponseBody WorkEntity update(@PathParam("id") int id, @RequestBody WorkEntity work){
         System.out.println("ID " + id);
@@ -99,6 +100,4 @@ public class WorkRESTWS {
         serviceWork.modifyEntity(work);
         return work;
     }
-    
-
 }

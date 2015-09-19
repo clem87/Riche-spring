@@ -6,7 +6,6 @@
 package org.lamop.riche.services;
 
 import java.util.List;
-import org.lamop.riche.dao.DAOWorkIFS;
 import org.lamop.riche.model.WorkEntity;
 
 /**
@@ -15,5 +14,6 @@ import org.lamop.riche.model.WorkEntity;
  */
 public interface WorkServiceIfs extends ServiceCRUDIfs<WorkEntity>{
 
+    public List<WorkEntity> getWorkForAuthor(long id);
 
 }

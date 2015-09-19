@@ -19,6 +19,7 @@ import org.lamop.riche.dao.DAOWorkIFS;
 import org.lamop.riche.model.Person;
 import org.lamop.riche.model.RelationWorkSource;
 import org.lamop.riche.model.Source;
+import org.lamop.riche.model.WorkAuthor;
 import org.lamop.riche.model.WorkEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +43,9 @@ public class WorkServiceImpl implements WorkServiceIfs {
 
     @Autowired
     DAORelationWorkSourceIfs daoRelationWorkSource;
+    
+    @Autowired
+    WorkAuthorServiceIfs workAuthorService;
 
     Logger log = LoggerFactory.getLogger(WorkServiceImpl.class);
 
@@ -236,5 +240,38 @@ public class WorkServiceImpl implements WorkServiceIfs {
     public void setDaoRelationWorkSource(DAORelationWorkSourceIfs daoRelationWorkSource) {
         this.daoRelationWorkSource = daoRelationWorkSource;
     }
+
+    
+    @Override
+    @Transactional
+    public List<WorkEntity> getWorkForAuthor(long id) {
+        
+        WorkAuthor author = workAuthorService.getEntity(id);
+        if(author != null){
+            List<WorkEntity> listWork = dao.getWorkForAuthor(author);
+            List<WorkEntity> listReturn = new ArrayList<>();
+            for (int i = 0; i < listWork.size(); i++) {
+                WorkEntity get = listWork.get(i);
+                WorkEntity clone = new WorkEntity();
+                clone.setId(get.getId());
+                clone.setTitle(get.getTitle());
+                listReturn.add(clone);
+            }
+            
+            return listReturn;
+//            return dao.getWorkForAuthor(author);
+        }
+        return null;
+    }
+
+    public WorkAuthorServiceIfs getWorkAuthorService() {
+        return workAuthorService;
+    }
+
+    public void setWorkAuthorService(WorkAuthorServiceIfs workAuthorService) {
+        this.workAuthorService = workAuthorService;
+    }
+    
+    
 
 }

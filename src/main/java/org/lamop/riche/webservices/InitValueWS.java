@@ -21,6 +21,7 @@ import org.lamop.riche.services.SourceServiceIfs;
 import org.lamop.riche.services.ThemeServiceIfs;
 import org.lamop.riche.services.WorkServiceIfs;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -52,6 +53,10 @@ public class InitValueWS {
     
     @Autowired
     ImportServiceIfs importService;
+    
+    
+    @Value("${test}")
+protected String test;
     
      @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", value = "/importall")
     @Produces(MediaType.APPLICATION_JSON)
@@ -186,6 +191,14 @@ public class InitValueWS {
     }
     
     
+    
+    @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", value = "/test")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ResponseBody
+    public void test() {
+        System.out.println("coucou");
+        System.out.println(test);
+    }
     
 
 }

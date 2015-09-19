@@ -20,15 +20,11 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     </property>
 </bean>
   
-
+<context:component-scan base-package="org.lamop.riche.webservices"/>
 <!-- SessionFactory, DataSource, etc. omitted -->
 
 
 <bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-<!--        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/riche"/>
-        <property name="username" value="root"/>
-        <property name="password" value="Sidll4LP"/>-->
         <property name="driverClassName" value="${db.driverClassName}"/>
         <property name="url" value="${db.url}"/>
         <property name="username" value="${db.user}"/>
@@ -154,6 +150,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <property name="daoPerson" ref="daoPerson" />
         <property name="daoSource" ref="daoSource" />
         <property name="daoRelationWorkSource" ref="daoRelationWorkSource" />
+        <property name="workAuthorService" ref="serviceWorkAuthor"/>
        
        
     </bean>

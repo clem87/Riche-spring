@@ -33,7 +33,6 @@ public class ApplicationConfig extends Application {
         resources.add(org.lamop.riche.webservices.SourceRESTWS.class);
         resources.add(org.lamop.riche.webservices.ThemeRESTWS.class);
         resources.add(org.lamop.riche.webservices.WorkAuthorRESTWs.class);
-        resources.add(org.lamop.riche.webservices.WorkRESTWS.class);
     }
     
 }

@@ -25,9 +25,6 @@ import org.hibernate.annotations.CascadeType;
  * @author clril
  */
 @Entity
-//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
-//        property = "@id", scope = WorkEntity.class)
-//@JsonSerialize(using = WorkEntitySerializer.class)
 public class WorkEntity implements Serializable, Cloneable {
 
     @JsonCreator
@@ -48,14 +45,8 @@ public class WorkEntity implements Serializable, Cloneable {
     protected String title;
 
     @ManyToMany()
-//    @LazyCollection(LazyCollectionOption.FALSE)
     protected Set<WorkAuthor> authors = new HashSet<>();
 
-
-    
-    
-//@LazyCollection(LazyCollectionOption.FALSE)
-//    @JsonManagedReference()
     @ManyToMany
     protected Set<Theme> theme;
     
@@ -99,11 +90,9 @@ public class WorkEntity implements Serializable, Cloneable {
         this.authors = authors;
     }
     
-
     public Set<Theme> getTheme() {
         return theme;
     }
-
 
     public void setTheme(Set<Theme> theme) {    
         this.theme = theme;
@@ -134,8 +123,6 @@ public class WorkEntity implements Serializable, Cloneable {
     public void setExactDate(String exactDate) {
         this.exactDate = exactDate;
     }
-
-
 
     public Integer getCenturyMax() {
         return centuryMax;
@@ -178,14 +165,6 @@ public class WorkEntity implements Serializable, Cloneable {
         return "org.lamop.riche.model.Work[ id=" + id + " ]";
     }
 
-//    public List<RelationWorkSource> getRelationWorkSource() {
-//        return relationWorkSource;
-//    }
-//
-//    public void setRelationWorkSource(List<RelationWorkSource> relationWorkSource) {
-//        this.relationWorkSource = relationWorkSource;
-//    }
-
     public Set<RelationWorkSource> getRelationWorkSource() {
         return relationWorkSource;
     }
@@ -203,7 +182,6 @@ public class WorkEntity implements Serializable, Cloneable {
                      iterator.remove();
             }
         }
-
     }
 
     public synchronized void addRelationWorkSource(RelationWorkSource relation) {
@@ -221,13 +199,9 @@ public class WorkEntity implements Serializable, Cloneable {
     @Override
     protected Object clone() throws CloneNotSupportedException {
         WorkEntity clone = (WorkEntity) super.clone();
-        clone.setRelationWorkSource(null);
-//        clone.setRelationWorkSource(this.relationWorkSource.);
-        
+        clone.setRelationWorkSource(null);   
         
         return clone; //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
     
 }
