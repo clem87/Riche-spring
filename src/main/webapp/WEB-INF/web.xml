@@ -9,18 +9,6 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     
-    
-    <!--    <servlet>
-        <servlet-name>dispatcher</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>dispatcher</servlet-name>
-        <url-pattern>*.htm</url-pattern>
-    </servlet-mapping>
-    -->
-    
     <servlet>
         <servlet-name>rest</servlet-name>
         <servlet-class>
@@ -35,7 +23,15 @@
     </servlet-mapping>
 
 
+    <filter>
+        <filter-name>filterRest</filter-name>
+        <filter-class>org.lamop.riche.webservices.FilterRest</filter-class>
+    </filter>
 
+    <filter-mapping>
+        <filter-name>filterRest</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
@@ -46,20 +42,39 @@
 
     <filter-mapping>
         <filter-name>springSecurityFilterChain</filter-name>
-        <url-pattern>/*</url-pattern>
+        <!--<url-pattern>/*</url-pattern>-->
+        <!--<url-pattern>/rest/work/getall</url-pattern>-->
+        <url-pattern>/j_spring_security_check</url-pattern>
+        <url-pattern>/j_spring_security_logout</url-pattern>
+            
+        <!--URL De modification--> 
+        <url-pattern>/rest/work/post</url-pattern>
+        <url-pattern>/rest/source/post</url-pattern>
+        <url-pattern>/rest/author/post</url-pattern>
+        <url-pattern>/rest/workauthor/post</url-pattern>
+           
+         
+        <!--URL d'ajout-->
+        <url-pattern>/rest/work/put</url-pattern>
+        <url-pattern>/rest/source/put</url-pattern>
+        <url-pattern>/rest/author/put</url-pattern>
+        <url-pattern>/rest/workauthor/put</url-pattern>
+           
+           
+        <!--           URL DE DELETE-->
+        <url-pattern>/rest/work/delete</url-pattern>
+        <url-pattern>/rest/source/delete</url-pattern>
+        <url-pattern>/rest/author/delete</url-pattern>
+        <url-pattern>/rest/workauthor/delete</url-pattern>
+           
+
     </filter-mapping>
     
     
-    <filter>
-        <filter-name>filterRest</filter-name>
-        <filter-class>org.lamop.riche.webservices.FilterRest</filter-class>
-    </filter>
-
     <filter-mapping>
         <filter-name>filterRest</filter-name>
-        <url-pattern>/rest/*</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
-    
     
     
     <session-config>
