@@ -6,16 +6,11 @@
 package org.lamop.riche.webservices;
 
 import java.util.List;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.lamop.riche.model.Source;
-import org.lamop.riche.model.WorkEntity;
-
 import org.lamop.riche.services.SourceServiceIfs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,17 +30,13 @@ public class SourceRESTWS {
 
     @Autowired
     SourceServiceIfs serviceSource;
-
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", value = "/getall")
     @Produces(MediaType.APPLICATION_JSON)
     @ResponseBody
     public List<Source> getAll() {
-
         return serviceSource.getAll();
-//        return null;
     }
 
-    @GET
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", value = "/find")
     @Produces(MediaType.APPLICATION_JSON)
     public @ResponseBody
@@ -54,11 +45,9 @@ public class SourceRESTWS {
         return l;
     }
 
-    @POST
-    @RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json", consumes = MediaType.APPLICATION_JSON, value = "/add")
+    @RequestMapping(method = RequestMethod.PUT, headers = "Accept=application/json", consumes = MediaType.APPLICATION_JSON, value = "/put")
     public @ResponseBody
     Source create(@RequestBody Source source) {
-        System.out.println("ADD source");
         serviceSource.addEntity(source);
         return source;
     }
@@ -66,25 +55,20 @@ public class SourceRESTWS {
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
     public @ResponseBody
     Source get(@PathParam("id") int id) {
-        System.out.println("GET ID " + id);
         return serviceSource.getEntity(new Long(id));
     }
 
-    @RequestMapping(method = RequestMethod.PUT, headers = "Accept=application/json")
+    @RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json", value = "/post")
     public @ResponseBody
     Source update(@PathParam("id") int id, @RequestBody Source work) {
-        System.out.println("ID " + id);
-        System.out.println("Modify " + work);
         serviceSource.modifyEntity(work);
         return work;
     }
 
-    @DELETE
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    @RequestMapping(method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE, value = "/delete")
     public void remove(@PathParam("id") int id) {
         serviceSource.removeEntity(new Long(id));
     }
-
 }

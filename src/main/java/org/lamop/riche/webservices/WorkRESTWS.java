@@ -29,18 +29,13 @@ public class WorkRESTWS {
 
     @Autowired
     WorkServiceIfs serviceWork;
-    
-
 
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", value = "/getall")
     @Produces(MediaType.APPLICATION_JSON)
     public @ResponseBody
     List<WorkEntity> getAllWork() {
-        
         List<WorkEntity> list = serviceWork.getAll();
-        
         return list;
-
     }
     
      @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", value = "/getWorkForAuthor")
@@ -51,30 +46,27 @@ public class WorkRESTWS {
     }
     
 
-    @DELETE
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    @RequestMapping(method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE, value = "/delete")
     public void remove(@PathParam("id") int id) {
         serviceWork.removeEntity(new Long(id));
     }
 
-    @POST
-    @RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json", consumes = MediaType.APPLICATION_JSON, value = "/add")
+    @RequestMapping(method = RequestMethod.PUT, headers = "Accept=application/json", consumes = MediaType.APPLICATION_JSON, value = "/put")
     public @ResponseBody
     WorkEntity create(@RequestBody WorkEntity work) {
-        System.out.println("Create new work : " + work);
-        System.out.println("work title : " + work.getTitle());
-        System.out.println("Work author size " + work.getAuthors().size());
-
-                
         serviceWork.addEntity(work);
         return work;
     }
     
-    @RequestMapping(method = RequestMethod.GET, headers ="Accept=application/json" )
+    /***
+     * Récupérer une source
+     * @param id
+     * @return 
+     */
+    @RequestMapping(method = RequestMethod.GET, headers ="Accept=application/json" , value = "/get")
     public @ResponseBody WorkEntity get(@PathParam("id") int id){
-        System.out.println("GET ID " + id);
         return serviceWork.getEntity(new Long(id));
     } 
     
@@ -93,10 +85,8 @@ public class WorkRESTWS {
         serviceWork.addEntity(wTest);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, headers = "Accept=application/json")
+    @RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json", value = "/post")
     public @ResponseBody WorkEntity update(@PathParam("id") int id, @RequestBody WorkEntity work){
-        System.out.println("ID " + id);
-        System.out.println("Modify " + work );
         serviceWork.modifyEntity(work);
         return work;
     }
