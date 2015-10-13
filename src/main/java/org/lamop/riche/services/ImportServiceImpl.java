@@ -35,7 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ImportServiceImpl implements ImportServiceIfs {
 
 //    private final String BDDUSER = "root";
-//    private final String BDDPASS = "Sidll4LP";
+//    private final String BDDPASS = "";
 //    private final String BDDBASE = "riche_existant";
 //    private final String BDDDRIVERJDBC = "riche_existant";
     private Connection connexion;
@@ -74,7 +74,7 @@ public class ImportServiceImpl implements ImportServiceIfs {
         }
         
         try {
-            connexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/riche_existant?allowMultiQueries=true", "root", "Sidll4LP");
+            connexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/riche_existant?allowMultiQueries=true", "root", "");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -87,7 +87,7 @@ public class ImportServiceImpl implements ImportServiceIfs {
         }
         
         try {
-            connexion2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/riche_existant?allowMultiQueries=true", "root", "Sidll4LP");
+            connexion2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/riche_existant?allowMultiQueries=true", "root", "");
         } catch (SQLException e) {
             e.printStackTrace();
         }
