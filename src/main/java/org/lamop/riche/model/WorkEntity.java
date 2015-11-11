@@ -49,7 +49,7 @@ public class WorkEntity implements Serializable, Cloneable {
 
     @ManyToMany
     protected Set<Theme> theme;
-    
+
     protected String origin;
 
     protected String exactDate;
@@ -57,8 +57,9 @@ public class WorkEntity implements Serializable, Cloneable {
     protected Integer centuryMax;
 
     protected Integer centuryMin;
-    
-    /***
+
+    /**
+     * *
      * Note personnelle de Pierre Riché sur l'oeuvre
      */
     @Column(length = 700)
@@ -89,12 +90,12 @@ public class WorkEntity implements Serializable, Cloneable {
     public void setAuthors(Set<WorkAuthor> authors) {
         this.authors = authors;
     }
-    
+
     public Set<Theme> getTheme() {
         return theme;
     }
 
-    public void setTheme(Set<Theme> theme) {    
+    public void setTheme(Set<Theme> theme) {
         this.theme = theme;
     }
 
@@ -105,8 +106,6 @@ public class WorkEntity implements Serializable, Cloneable {
     public void setOrigin(String origin) {
         this.origin = origin;
     }
-
-
 
     public Long getId() {
         return id;
@@ -172,14 +171,13 @@ public class WorkEntity implements Serializable, Cloneable {
     public void setRelationWorkSource(Set<RelationWorkSource> relationWorkSource) {
         this.relationWorkSource = relationWorkSource;
     }
-    
 
     public synchronized void removeRelationWorkSource(RelationWorkSource relation) {
-        
+
         for (Iterator<RelationWorkSource> iterator = relationWorkSource.iterator(); iterator.hasNext();) {
             RelationWorkSource next = iterator.next();
-                 if(next.getId().equals(relation.getId())){
-                     iterator.remove();
+            if (next.getId().equals(relation.getId())) {
+                iterator.remove();
             }
         }
     }
@@ -199,9 +197,9 @@ public class WorkEntity implements Serializable, Cloneable {
     @Override
     protected Object clone() throws CloneNotSupportedException {
         WorkEntity clone = (WorkEntity) super.clone();
-        clone.setRelationWorkSource(null);   
-        
+        clone.setRelationWorkSource(null);
+
         return clone; //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

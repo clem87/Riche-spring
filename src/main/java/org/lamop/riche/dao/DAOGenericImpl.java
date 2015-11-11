@@ -5,26 +5,14 @@
  */
 package org.lamop.riche.dao;
 
-import java.util.Iterator;
 import java.util.List;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
-import javax.persistence.Query;
 import javax.persistence.TransactionRequiredException;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import org.hibernate.Criteria;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
-import org.lamop.riche.model.Person;
 import org.lamop.riche.model.WorkEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.GenericTypeResolver;
@@ -57,6 +45,7 @@ public abstract class DAOGenericImpl<T> implements DAOGenericIFS<T> {
         persistentClass = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), DAOGenericImpl.class);
     }
 
+    @Override
     public T getEntity(Long id) {
        return (T) sessionFactory.getCurrentSession().get(persistentClass, id);
         

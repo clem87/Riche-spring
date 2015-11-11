@@ -49,6 +49,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
                 <value>org.lamop.riche.model.AuthorityOrganism</value>
                 <value>org.lamop.riche.model.RelationSourcePerson</value>
                  <value>org.lamop.riche.model.WorkAuthor</value>
+                 <value>org.lamop.riche.model.Article</value>
             </list>
         </property>
         
@@ -104,6 +105,10 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     </bean>
    
    
+   <bean id="daoArticle" class="org.lamop.riche.dao.DAOArticleImpl">
+       <property name="sessionFactory" ref="mySessionFactory" />
+   </bean>
+   
     <bean id="daoWork" class="org.lamop.riche.dao.DAOWorkImpl">
         <!--<property name="emf" ref="emf" />-->
         <property name="sessionFactory" ref="mySessionFactory" />
@@ -151,8 +156,10 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <property name="daoSource" ref="daoSource" />
         <property name="daoRelationWorkSource" ref="daoRelationWorkSource" />
         <property name="workAuthorService" ref="serviceWorkAuthor"/>
-       
-       
+    </bean>
+    
+    <bean id="articleService" class="org.lamop.riche.services.ArticleServiceImpl">
+        <property name="dao" ref="daoArticle" />
     </bean>
     
     
