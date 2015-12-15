@@ -15,6 +15,8 @@ import org.lamop.riche.model.Source;
 public interface SourceServiceIfs extends ServiceCRUDIfs<Source>{
     
     List<Source> find(String arg);
+
+    public Long getAllCount();
     
    
     

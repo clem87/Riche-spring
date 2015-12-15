@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import org.lamop.riche.dao.DAOPersonIfs;
+import org.lamop.riche.dao.DAORelationSourcePersonIfs;
 import org.lamop.riche.dao.DAOSourceIfs;
 import org.lamop.riche.model.Person;
 import org.lamop.riche.model.RelationSourcePerson;
@@ -27,6 +28,9 @@ public class AuthorServiceImpl implements PersonServiceIfs{
   
   @Autowired
     DAOSourceIfs daoSource;
+  
+  @Autowired
+    DAORelationSourcePersonIfs daoRelationSourcePerson;
     
 
   @Transactional
@@ -66,12 +70,12 @@ public class AuthorServiceImpl implements PersonServiceIfs{
         for (Iterator<RelationSourcePerson> iterator = list.iterator(); iterator.hasNext();) {
             RelationSourcePerson get = iterator.next();
             
-//        }
-//        for (int i = 0; i < list.size(); i++) {
-//            RelationSourcePerson get = list.get(i);
-            Source s = get.getSource();
-            s.removeRelationPerson(get);
-            daoSource.update(s);
+            daoRelationSourcePerson.removeEntity(get);
+            
+
+//            Source s = get.getSource();
+//            s.removeRelationPerson(get);
+//            daoSource.update(s);
         }    
         dao.removeEntity(p);
     }
@@ -107,4 +111,15 @@ public class AuthorServiceImpl implements PersonServiceIfs{
     public void setDaoSource(DAOSourceIfs daoSource) {
         this.daoSource = daoSource;
     }
+
+    public DAORelationSourcePersonIfs getDaoRelationSourcePerson() {
+        return daoRelationSourcePerson;
+    }
+
+    public void setDaoRelationSourcePerson(DAORelationSourcePersonIfs daoRelationSourcePerson) {
+        this.daoRelationSourcePerson = daoRelationSourcePerson;
+    }
+    
+    
+    
 }

@@ -167,6 +167,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean id="servicePerson" class="org.lamop.riche.services.AuthorServiceImpl">
         <property name="dao" ref="daoPerson" />
         <property name="daoSource" ref="daoSource" />
+        <property name="daoRelationSourcePerson" ref="daoRelationSourcePerson" />
        
     </bean>
     
@@ -186,6 +187,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     
     <bean id="serviceWorkAuthor" class="org.lamop.riche.services.WorkAuthorServiceImpl">
         <property name="dao" ref="daoWorkAuthor" />
+        <property name="daoWork" ref="daoWork"/>
     </bean>
     
     <bean id="importService" class="org.lamop.riche.services.ImportServiceImpl">

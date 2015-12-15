@@ -6,15 +6,13 @@
 package org.lamop.riche.dao;
 
 import java.util.List;
-import javax.persistence.Query;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
 import org.lamop.riche.model.Person;
 import org.lamop.riche.model.RelationWorkSource;
 import org.lamop.riche.model.Source;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.hibernate.Query;
 
 /**
  *
@@ -24,24 +22,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public class DAOSourceImpl extends DAOGenericImpl<Source> implements DAOSourceIfs {
 
-//    @Override
-//    public Source update(Source obj) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
     @Transactional
     @Override
-    public List<Source> find(String arg) {
-        
-                org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery("SELECT DISTINCT s FROM Source s LEFT JOIN FETCH s.relationWorkSource rws LEFT JOIN FETCH s.relationPerson rpers LEFT JOIN FETCH s.bibliographicType btype WHERE s.title LIKE '%"+arg+"%'");
+    public List<Source> find(String arg) { 
+       Query q = sessionFactory.getCurrentSession().createQuery("SELECT DISTINCT s FROM Source s LEFT JOIN FETCH s.relationWorkSource rws LEFT JOIN FETCH s.relationPerson rpers LEFT JOIN FETCH s.bibliographicType btype WHERE s.title LIKE '%"+arg+"%'");
        List result = q.list();
-               sessionFactory.getCurrentSession().clear();
+       sessionFactory.getCurrentSession().clear();
         return result;
-                
-//
-//        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Source.class);
-//        criteria.add(Restrictions.like("title", "%" + arg + "%"));
-//        return criteria.list();
-
     }
 @Transactional
     @Override
@@ -56,14 +43,11 @@ public class DAOSourceImpl extends DAOGenericImpl<Source> implements DAOSourceIf
     @Transactional
     @Override
     public List<Source> getAllEntities() {
-//        sessionFactory.getCurrentSession().flush();
-//        sessionFactory.getCurrentSession().
         org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery("SELECT DISTINCT s FROM Source s LEFT JOIN FETCH s.relationWorkSource rws LEFT JOIN FETCH s.relationPerson rpers LEFT JOIN FETCH s.bibliographicType btype");
         List result = q.list();
         System.out.println("NOMBRE DE RESULT " + result.size());
         sessionFactory.getCurrentSession().clear();
         return result;
-//        return super.getAllEntities(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Transactional
@@ -72,7 +56,7 @@ public class DAOSourceImpl extends DAOGenericImpl<Source> implements DAOSourceIf
         org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery("SELECT DISTINCT s FROM Source s JOIN FETCH s.authors a WHERE a.id=:aid");
         q.setParameter("aid", p.getId());
         List result = q.list();
-               sessionFactory.getCurrentSession().clear();
+        sessionFactory.getCurrentSession().clear();
         return result;
     }
 
@@ -90,4 +74,9 @@ public class DAOSourceImpl extends DAOGenericImpl<Source> implements DAOSourceIf
          return resu;
     }
 
+    @Override
+    public Long getAllEntitiesCount() {
+        org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery("SELECT count(*) FROM Source");
+        return (Long) q.uniqueResult();
+    }
 }

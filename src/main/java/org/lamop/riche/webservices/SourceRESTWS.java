@@ -30,13 +30,19 @@ public class SourceRESTWS {
 
     @Autowired
     SourceServiceIfs serviceSource;
-    
-    
+
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", value = "/getall")
     @Produces(MediaType.APPLICATION_JSON)
     @ResponseBody
     public List<Source> getAll() {
         return serviceSource.getAll();
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", value = "/getallcount")
+    @Produces(MediaType.APPLICATION_JSON)
+    @ResponseBody
+    public Long getAllCount() {
+        return serviceSource.getAllCount();
     }
 
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", value = "/find")

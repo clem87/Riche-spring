@@ -8,7 +8,6 @@ package org.lamop.riche.services;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Set;
 import org.lamop.riche.dao.DAOPersonIfs;
 import org.lamop.riche.dao.DAORelationSourcePersonIfs;
@@ -19,7 +18,6 @@ import org.lamop.riche.model.Person;
 import org.lamop.riche.model.RelationSourcePerson;
 import org.lamop.riche.model.RelationWorkSource;
 import org.lamop.riche.model.Source;
-import org.lamop.riche.model.WorkEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,15 +81,8 @@ public class SourceServiceImpl implements SourceServiceIfs {
         Set<RelationWorkSource> listRelation = source.getRelationWorkSource();
         for (Iterator<RelationWorkSource> iterator = listRelation.iterator(); iterator.hasNext();) {
             RelationWorkSource relation = iterator.next();
+            daoRelationWorkSource.removeEntity(relation);
 
-//        }
-//        for (int i = 0; i < listRelation.size(); i++) {
-//            RelationWorkSource relation = listRelation.get(i);
-            WorkEntity w = relation.getWorkEntity();
-            if (w != null) {
-                w.removeRelationWorkSource(relation);
-                daoWork.update(w);
-            }
         }
 
         dao.removeEntity(source);
@@ -101,6 +92,13 @@ public class SourceServiceImpl implements SourceServiceIfs {
     @Transactional
     public void removeEntity(Long id) {
         Source s = getEntity(id);
+        Set<RelationWorkSource> list = s.getRelationWorkSource();
+        
+        for (Iterator<RelationWorkSource> iterator = list.iterator(); iterator.hasNext();) {
+            RelationWorkSource next = iterator.next();
+            daoRelationWorkSource.removeEntity(next);
+            
+        }
         removeEntity(s);
     }
 
@@ -156,7 +154,15 @@ public class SourceServiceImpl implements SourceServiceIfs {
     @Transactional
     @Override
     public List<Source> find(String arg) {
-        return dao.find(arg);
+        List<Source> dtoList = new ArrayList<>();
+        List<Source> entitiesList = dao.find(arg);
+        //TODO : ce serait mieu de faire un vrai DTO
+//        for (int i = 0; i < entitiesList.size(); i++) {
+//            Source get = entitiesList.get(i);
+//            get.setRelationPerson(null);
+//            get.setRelationWorkSource(null);
+//        }
+        return entitiesList;
     }
 
     public DAOSourceIfs getDao() {
@@ -197,6 +203,13 @@ public class SourceServiceImpl implements SourceServiceIfs {
 
     public void setDaoRelationSourcePerson(DAORelationSourcePersonIfs daoRelationSourcePerson) {
         this.daoRelationSourcePerson = daoRelationSourcePerson;
+    }
+
+    
+    @Override
+    @Transactional
+    public Long getAllCount() {
+        return dao.getAllEntitiesCount();
     }
 
 }

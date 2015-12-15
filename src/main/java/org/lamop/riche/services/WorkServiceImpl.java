@@ -8,19 +8,17 @@ package org.lamop.riche.services;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Set;
-import javax.persistence.EntityManager;
-import org.lamop.riche.dao.DAOGenericImpl;
 import org.lamop.riche.dao.DAOPersonIfs;
 import org.lamop.riche.dao.DAORelationWorkSourceIfs;
 import org.lamop.riche.dao.DAOSourceIfs;
 import org.lamop.riche.dao.DAOWorkIFS;
-import org.lamop.riche.model.Person;
 import org.lamop.riche.model.RelationWorkSource;
 import org.lamop.riche.model.Source;
 import org.lamop.riche.model.WorkAuthor;
 import org.lamop.riche.model.WorkEntity;
+import org.lamop.riche.model.WorkEntityDTO;
+import org.lamop.riche.model.search.SearchBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +52,12 @@ public class WorkServiceImpl implements WorkServiceIfs {
 
         return dao.getAllEntities();
 //        return null;
+    }
+    
+    @Transactional
+        @Override
+    public Long getAllCount() {
+        return dao.getAllEntitiesCount();
     }
 
     @Transactional
@@ -271,7 +275,22 @@ public class WorkServiceImpl implements WorkServiceIfs {
     public void setWorkAuthorService(WorkAuthorServiceIfs workAuthorService) {
         this.workAuthorService = workAuthorService;
     }
-    
-    
 
+    
+    @Override
+    @Transactional
+    public List<WorkEntityDTO> search(SearchBean search) {
+        
+        List<WorkEntity> entites = dao.search(search);
+        List<WorkEntityDTO> dtos = new ArrayList<>();
+        for (int i = 0; i < entites.size(); i++) {
+            WorkEntity get = entites.get(i);
+            
+            WorkEntityDTO dto = new WorkEntityDTO();
+            dto.feedWithEntity(get);
+            dtos.add(dto);
+        }
+        
+        return dtos;
+    }
 }

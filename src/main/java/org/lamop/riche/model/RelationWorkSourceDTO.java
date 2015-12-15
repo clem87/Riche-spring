@@ -5,28 +5,18 @@
  */
 package org.lamop.riche.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 /**
  *
  * @author clril
  */
-@Entity
-@JsonSerialize(using = RelationWorkSourceSerializer.class)
-//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
-//        property = "@id", scope = RelationWorkSource.class)
-public class RelationWorkSource implements Serializable {
+public class RelationWorkSourceDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    
     private Long id;
 
     public Long getId() {
@@ -37,25 +27,16 @@ public class RelationWorkSource implements Serializable {
         this.id = id;
     }
 
-//    @LazyCollection(LazyCollectionOption.FALSE)
-//    @OneToOne(targetEntity = WorkEntity.class)
-//    @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToOne
-    WorkEntity workEntity;
+    WorkEntityDTO workEntity;
 
-//    @LazyCollection(LazyCollectionOption.FALSE)
-//    @OneToOne(targetEntity = Source.class)
-//    @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToOne
-    Source source;
+    SourceDTO source;
 
     String extract;
     
     String tome;
     
-    
-    
-
     /**
      * *
      * Indique di c'est de la biblio une traduction etc
@@ -67,13 +48,13 @@ public class RelationWorkSource implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.id);
-        hash = 29 * hash + Objects.hashCode(this.workEntity);
-        hash = 29 * hash + Objects.hashCode(this.source);
-        hash = 29 * hash + Objects.hashCode(this.extract);
-        hash = 29 * hash + Objects.hashCode(this.tome);
-        hash = 29 * hash + Objects.hashCode(this.nature);
-        hash = 29 * hash + Objects.hashCode(this.note);
+        hash = 53 * hash + Objects.hashCode(this.id);
+        hash = 53 * hash + Objects.hashCode(this.workEntity);
+        hash = 53 * hash + Objects.hashCode(this.source);
+        hash = 53 * hash + Objects.hashCode(this.extract);
+        hash = 53 * hash + Objects.hashCode(this.tome);
+        hash = 53 * hash + Objects.hashCode(this.nature);
+        hash = 53 * hash + Objects.hashCode(this.note);
         return hash;
     }
 
@@ -85,7 +66,7 @@ public class RelationWorkSource implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final RelationWorkSource other = (RelationWorkSource) obj;
+        final RelationWorkSourceDTO other = (RelationWorkSourceDTO) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
@@ -117,19 +98,19 @@ public class RelationWorkSource implements Serializable {
         return "org.lamop.riche.model.RWorkSource[ id=" + id + " ]";
     }
 
-    public WorkEntity getWorkEntity() {
+    public WorkEntityDTO getWorkEntity() {
         return workEntity;
     }
 
-    public void setWorkEntity(WorkEntity workEntity) {
+    public void setWorkEntity(WorkEntityDTO workEntity) {
         this.workEntity = workEntity;
     }
 
-    public Source getSource() {
+    public SourceDTO getSource() {
         return source;
     }
 
-    public void setSource(Source source) {
+    public void setSource(SourceDTO source) {
         this.source = source;
     }
 
@@ -164,8 +145,5 @@ public class RelationWorkSource implements Serializable {
     public void setTome(String tome) {
         this.tome = tome;
     }
-    
-    
-    
     
 }

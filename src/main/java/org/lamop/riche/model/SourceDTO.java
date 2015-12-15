@@ -8,33 +8,15 @@ package org.lamop.riche.model;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 /**
  *
  * @author clril
  */
-@Entity
-//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class,
-//        property = "@id", scope = Source.class)
-public class Source implements Serializable, Cloneable {
+public class SourceDTO implements Serializable, Cloneable {
 
-    
-//    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "source",orphanRemoval = true)
-    private Set<RelationWorkSource> relationWorkSource = new HashSet<>();
+    private Set<RelationWorkSourceDTO> relationWorkSource = new HashSet<>();
 
-    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "UseIdOrGenerateID")
-//    @GenericGenerator(name = "UseIdOrGenerateID", strategy = "org.lamop.riche.model.UseIdOrGenerateID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     protected String title;
@@ -46,12 +28,8 @@ public class Source implements Serializable, Cloneable {
      */
     protected String url;
 
-    @OneToMany(mappedBy = "source", orphanRemoval = true)
-//     @LazyCollection(LazyCollectionOption.FALSE)
-    @Cascade(CascadeType.ALL)
     protected Set<RelationSourcePerson> relationPerson = new HashSet<>();
 
-    @ManyToOne
     protected BibliographicType bibliographicType;
 
     protected String releaseTown;
@@ -90,10 +68,10 @@ public class Source implements Serializable, Cloneable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Source)) {
+        if (!(object instanceof SourceDTO)) {
             return false;
         }
-        Source other = (Source) object;
+        SourceDTO other = (SourceDTO) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -185,18 +163,16 @@ public class Source implements Serializable, Cloneable {
         this.num = num;
     }
 
-//    public List<WorkEntity> getWorks() {
-
-    public Set<RelationWorkSource> getRelationWorkSource() {
+    public Set<RelationWorkSourceDTO> getRelationWorkSource() {
         return relationWorkSource;
     }
 
-    public void setRelationWorkSource(Set<RelationWorkSource> relationWorkSource) {
+    public void setRelationWorkSource(Set<RelationWorkSourceDTO> relationWorkSource) {
         this.relationWorkSource = relationWorkSource;
     }
 
 
-    public synchronized void addRelationWorkSource(RelationWorkSource r) {
+    public synchronized void addRelationWorkSource(RelationWorkSourceDTO r) {
 
         this.relationWorkSource.add(r);
 
@@ -205,14 +181,6 @@ public class Source implements Serializable, Cloneable {
     public synchronized void removeRelationWorkSource(RelationWorkSource r) {
         this.relationWorkSource.remove(r);
     }
-
-//    public List<RelationSourcePerson> getRelationPerson() {
-//        return relationPerson;
-//    }
-//
-//    public void setRelationPerson(List<RelationSourcePerson> relationPerson) {
-//        this.relationPerson = relationPerson;
-//    }
 
     public Set<RelationSourcePerson> getRelationPerson() {
         return relationPerson;
@@ -247,10 +215,5 @@ public class Source implements Serializable, Cloneable {
     public void setUrl(String url) {
         this.url = url;
     }
-
-    
-    
-  
-    
     
 }

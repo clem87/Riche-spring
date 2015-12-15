@@ -18,7 +18,17 @@ public interface DAOSourceIfs extends DAOGenericIFS<Source>{
 
     public void addRelation(RelationWorkSource get);
     
+    /***
+     * Retourne toutes les sources pour un auteur.
+     * @param p
+     * @return 
+     */
     public List<Source> getAllSourcesForAuthor(Person p);
-    
+
+    /***
+     * Compte de toutes les sources
+     * @return 
+     */
+    public Long getAllEntitiesCount();
     
 }

@@ -6,8 +6,11 @@
 package org.lamop.riche.services;
 
 import java.util.List;
+import java.util.Set;
 import org.lamop.riche.dao.DAOWorkAuthorIfs;
+import org.lamop.riche.dao.DAOWorkIFS;
 import org.lamop.riche.model.WorkAuthor;
+import org.lamop.riche.model.WorkEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +23,8 @@ public class WorkAuthorServiceImpl implements WorkAuthorServiceIfs{
     
     @Autowired
     DAOWorkAuthorIfs dao;
+    
+    DAOWorkIFS daoWork;
     
     @Override
     @Transactional
@@ -43,6 +48,20 @@ public class WorkAuthorServiceImpl implements WorkAuthorServiceIfs{
     @Transactional
     public void removeEntity(Long id) {
         WorkAuthor wa = getEntity(id);
+        
+        List<WorkEntity> listWork = daoWork.getWorkForAuthor(wa);
+        for (int i = 0; i < listWork.size(); i++) {
+            WorkEntity get = listWork.get(i);
+            Set<WorkAuthor> authors =  get.getAuthors();
+            authors.remove(wa);
+            daoWork.update(get);
+        }
+        
+        
+        //suppression de l'auteur parmis les Oeuvres
+        
+//        List<WorkEntity> listWork = wa.
+        
         removeEntity(wa);
     }
 
@@ -71,6 +90,14 @@ public class WorkAuthorServiceImpl implements WorkAuthorServiceIfs{
     public List<WorkAuthor> find(String arg, boolean approx) {
         
         return dao.find(arg, approx);
+    }
+
+    public DAOWorkIFS getDaoWork() {
+        return daoWork;
+    }
+
+    public void setDaoWork(DAOWorkIFS daoWork) {
+        this.daoWork = daoWork;
     }
     
     
