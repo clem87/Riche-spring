@@ -55,8 +55,6 @@ public class InitValueWS {
     ImportServiceIfs importService;
     
     
-    @Value("${test}")
-protected String test;
     
      @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", value = "/importall")
     @Produces(MediaType.APPLICATION_JSON)
@@ -197,8 +195,5 @@ protected String test;
     @ResponseBody
     public void test() {
         System.out.println("coucou");
-        System.out.println(test);
     }
-    
-
 }
