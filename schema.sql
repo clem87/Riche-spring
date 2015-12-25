@@ -1,3 +1,25 @@
+-- MySQL dump 10.13  Distrib 5.5.46, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: riche2
+-- ------------------------------------------------------
+-- Server version	5.5.46-0ubuntu0.14.04.2-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `Article`
+--
+
+DROP TABLE IF EXISTS `Article`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Article` (
@@ -7,6 +29,12 @@ CREATE TABLE `Article` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `AuthorityNotice`
+--
+
+DROP TABLE IF EXISTS `AuthorityNotice`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `AuthorityNotice` (
@@ -18,6 +46,12 @@ CREATE TABLE `AuthorityNotice` (
   CONSTRAINT `FK_di4tsx4xuhu18mkx7scbq5fj0` FOREIGN KEY (`organisme_id`) REFERENCES `AuthorityOrganism` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `AuthorityOrganism`
+--
+
+DROP TABLE IF EXISTS `AuthorityOrganism`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `AuthorityOrganism` (
@@ -25,6 +59,12 @@ CREATE TABLE `AuthorityOrganism` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `BibliographicType`
+--
+
+DROP TABLE IF EXISTS `BibliographicType`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `BibliographicType` (
@@ -33,6 +73,12 @@ CREATE TABLE `BibliographicType` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `Person`
+--
+
+DROP TABLE IF EXISTS `Person`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Person` (
@@ -45,6 +91,12 @@ CREATE TABLE `Person` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `Person_AuthorityNotice`
+--
+
+DROP TABLE IF EXISTS `Person_AuthorityNotice`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Person_AuthorityNotice` (
@@ -56,6 +108,12 @@ CREATE TABLE `Person_AuthorityNotice` (
   CONSTRAINT `FK_revd7fkybpes9k5u63k9txb2d` FOREIGN KEY (`Person_id`) REFERENCES `Person` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `RelationSourcePerson`
+--
+
+DROP TABLE IF EXISTS `RelationSourcePerson`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `RelationSourcePerson` (
@@ -70,6 +128,12 @@ CREATE TABLE `RelationSourcePerson` (
   CONSTRAINT `FK_q0o2o90882js2hh84ueftanjh` FOREIGN KEY (`source_id`) REFERENCES `Source` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `RelationWorkSource`
+--
+
+DROP TABLE IF EXISTS `RelationWorkSource`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `RelationWorkSource` (
@@ -87,6 +151,12 @@ CREATE TABLE `RelationWorkSource` (
   CONSTRAINT `FK_r50bfajvlw3irgiw8ml58n6n9` FOREIGN KEY (`workEntity_id`) REFERENCES `WorkEntity` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `SecondaryName`
+--
+
+DROP TABLE IF EXISTS `SecondaryName`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `SecondaryName` (
@@ -97,6 +167,12 @@ CREATE TABLE `SecondaryName` (
   CONSTRAINT `FK_r3e86fy82o266xatvra2cymxt` FOREIGN KEY (`person_id`) REFERENCES `Person` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `Source`
+--
+
+DROP TABLE IF EXISTS `Source`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Source` (
@@ -118,6 +194,12 @@ CREATE TABLE `Source` (
   CONSTRAINT `FK_9dlp92cim9ohdbc5ip6u9pelg` FOREIGN KEY (`bibliographicType_id`) REFERENCES `BibliographicType` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `Theme`
+--
+
+DROP TABLE IF EXISTS `Theme`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Theme` (
@@ -126,6 +208,12 @@ CREATE TABLE `Theme` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `WorkAuthor`
+--
+
+DROP TABLE IF EXISTS `WorkAuthor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `WorkAuthor` (
@@ -134,6 +222,12 @@ CREATE TABLE `WorkAuthor` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `WorkEntity`
+--
+
+DROP TABLE IF EXISTS `WorkEntity`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `WorkEntity` (
@@ -147,6 +241,12 @@ CREATE TABLE `WorkEntity` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `WorkEntity_Theme`
+--
+
+DROP TABLE IF EXISTS `WorkEntity_Theme`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `WorkEntity_Theme` (
@@ -158,6 +258,12 @@ CREATE TABLE `WorkEntity_Theme` (
   CONSTRAINT `FK_p1ld4ixj2fnuwwpvwpu81n6js` FOREIGN KEY (`works_id`) REFERENCES `WorkEntity` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `WorkEntity_WorkAuthor`
+--
+
+DROP TABLE IF EXISTS `WorkEntity_WorkAuthor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `WorkEntity_WorkAuthor` (
@@ -169,3 +275,14 @@ CREATE TABLE `WorkEntity_WorkAuthor` (
   CONSTRAINT `FK_ekryq9wkii5awir2d7r082amb` FOREIGN KEY (`authors_id`) REFERENCES `WorkAuthor` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2015-12-25 12:45:16
