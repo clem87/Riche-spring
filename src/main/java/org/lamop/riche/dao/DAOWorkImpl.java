@@ -104,17 +104,17 @@ public class DAOWorkImpl extends DAOGenericImpl<WorkEntity> implements DAOWorkIF
         List<SearchCriteria> dateCriteria = new ArrayList<>();
         dateCriteria = search.returnCritheriaForField("centuryMax");
         dateCriteria.addAll(search.returnCritheriaForField("centuryMin"));
-       
+
         gestionDateCriteria(dateCriteria, criteria);
-        gestionCriteriaWithJoin(search, criteria,"theme");
-        gestionCriteriaWithJoin(search, criteria,"authors");
+        gestionCriteriaWithJoin(search, criteria, "theme");
+        gestionCriteriaWithJoin(search, criteria, "authors");
 
         return criteria.list();
     }
 
     public void gestionCriteriaWithJoin(SearchBean search, Criteria criteria, String field) {
         List<SearchCriteria> themeCriteria = search.returnCritheriaForField(field);
-        
+
         if (!themeCriteria.isEmpty()) {
             Criteria joinCriteria = criteria.createCriteria(field, JoinType.INNER_JOIN);
             for (int i = 0; i < themeCriteria.size(); i++) {
@@ -123,7 +123,6 @@ public class DAOWorkImpl extends DAOGenericImpl<WorkEntity> implements DAOWorkIF
             }
         }
     }
-    
 
     /**
      * *
@@ -156,6 +155,28 @@ public class DAOWorkImpl extends DAOGenericImpl<WorkEntity> implements DAOWorkIF
                 dateLogicalExpression.add(Restrictions.and(exprMin, exprMax));
             }
             criteria.add(Restrictions.or(dateLogicalExpression.get(0), dateLogicalExpression.get(1)));
+        } else if (!dateCriteria.isEmpty() && dateCriteria.size() == 1) {
+            SearchCriteria critere = dateCriteria.get(0);
+            Integer val = null;
+
+            try {
+                val = Integer.valueOf(critere.getValue());
+            } catch (Exception e) {
+                log.info("impossible de parser la date envoyée par le client", e);
+            }
+
+            if (val != null) {
+                if ("centuryMax".equals(critere.getField())) {
+                    SimpleExpression exprMax = Restrictions.le("centuryMax", val);
+                    SimpleExpression exprMin = Restrictions.le("centuryMin", val);
+                    criteria.add(Restrictions.or(exprMin, exprMax));
+                } else if ("centuryMin".equals(critere.getField())) {
+                    SimpleExpression exprMax = Restrictions.ge("centuryMax", val);
+                    SimpleExpression exprMin = Restrictions.ge("centuryMin", val);
+                    criteria.add(Restrictions.or(exprMin, exprMax));
+                }
+            }
         }
+
     }
 }
