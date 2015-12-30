@@ -280,9 +280,9 @@
         </dependencies>
     </dependencyManagement>
     <scm>
-        <connection>scm:git:git@github.com:clem87/git-demo.git</connection>
-        <url>scm:git:git@github.com:clem87/git-demo.git</url>
-        <developerConnection>scm:git:git@github.com:clem87/git-demo.git</developerConnection>
+        <connection>scm:git:git@github.com:clem87/Riche-spring.git</connection>
+        <url>scm:git:git@github.com:clem87/Riche-spring.git</url>
+        <developerConnection>scm:git:git@github.com:clem87/Riche-spring.git</developerConnection>
     </scm>
   
 </project>
