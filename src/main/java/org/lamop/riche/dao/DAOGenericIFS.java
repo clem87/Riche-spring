@@ -6,7 +6,6 @@
 package org.lamop.riche.dao;
 
 import java.util.List;
-import javax.persistence.EntityManager;
 import org.hibernate.SessionFactory;
 
 /**
@@ -30,10 +29,6 @@ public interface DAOGenericIFS<T> {
 
     public List<T> find(String arg);
     
-//    public EntityManager getEm() ;
-//    public void setEm(EntityManager em);
-//    
-//    public void initEm();
     
         public SessionFactory getSessionFactory();
         public void clearSession();

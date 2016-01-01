@@ -71,63 +71,26 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 
     <tx:annotation-driven/>
     
-    
-
-    <!--bean id="propertyConfigurer"
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-          p:location="/WEB-INF/jdbc.properties" />
-
-<bean id="dataSource"
-    class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-    p:driverClassName="${jdbc.driverClassName}"
-    p:url="${jdbc.url}"
-    p:username="${jdbc.username}"
-    p:password="${jdbc.password}" /-->
-
-    <!-- ADD PERSISTENCE SUPPORT HERE (jpa, hibernate, etc) -->
-
-    <!--<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>-->
-    <!--<bean id="workDAO" class="org.lamop.riche.dao.DAOWorkImpl"/>-->
-
-
-    <!--<bean id="myEmf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="dataSource" ref="someDataSource"/>
-        <property name="loadTimeWeaver">
-            <bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver"/>
-        </property>
-    </bean>-->
-    
-    
-    <!--    <context:annotation-config/>
-    -->
-    <bean id="emf" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="myPersistenceUnit"/>
-    </bean>
-   
    
    <bean id="daoArticle" class="org.lamop.riche.dao.DAOArticleImpl">
        <property name="sessionFactory" ref="mySessionFactory" />
    </bean>
    
     <bean id="daoWork" class="org.lamop.riche.dao.DAOWorkImpl">
-        <!--<property name="emf" ref="emf" />-->
         <property name="sessionFactory" ref="mySessionFactory" />
        
     </bean>
 
     <bean id="daoPerson" class ="org.lamop.riche.dao.DAOPersonImpl">
-        <!--<property name="emf" ref="emf" />-->
         <property name="sessionFactory" ref="mySessionFactory" />
     </bean>
     
     <bean id="daoTheme" class="org.lamop.riche.dao.DAOThemeImpl">
-        <!--<property name="emf" ref="emf" />-->
         <property name="sessionFactory" ref="mySessionFactory" />
     </bean>
     
     
     <bean id="daoSource" class="org.lamop.riche.dao.DAOSourceImpl">
-        <!--<property name="emf" ref="emf" />-->
         <property name="sessionFactory" ref="mySessionFactory" />
     </bean>
    
@@ -199,8 +162,6 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <property name="workService" ref="serviceWork" />
         <property name="daoRelationWorkSource" ref="daoRelationWorkSource" />
     </bean>
-    
-    
     
     <bean id="serviceBibliographicType" class="org.lamop.riche.services.BibliographicTypeServiceImpl">
         <property name="dao"  ref="daoBibliographicType"/>

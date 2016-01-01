@@ -194,23 +194,7 @@ public class WorkServiceImpl implements WorkServiceIfs {
     }
 
     public void removeRelation(RelationWorkSource relation) {
-//        Source source = relation.getSource();
-//        source.removeRelationWorkSource(relation);
-//
-//        WorkEntity work = relation.getWorkEntity();
-//        work.removeRelationWorkSource(relation);
-//
-//        EntityManager em = dao.getEm();
-//
-//        if (!em.getTransaction().isActive()) {
-//            em.getTransaction().begin();
-//        }
-//
-//        em.remove(relation);
-//        em.merge(work);
-//        em.merge(source);
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
     }
 
     public DAOPersonIfs getDaoPerson() {
