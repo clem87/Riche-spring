@@ -5,7 +5,7 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
-        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
@@ -13,18 +13,26 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
     
-<bean id="configuration"
-    class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <bean id="defaultApplicationPropertiesBean" class="org.lamop.riche.tools.DefaultApplicationPropertiesBean">
+        
+    </bean>
+    
+    <bean id="configuration"
+      class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="location">
-        <value>classpath:appli.properties</value>
-    </property>
-</bean>
+        <value>#{defaultApplicationPropertiesBean.propertie}</value>
+        </property> 
+    </bean>
+    
+    <bean id="filterRest" class="org.lamop.riche.webservices.FilterRest">
+        
+    </bean>
   
-<context:component-scan base-package="org.lamop.riche.webservices"/>
-<!-- SessionFactory, DataSource, etc. omitted -->
+    <context:component-scan base-package="org.lamop.riche.webservices"/>
+    <!-- SessionFactory, DataSource, etc. omitted -->
 
 
-<bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${db.driverClassName}"/>
         <property name="url" value="${db.url}"/>
         <property name="username" value="${db.user}"/>
@@ -48,8 +56,8 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
                 <value>org.lamop.riche.model.Theme</value>
                 <value>org.lamop.riche.model.AuthorityOrganism</value>
                 <value>org.lamop.riche.model.RelationSourcePerson</value>
-                 <value>org.lamop.riche.model.WorkAuthor</value>
-                 <value>org.lamop.riche.model.Article</value>
+                <value>org.lamop.riche.model.WorkAuthor</value>
+                <value>org.lamop.riche.model.Article</value>
             </list>
         </property>
         
@@ -65,16 +73,16 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     
 
     <bean id="transactionManager"
-            class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="mySessionFactory"/>
     </bean>
 
     <tx:annotation-driven/>
     
    
-   <bean id="daoArticle" class="org.lamop.riche.dao.DAOArticleImpl">
-       <property name="sessionFactory" ref="mySessionFactory" />
-   </bean>
+    <bean id="daoArticle" class="org.lamop.riche.dao.DAOArticleImpl">
+        <property name="sessionFactory" ref="mySessionFactory" />
+    </bean>
    
     <bean id="daoWork" class="org.lamop.riche.dao.DAOWorkImpl">
         <property name="sessionFactory" ref="mySessionFactory" />

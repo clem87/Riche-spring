@@ -17,7 +17,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
-import org.lamop.riche.tools.PropertiesTools;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
@@ -28,10 +27,13 @@ import org.springframework.beans.factory.annotation.Value;
 public class FilterRest implements Filter {
 
     List<String> listIpOriginAllowed = null;
+    
+    @Value(value = "${front.IpOrigin}")
+    String frontIpOrigin;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
@@ -69,13 +71,12 @@ public class FilterRest implements Filter {
      */
     private void addHeaderAllowOrigin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (listIpOriginAllowed == null) {
-            String frontIpOrigin = PropertiesTools.loadProperties("appli.properties", "front.IpOrigin");
+            
             if (StringUtils.isNotEmpty(frontIpOrigin)) {
                 String[] arrayIpOriginAllowed = frontIpOrigin.split(",");
                 listIpOriginAllowed = Arrays.asList(arrayIpOriginAllowed);
             }
         }
-        
         String originInrequest = request.getHeader("Origin");
         if (listIpOriginAllowed.contains(originInrequest)) {
             response.setHeader("Access-Control-Allow-Origin", originInrequest);

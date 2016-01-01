@@ -8,14 +8,14 @@ package org.lamop.riche.tools;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import org.lamop.riche.dao.DAOGenericImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
+ * N'est plus utilisé. Se tourner vers les outils springs
  * @author clril
  */
+@Deprecated
 public class PropertiesTools {
  
         private static final Logger LOG = LoggerFactory.getLogger(PropertiesTools.class);
