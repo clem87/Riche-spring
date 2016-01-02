@@ -6,12 +6,15 @@
 package org.lamop.riche.dao;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.criteria.Predicate;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.SimpleExpression;
+import org.hibernate.jpa.criteria.expression.SimpleCaseExpression;
 import org.hibernate.sql.JoinType;
 import org.lamop.riche.model.Source;
 import org.lamop.riche.model.WorkAuthor;
@@ -95,88 +98,77 @@ public class DAOWorkImpl extends DAOGenericImpl<WorkEntity> implements DAOWorkIF
         return result;
     }
 
+   
+    
     @Override
-    public List<WorkEntity> search(SearchBean search) {
-
-        Set<SearchCriteria> criteres = search.getSearchCriteria();
-        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(WorkEntity.class);
-
-        List<SearchCriteria> dateCriteria = new ArrayList<>();
-        dateCriteria = search.returnCritheriaForField("centuryMax");
-        dateCriteria.addAll(search.returnCritheriaForField("centuryMin"));
-
-        gestionDateCriteria(dateCriteria, criteria);
-        gestionCriteriaWithJoin(search, criteria, "theme");
-        gestionCriteriaWithJoin(search, criteria, "authors");
-
-        return criteria.list();
-    }
-
-    public void gestionCriteriaWithJoin(SearchBean search, Criteria criteria, String field) {
-        List<SearchCriteria> themeCriteria = search.returnCritheriaForField(field);
-
-        if (!themeCriteria.isEmpty()) {
-            Criteria joinCriteria = criteria.createCriteria(field, JoinType.INNER_JOIN);
-            for (int i = 0; i < themeCriteria.size(); i++) {
-                SearchCriteria themeCrit = themeCriteria.get(i);
-                joinCriteria.add(Restrictions.eq("id", Long.valueOf(themeCrit.getValue())));
+    public List<WorkEntity> search(SearchBean search){
+        
+        Criteria hibernateCriteria = sessionFactory.getCurrentSession().createCriteria(WorkEntity.class);
+        
+        List<SearchCriteria> listSearch = search.getSearchCriteria();
+        
+        //--- On groupe les critères de recherche en sous groupes en fonction des AND
+        List<List<SearchCriteria>> andListGroup = new ArrayList<>();
+        andListGroup.add(new ArrayList<SearchCriteria>());
+        for (Iterator<SearchCriteria> iterator = listSearch.iterator(); iterator.hasNext();) {
+            SearchCriteria criteria = iterator.next();
+           
+            if(criteria.getOperator().equals("AND")){
+                List<SearchCriteria> andList = new ArrayList<>();
+                andList.add(criteria);
+                andListGroup.add(andList);   
+            }
+            else{
+                andListGroup.get(andListGroup.size()-1).add(criteria);
             }
         }
-    }
-
-    /**
-     * *
-     * Gere les critères de date envoyé dans la liste dateCriteria pour ajouter
-     * les bon criteria hibernate dans criteria
-     *
-     * @param dateCriteria
-     * @param criteria
-     * @throws NumberFormatException
-     */
-    private void gestionDateCriteria(List<SearchCriteria> dateCriteria, Criteria criteria) throws NumberFormatException {
-        if (!dateCriteria.isEmpty() && dateCriteria.size() == 2) {
-            int min = -999;
-            int max = -999;
-            for (int i = 0; i < dateCriteria.size(); i++) {
-                SearchCriteria critere = dateCriteria.get(i);
-                if (critere.getField().equals("centuryMax")) {
-                    max = Integer.valueOf(critere.getValue());
-                } else {
-                    min = Integer.valueOf(critere.getValue());
+        
+        
+        // Pour chaque And
+        List<SimpleExpression> simpleExpr = new ArrayList<>();
+        for (int i = 0; i < andListGroup.size(); i++) {
+            List<SearchCriteria> listAnd = andListGroup.get(i);
+            
+            
+            Criteria joinTheme = null;
+            List<SimpleExpression> themeSimpleExpression = new ArrayList<>();
+            
+            for (int j = 0; j < listAnd.size(); j++) {
+                SearchCriteria crit = listAnd.get(j);
+                
+                if("title".equals(crit.getField())){
+                    simpleExpr.add(Restrictions.like(crit.getField(), "%"+crit.getValue()+"%"));
+                }
+                
+                else if ("theme".equals(crit.getField())){
+                    if(joinTheme==null){
+                        joinTheme = hibernateCriteria.createCriteria(crit.getField(), JoinType.INNER_JOIN);                        
+                    }
+                    themeSimpleExpression.add(Restrictions.eq("id", Long.valueOf(crit.getValue())));
+                }
+                
+                else if("centuryMax".equals(crit.getField())){
+                    simpleExpr.add(Restrictions.le("centuryMax", Integer.valueOf(crit.getValue())));
+                    simpleExpr.add(Restrictions.le("centuryMin", Integer.valueOf(crit.getValue())));
+                }
+                else if("centuryMin".equals(crit.getField())){
+                    simpleExpr.add(Restrictions.ge("centuryMax", Integer.valueOf(crit.getValue())));
+                    simpleExpr.add(Restrictions.ge("centuryMin", Integer.valueOf(crit.getValue())));
                 }
             }
-            List<LogicalExpression> dateLogicalExpression = new ArrayList<>();
-            for (int i = 0; i < dateCriteria.size(); i++) {
-                SearchCriteria critere = dateCriteria.get(i);
-
-                SimpleExpression exprMin = Restrictions.le(critere.getField(), max);
-                SimpleExpression exprMax = Restrictions.ge(critere.getField(), min);
-
-                dateLogicalExpression.add(Restrictions.and(exprMin, exprMax));
+            
+            if(joinTheme != null && !themeSimpleExpression.isEmpty()){
+                joinTheme.add(Restrictions.or(themeSimpleExpression.toArray(new SimpleExpression[0])));
             }
-            criteria.add(Restrictions.or(dateLogicalExpression.get(0), dateLogicalExpression.get(1)));
-        } else if (!dateCriteria.isEmpty() && dateCriteria.size() == 1) {
-            SearchCriteria critere = dateCriteria.get(0);
-            Integer val = null;
-
-            try {
-                val = Integer.valueOf(critere.getValue());
-            } catch (Exception e) {
-                log.info("impossible de parser la date envoyée par le client", e);
-            }
-
-            if (val != null) {
-                if ("centuryMax".equals(critere.getField())) {
-                    SimpleExpression exprMax = Restrictions.le("centuryMax", val);
-                    SimpleExpression exprMin = Restrictions.le("centuryMin", val);
-                    criteria.add(Restrictions.or(exprMin, exprMax));
-                } else if ("centuryMin".equals(critere.getField())) {
-                    SimpleExpression exprMax = Restrictions.ge("centuryMax", val);
-                    SimpleExpression exprMin = Restrictions.ge("centuryMin", val);
-                    criteria.add(Restrictions.or(exprMin, exprMax));
-                }
-            }
+            
+        SimpleExpression[] arraySimpleExpression = simpleExpr.toArray(new SimpleExpression[0]);
+        hibernateCriteria.add(Restrictions.and(arraySimpleExpression));
         }
-
+     
+        
+        
+        return hibernateCriteria.list();
     }
+    
+
 }

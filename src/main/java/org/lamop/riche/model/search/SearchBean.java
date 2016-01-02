@@ -18,13 +18,13 @@ import org.apache.commons.lang.StringUtils;
  */
 public class SearchBean {
 
-    Set<SearchCriteria> searchCriteria = new HashSet<>();
+    List<SearchCriteria> searchCriteria = new ArrayList<>();
 
-    public Set<SearchCriteria> getSearchCriteria() {
+    public List<SearchCriteria> getSearchCriteria() {
         return searchCriteria;
     }
 
-    public void setSearchCriteria(Set<SearchCriteria> searchCriteria) {
+    public void setSearchCriteria(List<SearchCriteria> searchCriteria) {
         this.searchCriteria = searchCriteria;
     }
 
