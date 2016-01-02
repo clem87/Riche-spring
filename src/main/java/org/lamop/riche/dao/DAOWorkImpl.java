@@ -11,16 +11,21 @@ import java.util.List;
 import java.util.Set;
 import javax.persistence.criteria.Predicate;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.LogicalExpression;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.SimpleExpression;
+import org.hibernate.criterion.Subqueries;
 import org.hibernate.jpa.criteria.expression.SimpleCaseExpression;
 import org.hibernate.sql.JoinType;
 import org.lamop.riche.model.Source;
+import org.lamop.riche.model.Theme;
 import org.lamop.riche.model.WorkAuthor;
 import org.lamop.riche.model.WorkEntity;
 import org.lamop.riche.model.search.SearchBean;
 import org.lamop.riche.model.search.SearchCriteria;
+import org.springframework.expression.spel.ast.Projection;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -98,77 +103,69 @@ public class DAOWorkImpl extends DAOGenericImpl<WorkEntity> implements DAOWorkIF
         return result;
     }
 
-   
-    
     @Override
-    public List<WorkEntity> search(SearchBean search){
-        
-        Criteria hibernateCriteria = sessionFactory.getCurrentSession().createCriteria(WorkEntity.class);
-        
+    public List<WorkEntity> search(SearchBean search) {
+
+        Criteria hibernateCriteria = sessionFactory.getCurrentSession().createCriteria(WorkEntity.class, "work");
+
         List<SearchCriteria> listSearch = search.getSearchCriteria();
-        
+
         //--- On groupe les critères de recherche en sous groupes en fonction des AND
         List<List<SearchCriteria>> andListGroup = new ArrayList<>();
         andListGroup.add(new ArrayList<SearchCriteria>());
         for (Iterator<SearchCriteria> iterator = listSearch.iterator(); iterator.hasNext();) {
             SearchCriteria criteria = iterator.next();
-           
-            if("AND".equals(criteria.getOperator())){
+
+            if ("AND".equals(criteria.getOperator())) {
                 List<SearchCriteria> andList = new ArrayList<>();
                 andList.add(criteria);
-                andListGroup.add(andList);   
-            }
-            else{
-                andListGroup.get(andListGroup.size()-1).add(criteria);
+                andListGroup.add(andList);
+            } else {
+                andListGroup.get(andListGroup.size() - 1).add(criteria);
             }
         }
-        
-        
+
         // Pour chaque And
         List<SimpleExpression> simpleExpr = new ArrayList<>();
         for (int i = 0; i < andListGroup.size(); i++) {
             List<SearchCriteria> listAnd = andListGroup.get(i);
-            
-            
-            Criteria joinTheme = null;
+
             List<SimpleExpression> themeSimpleExpression = new ArrayList<>();
-            
+            DetachedCriteria detachedSubQueryTheme = null;
+
             for (int j = 0; j < listAnd.size(); j++) {
                 SearchCriteria crit = listAnd.get(j);
-                
-                if("title".equals(crit.getField())){
-                    simpleExpr.add(Restrictions.like(crit.getField(), "%"+crit.getValue()+"%"));
-                }
-                
-                else if ("theme".equals(crit.getField())){
-                    if(joinTheme==null){
-                        joinTheme = hibernateCriteria.createCriteria(crit.getField(), JoinType.INNER_JOIN);                        
+
+                if ("title".equals(crit.getField())) {
+                    simpleExpr.add(Restrictions.like(crit.getField(), "%" + crit.getValue() + "%"));
+                } else if ("theme".equals(crit.getField())) {
+                    if (detachedSubQueryTheme == null) {
+                        detachedSubQueryTheme = DetachedCriteria.forClass(Theme.class, "theme");
+                        detachedSubQueryTheme.createAlias("works", "wk");
+                        detachedSubQueryTheme.add(Restrictions.eqProperty("wk.id", "work.id"));
+
                     }
                     themeSimpleExpression.add(Restrictions.eq("id", Long.valueOf(crit.getValue())));
-                }
-                
-                else if("centuryMax".equals(crit.getField())){
+                } else if ("centuryMax".equals(crit.getField())) {
                     simpleExpr.add(Restrictions.le("centuryMax", Integer.valueOf(crit.getValue())));
                     simpleExpr.add(Restrictions.le("centuryMin", Integer.valueOf(crit.getValue())));
-                }
-                else if("centuryMin".equals(crit.getField())){
+                } else if ("centuryMin".equals(crit.getField())) {
                     simpleExpr.add(Restrictions.ge("centuryMax", Integer.valueOf(crit.getValue())));
                     simpleExpr.add(Restrictions.ge("centuryMin", Integer.valueOf(crit.getValue())));
                 }
             }
-            
-            if(joinTheme != null && !themeSimpleExpression.isEmpty()){
-                joinTheme.add(Restrictions.or(themeSimpleExpression.toArray(new SimpleExpression[0])));
+
+            SimpleExpression[] arraySimpleExpression = simpleExpr.toArray(new SimpleExpression[0]);
+            hibernateCriteria.add(Restrictions.and(arraySimpleExpression));
+
+            if (detachedSubQueryTheme != null && !themeSimpleExpression.isEmpty()) {
+                detachedSubQueryTheme.add(Restrictions.or(themeSimpleExpression.toArray(new SimpleExpression[0])));
+                hibernateCriteria.add(Subqueries.exists(detachedSubQueryTheme.setProjection(Projections.property("theme.id"))));
+                //https://gist.github.com/jeffsheets/5292986
             }
-            
-        SimpleExpression[] arraySimpleExpression = simpleExpr.toArray(new SimpleExpression[0]);
-        hibernateCriteria.add(Restrictions.and(arraySimpleExpression));
         }
-     
-        
-        
+
         return hibernateCriteria.list();
     }
-    
 
 }
