@@ -113,7 +113,7 @@ public class DAOWorkImpl extends DAOGenericImpl<WorkEntity> implements DAOWorkIF
         for (Iterator<SearchCriteria> iterator = listSearch.iterator(); iterator.hasNext();) {
             SearchCriteria criteria = iterator.next();
            
-            if(criteria.getOperator().equals("AND")){
+            if("AND".equals(criteria.getOperator())){
                 List<SearchCriteria> andList = new ArrayList<>();
                 andList.add(criteria);
                 andListGroup.add(andList);   
