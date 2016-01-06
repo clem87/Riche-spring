@@ -175,6 +175,18 @@ public class WorkEntityDTO implements Serializable {
         this.id = entity.getId();
         this.centuryMax = entity.getCenturyMax();
         this.centuryMin = entity.getCenturyMin();
+        
+        Set<Theme> newThemeSet = new HashSet<>();
+        for (Iterator<Theme> iterator = entity.getTheme().iterator(); iterator.hasNext();) {
+            Theme themeIteration = iterator.next();
+            Theme newTheme = new Theme();
+            newTheme.setLabel(themeIteration.getLabel());
+            newTheme.setId(themeIteration.getId());
+            newThemeSet.add(newTheme);
+        }
+        this.theme = entity.getTheme();
+        this.authors = entity.getAuthors();
+        
     }
 
 

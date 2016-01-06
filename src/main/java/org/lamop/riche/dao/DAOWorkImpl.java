@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 import javax.persistence.criteria.Predicate;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Projections;
@@ -165,6 +166,8 @@ public class DAOWorkImpl extends DAOGenericImpl<WorkEntity> implements DAOWorkIF
             }
         }
 
+        hibernateCriteria.setFetchMode("theme", FetchMode.JOIN);
+        hibernateCriteria.setFetchMode("authors", FetchMode.JOIN);
         return hibernateCriteria.list();
     }
 
