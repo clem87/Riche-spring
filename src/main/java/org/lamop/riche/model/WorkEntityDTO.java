@@ -166,7 +166,7 @@ public class WorkEntityDTO implements Serializable {
     }
 
     /***
-     * Charge la DTO avec les données d'une entite
+     * Charge la DTO avec les données d'une entite. Charge uniquement les donnée pour la vue liste. pas de sources
      * @param entity 
      */
     public void feedWithEntity(WorkEntity entity){
@@ -186,8 +186,5 @@ public class WorkEntityDTO implements Serializable {
         }
         this.theme = entity.getTheme();
         this.authors = entity.getAuthors();
-        
     }
-
-
 }

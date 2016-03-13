@@ -10,8 +10,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Classe permettant de serialiser une relationWorkSource en évitant d'inclure
@@ -25,40 +23,26 @@ public class RelationWorkSourceSerializer extends JsonSerializer<RelationWorkSou
     @Override
     public void serialize(RelationWorkSource t, JsonGenerator jsonGenerator, SerializerProvider sp) throws IOException, JsonProcessingException {
 
-//        try {
             jsonGenerator.writeStartObject();
             
             jsonGenerator.writeStringField("extract", t.getExtract());
             jsonGenerator.writeStringField("nature", t.getNature());
+            jsonGenerator.writeNumberField("id", t.getId());
             
             Source source = t.getSource();
             Source sourceSer = new Source();
             sourceSer.setId(source.getId());
             sourceSer.setArticleTitle(source.getArticleTitle());
             sourceSer.setTitle(source.getTitle());
-//            sourceSer.setRelationPerson(source.getRelationPerson());
             jsonGenerator.writeObjectField("source", sourceSer);
-            
-//            WorkEntity workSer = (WorkEntity) t.getWorkEntity().clone();
             
             WorkEntity workSer = new WorkEntity();
             workSer.setId(t.getWorkEntity().getId());
             workSer.setTitle(t.getWorkEntity().getTitle());
-            
-            
-            
-            
-//            workSer.getRelationWorkSource().clear();
-           
-//        WorkEntity work = t.getWorkEntity();
-//        workSer.setId(work.getId());
-//        workSer.setTitle(work.getTitle());
+
         jsonGenerator.writeObjectField("workEntity", workSer);
             jsonGenerator.writeEndObject();
-//        } 
-//        catch (CloneNotSupportedException ex) {
-//            Logger.getLogger(RelationWorkSourceSerializer.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+
     }
 
 }

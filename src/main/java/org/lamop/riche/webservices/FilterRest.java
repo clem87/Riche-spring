@@ -8,6 +8,7 @@ package org.lamop.riche.webservices;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -18,6 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 /**
  * Filter used for all restService. Add Access-Control-Allow-Origin for test
@@ -47,7 +51,14 @@ public class FilterRest implements Filter {
             response.setHeader("Access-Control-Allow-Credentials", "true");
             response.setHeader("Access-Control-Request-Headers", "X-Requested-With, accept, content-type");
             response.setHeader("Access-Control-Allow-Headers", "Origin,  X-Requested-With, X-CSRF-Token, X-Requested-With, Content-Type, Accept");
-
+            
+            try {
+                Resource resource = new ClassPathResource("/application.properties");
+                Properties props = PropertiesLoaderUtils.loadProperties(resource);
+                System.out.println(props.get("server.compression.enabled"));
+            } catch (Exception e) {
+            }
+            
             if (!request.getMethod().equals("OPTIONS")) {
                 chain.doFilter(req, res);
             } else {

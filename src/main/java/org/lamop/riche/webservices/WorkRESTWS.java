@@ -37,8 +37,8 @@ public class WorkRESTWS {
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", value = "/getall")
     @Produces(MediaType.APPLICATION_JSON)
     public @ResponseBody
-    List<WorkEntity> getAllWork() {
-        List<WorkEntity> list = serviceWork.getAll();
+    List<WorkEntityDTO> getAllWork() {
+        List<WorkEntityDTO> list = serviceWork.getAllDTO();
         return list;
     }
 

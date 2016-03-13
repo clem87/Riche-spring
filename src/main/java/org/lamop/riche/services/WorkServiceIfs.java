@@ -22,4 +22,9 @@ public interface WorkServiceIfs extends ServiceCRUDIfs<WorkEntity>{
 
     public List<WorkEntityDTO> search(SearchBean search);
 
+
+    public List<WorkEntityDTO> getAllDTO();
+    
+    
+
 }
